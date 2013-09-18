@@ -22,7 +22,7 @@ def cdate():
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
     _cronTab = None
-    time_swap = 7
+    time_swap = 10
     
     def onStartup(self):
         # get the admin plugin so we can register commands
@@ -156,12 +156,12 @@ class MoneyPlugin(b3.plugin.Plugin):
         	if swap_num=="False":
                   self.console.storage.query('UPDATE `configmoney` SET nim="1",`swap_num` ="True" WHERE `id` = "1"')
                   TimeS1 = MoneyPlugin.time_swap * 1
-                  threading.Timer(TimeS1, self.Fin_S1)
-                  threading.Timer.start()
+                  swaptimer = threading.Timer(TimeS1, self.Fin_S1)
+                  swaptimer.start()
         	else:
                   TimeS1 = MoneyPlugin.time_swap * 1
-                  threading.Timer(TimeS1, self.Fin_S2)
-                  threading.Timer.start()
+                  swaptimer = threading.Timer(TimeS1, self.Fin_S2)
+                  swaptimer.start()
                   if(nim == 1):
                     self.console.storage.query('UPDATE `configmoney` SET nim="2" WHERE id = "1"')
                   else:
