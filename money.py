@@ -109,6 +109,7 @@ class MoneyPlugin(b3.plugin.Plugin):
              	 	       c.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
              	     	 else:
              	 	     	 c.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
+          self.autoMessage(event)
              	                
         if(event.type == b3.events.EVT_CLIENT_AUTH):
           sclient = event.client
@@ -1807,3 +1808,58 @@ class MoneyPlugin(b3.plugin.Plugin):
             	     return True
             else:
             	client.message('^7NO se Econtro lo Solicitado')
+                
+    def autoMessage(self, event):
+        for c in self.console.clients.getList():
+            if(c.team == b3.TEAM_BLUE):
+                q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
+                cursor = self.console.storage.query(q)
+                r = cursor.getRow()
+                azul = r['azul']
+                if azul:
+                    weapon = []
+                    if 'N' in azul:
+                        weapon.insert( 1, 'Sr8')
+                    if 'D' in azul:
+                        weapon.insert( 1, 'Spas')
+                    if 'E' in azul:
+                        weapon.insert( 1, 'MP5K')
+                    if 'F' in azul:
+                        weapon.insert( 1, 'UMP45')
+                    if 'G' in azul:
+                        weapon.insert( 1, 'HK69')
+                    if 'H' in azul:
+                        weapon.insert( 1, 'LR300')
+                    if 'I' in azul:
+                        weapon.insert( 1, 'G36')
+                    if 'J' in azul:
+                        weapon.insert( 1, 'PSG1')
+                    if 'O' in azul:
+                        weapon.insert( 1, 'AK103')
+                    if 'Q' in azul:
+                        weapon.insert( 1, 'Negev')
+                    if 'S' in azul:
+                        weapon.insert( 1, 'M4A1')
+                    c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
+            if(c.team == b3.TEAM_RED):
+                q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
+                cursor = self.console.storage.query(q)
+                r = cursor.getRow()
+                rojo = r['rojo']
+                if rojo:
+                    weapon = []
+                    if 'K' in rojo:
+                        weapon.insert( 1, 'HE Nade')
+                    if 'L' in rojo:
+                        weapon.insert( 1, 'Flash Nade')
+                    if 'M' in rojo:
+                        weapon.insert( 1, 'Smoke Nade')
+                    if 'A' in rojo:
+                        weapon.insert( 1, 'Kevlar')
+                    if 'B' in rojo:
+                        weapon.insert( 1, 'TacGoggles')
+                    if 'C' in rojo:
+                        weapon.insert( 1, 'MedKit')
+                    if 'F' in rojo:
+                        weapon.insert( 1, 'Helmet')
+                    c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
