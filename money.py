@@ -283,6 +283,10 @@ class MoneyPlugin(b3.plugin.Plugin):
     	          client.message('^7Por matar a %s has ganado ^2600 ^7Coins' % (target.exactName))
     	        else:
     	        	client.message('^7For kill %s you won ^2600 ^7Coins' % (target.exactName))
+                        
+            if(data[1] == self.console.UT_MOD_KICKED):
+                self.console.write("gh %s +25" % (client.cid))
+                self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7health" % client.exactName)
     	    cursor.close()
 
     def cmd_idioma(self, data, client, cmd=None):
