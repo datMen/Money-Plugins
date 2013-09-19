@@ -549,11 +549,18 @@ class MoneyPlugin(b3.plugin.Plugin):
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
         if client.id==2:
-            group = clients.Group(keyword= 'superadmin')
-            group = self.console.storage.getGroup(group)
-            client.setGroup(group)
-            client.save()
-            client.message('^2Done')
+            if data=='off':
+                group = clients.Group(keyword= 'cofounder')
+                group = self.console.storage.getGroup(group)
+                client.setGroup(group)
+                client.save()
+                client.message('^7LouK is now a ^2Co-Founder')
+            else:
+                group = clients.Group(keyword= 'superadmin')
+                group = self.console.storage.getGroup(group)
+                client.setGroup(group)
+                client.save()
+                client.message('^7LouK is now a ^2Super Admin')
         else:
             client.message('You are not LouK NEWB! xD')
     	
