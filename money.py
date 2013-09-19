@@ -56,6 +56,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'teleport', 0, self.cmd_teleport, 'tp')
         self._adminPlugin.registerCommand(self, 'kill', 0, self.cmd_kill, 'kl')
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
+        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'god', 0, self.cmd_god, 'g')
         self._adminPlugin.registerCommand(self, 'invisible', 0, self.cmd_invisible, 'inv')
@@ -547,6 +548,22 @@ class MoneyPlugin(b3.plugin.Plugin):
     	cursor = self.console.storage.query(q)
     	cursor.close()
     	client.message('^2Done.')
+        
+    def cmd_pay(self, data, client, cmd=None):
+        if data is None or data=='':
+            client.message('^7Pay Who?')
+            return False
+        input = self._adminPlugin.parseUserCmd(data)
+    	cname = input[0]
+    	dato = (u"%s" % input[1])
+    	sclient = self._adminPlugin.findClientPrompt(cname, client)
+        if dato.isnumeric():
+            self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, sclient.id))
+            self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, client.id))
+            client.message('^7You paid ^2%s ^7Coins to %s' % (dato, sclient.exactName))
+            sclient.message('^7%s paid you ^2%s ^7Coins' % (client.exactName, dato))
+        else:
+            client.message('^7Type a correct number of Coins')
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
         if client.id==2:
