@@ -52,6 +52,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'buy', 0, self.cmd_getweapon, 'b')
         self._adminPlugin.registerCommand(self, 'buylist', 0, self.cmd_buy, 'bl')
         self._adminPlugin.registerCommand(self, 'money', 0, self.cmd_money, 'mo')
+        self._adminPlugin.registerCommand(self, 'moneytopstats', 0, self.cmd_moneytopstats, 'motopstats')
         self._adminPlugin.registerCommand(self, 'teleport', 0, self.cmd_teleport, 'tp')
         self._adminPlugin.registerCommand(self, 'kill', 0, self.cmd_kill, 'kl')
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
@@ -594,6 +595,45 @@ class MoneyPlugin(b3.plugin.Plugin):
               client.message('%s has: ^2%s ^7$' % (sclient.exactName,dinero))
             cursor.close()
             return True
+        
+    def cmd_moneytopstats(self, data, client, cmd=None, ext=False):
+        """\
+        [<#>] - list the top # players of the last 14 days.
+        """
+        thread.start_new_thread(self.doTopList, (data, client, cmd, ext))
+
+        return
+    
+    def doTopList(self, data, client, cmd=None, ext=False):
+        if data:
+            if re.match('^[0-9]+$', data, re.I):
+                limit = int(data)
+                if limit > 10:
+                    limit = 10
+        else:
+            limit = 3
+            
+        q=("SELECT c.name, c.id, m.dinero, m.iduser FROM clients c, dinero m WHERE m.iduser = c.id ORDER BY m.dinero DESC LIMIT 1 , %s" % limit)
+        cursor = self.console.storage.query(q)
+        if cursor and (cursor.rowcount > 0):
+            message = '^2Money ^7Top ^5%s ^7Players:' % limit
+            if ext:
+                self.console.say(message)
+            else:
+                cmd.sayLoudOrPM(client, message)
+            c = 1
+            while not cursor.EOF:
+                r = cursor.getRow()
+                message = '^3# %s: ^7%s : ^2%s ^7Coins' % (c, r['name'], r['dinero'])
+                if ext:
+                    self.console.say(message)
+                else:
+                    cmd.sayLoudOrPM(client, message)
+                cursor.moveNext()
+                c += 1
+                time.sleep(1)
+
+        return
 
     def cmd_buy(self, data, client, cmd=None):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
