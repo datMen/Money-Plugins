@@ -289,7 +289,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         
             if(data[1] == self.console.UT_MOD_KICKED):
                 self.console.write("gh %s +25" % (client.cid))
-                self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7health" % client.exactName)
+                self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7hps" % client.exactName)
     	    cursor.close()
 
     def cmd_idioma(self, data, client, cmd=None):
