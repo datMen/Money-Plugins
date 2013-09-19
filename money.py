@@ -79,14 +79,14 @@ class MoneyPlugin(b3.plugin.Plugin):
              	 else:
              	   if azul:
              	     if(dinero > precio_azul):
-             	 	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_azul,c.id))
+                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_azul,c.id))
              	 	     self.console.storage.query(q)
              	 	     self.console.write("gw %s %s" % (c.cid,azul))
              	     else:
              	     	 if(idioma == "ES"):
-             	 	       c.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
+             	 	       c.message('^7NO tienes suficiente DINERO Tienes: %s' % dinero)
              	     	 else:
-             	 	     	 c.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
+             	 	     	 c.message('^7You DONT have coins. Your coins are: ^2%s' % dinero)
           	################### ROJO ################### 	     	 
              if(c.team == b3.TEAM_RED):
              	 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
