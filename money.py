@@ -621,7 +621,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         else:
             limit = 3
             
-        q=("SELECT c.name, c.id, m.dinero, m.iduser FROM clients c, dinero m WHERE m.iduser = c.id ORDER BY m.dinero DESC LIMIT 1 , %s" % limit)
+        q=('SELECT c.id, c.name, m.iduser, m.dinero FROM dinero m, clients c WHERE c.id = m.iduser AND c.id NOT IN ( SELECT distinct(c.id) FROM penalties p, clients c WHERE (p.type = "Ban" OR p.type = "TempBan") AND inactive = 0 AND p.client_id = c.id  AND ( p.time_expire = -1 OR p.time_expire > UNIX_TIMESTAMP(NOW()) ) ) ORDER BY m.dinero DESC LIMIT 0, %s' % limit)
         cursor = self.console.storage.query(q)
         if cursor and (cursor.rowcount > 0):
             message = '^2Money ^7Top ^5%s ^7Players:' % limit
@@ -632,7 +632,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             c = 1
             while not cursor.EOF:
                 r = cursor.getRow()
-                message = '^3# %s: ^7%s : ^2%s ^7Coins' % (c, r['name'], r['dinero'])
+                name = r['name']
+                dinero = r['dinero']
+                message = '^3# %s: ^7%s : ^2%s ^7Coins' % (c, name, dinero)
                 if ext:
                     self.console.say(message)
                 else:
