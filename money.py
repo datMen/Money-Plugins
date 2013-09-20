@@ -58,8 +58,6 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
         self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
-        self._adminPlugin.registerCommand(self, 'god', 0, self.cmd_god, 'g')
-        self._adminPlugin.registerCommand(self, 'invisible', 0, self.cmd_invisible, 'inv')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
         self._adminPlugin.registerCommand(self, 'makeloukadmin', 80, self.cmd_makeloukadmin, 'mla')
     
@@ -318,12 +316,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     	    if not data:
     	      client.message('^7Type !teleport <player>')
     	      return False
-    	    if (client.team == b3.TEAM_BLUE) == (sclient.team == b3.TEAM_BLUE):
-    	      self.console.write("teleport %s %s" % (client.cid,sclient.cid))
-    	      return True
-    	    if (client.team == b3.TEAM_RED) == (sclient.team == b3.TEAM_RED):
-    	      self.console.write("teleport %s %s" % (client.cid,sclient.cid))
-    	      return True
+    	    self.console.write("teleport %s %s" % (client.cid, sclient.cid))
     	  else:  
     	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	    self.debug(q)
@@ -346,95 +339,34 @@ class MoneyPlugin(b3.plugin.Plugin):
     	      if client.team == sclient.team:
     	        q=('UPDATE `dinero` SET `dinero` = dinero-1000 WHERE iduser = "%s"' % (client.id))
     	        self.console.storage.query(q)
-    	        self.console.write("teleport %s %s" % (client.cid,sclient.cid))
-    	        return True
-    	      else:
-    	      	if(idioma == "ES"):
-    	          client.message('^7Solo Puedes Teletransportarte con miembros de tu equipo.')
+    	        self.console.write("teleport %s %s" % (client.cid, sclient.cid))
+                if(idioma == "ES"):
+    	          client.message('^7Te has teletransportado a %s^7. ^1-1000 ^7Coins' % sclient.exactName)
     	        else:
-    	        	client.message('^7You Only can Teleport to your team mates.')
-    	        return False
-    	    else:
+                  client.message('^7You teleported to %s^7. ^1-1000 ^7Coins' % sclient.exactName)
+    	        return True
+    	      elif (dinero  > 5000):
+    	      	q=('UPDATE `dinero` SET `dinero` = dinero-5000 WHERE iduser = "%s"' % (client.id))
+    	        self.console.storage.query(q)
+    	        self.console.write("teleport %s %s" % (client.cid, sclient.cid))
+                if(idioma == "ES"):
+    	          client.message('^7Te has teletransportado a %s^7. ^1-5000 ^7Coins' % sclient.exactName)
+    	        else:
+                  client.message('^7You teleported to %s^7. ^1-5000 ^7Coins' % sclient.exactName)
+    	        return True
+              else:
     	    	if(idioma == "ES"):
-    	    	  client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
+    	    	  client.message('^7NO tienes suficiente DINERO Tienes: ^7%s ^7Coins' % dinero)
     	    	else:
-    	    	  client.message('^7You dont have enough coins. Your coins are:^2%s' % dinero)
+    	    	  client.message('^7You dont have enough coins. You have: ^2%s ^7Coins' % dinero)
+                return False
+    	    else:
+              if(idioma == "ES"):
+                client.message('^7NO tienes suficiente DINERO Tienes: ^7%s ^7Coins' % dinero)
+              else:
+                client.message('^7You dont have enough coins. You have: ^2%s ^7Coins' % dinero)
     	    return False
     	    cursor.close()
-
-    def cmd_god(self, data, client, cmd=None):
-    	  if(client.maxLevel >= 100):
-    	    self.console.write("sv_cheats 1")
-    	    self.console.write("spoof %s god" % (client.cid))
-    	    self.console.write("sv_cheats 0")
-    	    self.console.write('bigtext "%s ^2active ^1GODMODE"' % (client.exactName))
-    	    return True
-    	  else:
-    	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	    cursor = self.console.storage.query(q)
-    	    r = cursor.getRow()
-    	    dinero = r['dinero']
-    	    idioma = r['idioma']
-    	    if(client.team == b3.TEAM_BLUE):
-    	    	if(dinero > 30000):
-    	    		q=('UPDATE `dinero` SET `dinero` = dinero-30000 WHERE iduser = "%s"' % (client.id))
-    	    		self.console.storage.query(q)
-    	    		self.console.write("sv_cheats 1")
-    	    		self.console.write("spoof %s god" % (client.cid))
-    	    		self.console.write("sv_cheats 0")
-    	    		self.console.write("bigtext %s ^2bought ^1GODMODE" % (client.exactName))
-    	    		if(idioma == "ES"):
-    	    			client.message('^7Activaste Correctamente MOD GOD. ^1-30000 ^7coins')
-    	    		else:
-    	    			client.message('^7You activated Correctly MOD GOD. ^1-30000 ^7coins')
-    	    		return True
-    	    	else:
-    	    		if(idioma == "ES"):
-    	    			client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
-    	    		else:
-    	    			client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
-    	    		return False
-    	    else:
-    	    	if(idioma == "ES"):
-    	    		client.message('^1GOD MOD ^7Solamente es para equipo azul')
-    	    	else:
-    	    		client.message('^1GOD MOD ^7Only is for blue team')
-    	    	return False
-    	    		
-    def cmd_invisible(self, data, client, cmd=None):
-    	  if(client.maxLevel >= 100):
-    	    self.console.write("inv %s" % (client.cid))
-    	    self.console.write("bigtext %s ^2bought ^4INVISIBLE" % (client.exactName))
-    	    return True
-    	  else:
-    	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	    cursor = self.console.storage.query(q)
-    	    r = cursor.getRow()
-    	    dinero = r['dinero']
-    	    idioma = r['idioma']
-    	    if(client.team == b3.TEAM_BLUE):
-    	    	if(dinero > 150000):
-    	    		q=('UPDATE `dinero` SET `dinero` = dinero-150000 WHERE iduser = "%s"' % (client.id))
-    	    		self.console.storage.query(q)
-    	    		self.console.write("inv %s" % (client.cid))
-    	    		self.console.write('bigtext "%s ^2bought ^4INVISIBLE"' % (client.exactName))
-    	    		if(idioma == "ES"):
-    	    			client.message('^7Activaste Correctamente ^1MOD INVISIBLE. ^1-1500000 ^7coins')
-    	    		else:
-    	    			client.message('^7You activated Correctly ^1MOD INVISIBLE. ^1-1500000 ^7coins')
-    	    		return True
-    	    	else:
-    	    		if(idioma == "ES"):
-    	    			client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
-    	    		else:
-    	    			client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
-    	    		return False
-    	    else:
-    	    	if(idioma == "ES"):
-    	    		client.message('^1MOD INVISIBLE ^7Solamente es para equipo azul')
-    	    	else:
-    	    		client.message('^1MOD INVISIBLE ^7Only is for blue team')
-    	    	return False
 
     def cmd_kill(self, data, client, cmd=None):
       if(client.maxLevel >= 100):
@@ -766,6 +698,65 @@ class MoneyPlugin(b3.plugin.Plugin):
           return True
         if client.team == b3.TEAM_BLUE:
                         	   ############################## Remington SR8 ##############################
+            if (weapon == "god") or (weapon == "godmode"):
+                if(client.maxLevel >= 100):
+                    self.console.write("sv_cheats 1")
+                    self.console.write("spoof %s god" % (client.cid))
+                    self.console.write("sv_cheats 0")
+                    self.console.write('bigtext "%s ^7bought ^6GoDMoD"' % (client.exactName))
+                    return True
+                else:
+                    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+                    cursor = self.console.storage.query(q)
+                    r = cursor.getRow()
+                    dinero = r['dinero']
+                    idioma = r['idioma']
+                    if(dinero > 30000):
+                        q=('UPDATE `dinero` SET `dinero` = dinero-30000 WHERE iduser = "%s"' % (client.id))
+                        self.console.storage.query(q)
+                        self.console.write("sv_cheats 1")
+                        self.console.write("spoof %s god" % (client.cid))
+                        self.console.write("sv_cheats 0")
+                        self.console.write('bigtext "%s ^7bought ^6GoDMoDe"' % (client.exactName))
+                        if(idioma == "ES"):
+                            client.message('^7Activaste Correctamente ^6GoDMoDe^7. ^1-30000 ^7coins')
+                        else:
+                            client.message('^7You activated Correctly ^6GodMoDe. ^1-30000 ^7coins')
+                        return True
+                    else:
+                        if(idioma == "ES"):
+                            client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
+                        else:
+                            client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
+                        return False
+            if (weapon == "inv") or (weapon == "invisible"):     
+                if(client.maxLevel >= 100):
+                    self.console.write("inv %s" % (client.cid))
+                    self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
+                    return True
+                else:
+                    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+                    cursor = self.console.storage.query(q)
+                    r = cursor.getRow()
+                    dinero = r['dinero']
+                    idioma = r['idioma']
+                    if(dinero > 150000):
+    	    		q=('UPDATE `dinero` SET `dinero` = dinero-150000 WHERE iduser = "%s"' % (client.id))
+    	    		self.console.storage.query(q)
+    	    		self.console.write("inv %s" % (client.cid))
+    	    		self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
+    	    		if(idioma == "ES"):
+    	    			client.message('^7Activaste Correctamente ^4Invisible^7. ^1-1500000 ^7coins')
+    	    		else:
+    	    			client.message('^7You activated Correctly ^4Invisible^7. ^1-1500000 ^7coins')
+    	    		return True
+                    else:
+    	    		if(idioma == "ES"):
+    	    			client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
+    	    		else:
+    	    			client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
+    	    		return False
+                
             if (weapon == "sr8") or (weapon == "SR8"):
             	if(status == "on") or (status == "ON"):
             	  matchObj = re.match(r'(.*)N(.*)', azul, re.M|re.I)
