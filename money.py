@@ -436,16 +436,16 @@ class MoneyPlugin(b3.plugin.Plugin):
     	  	  return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
-    	  if (dinero > 5000):
+    	  if (dinero > 3000):
     	    if client.team != sclient.team:
               if(client.team == b3.TEAM_RED):
-                q=('UPDATE `dinero` SET `dinero` = dinero-5000 WHERE iduser = "%s"' % (client.id))
+                q=('UPDATE `dinero` SET `dinero` = dinero-3000 WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
                 self.console.write("gw %s -@" % (sclient.cid))
                 if(idioma == "ES"):
-                  client.message('^7Has desarmado a %s! ^1-5000 ^7coins' % (sclient.exactName))
+                  client.message('^7Has desarmado a %s! ^1-3000 ^7Coins' % (sclient.exactName))
                 else:
-                  client.message('^7You disarmed %s! ^1-5000 ^7coins' % (sclient.exactName))
+                  client.message('^7You disarmed %s! ^1-3000 ^7Coins' % (sclient.exactName))
                 return True
               else:
     	    	if(idioma == "ES"):
