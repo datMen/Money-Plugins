@@ -461,9 +461,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               return False
     	  else:
     	  	if(idioma == "ES"):
-    	  	  client.message('^7NO tienes suficiente DINERO Tienes: %s' % dinero)
+    	  	  client.message('^7NO tienes suficiente DINERO Tienes: ^2%s' % dinero)
     	  	else:
-    	  	  client.message('^7You dont have enough money. Your coins are: ^2%s' % dinero)
+    	  	  client.message('^7You dont have enough money. You have: ^2%s' % dinero)
     	  return False
     	  cursor.close()
           
@@ -527,9 +527,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             dinero = r['dinero']
             idioma = r['idioma']
             if(idioma == "ES"):
-              client.message('^7Tienes: ^5%s ^7$' % (dinero))
+              client.message('^7Tienes: ^2%s ^7Coins' % (dinero))
             else:
-              client.message("^7You have: ^5%s ^7$" % (dinero))
+              client.message("^7You have: ^2%s ^7Coins" % (dinero))
             cursor.close()
             return True
         else:
@@ -537,7 +537,7 @@ class MoneyPlugin(b3.plugin.Plugin):
           sclient = self._adminPlugin.findClientPrompt(input[0], client)
           if not sclient: return False
           if(sclient.maxLevel >= 100):
-            client.message('%s Tiene:^2Infinito' % (sclient.exactName))
+            client.message('%s has: ^2Infinito' % (sclient.exactName))
             return True
           else:
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
@@ -547,9 +547,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             dinero = r['dinero']
             idioma = r['idioma']
             if(idioma == "ES"):
-              client.message('%s tiene: ^2%s ^7$' % (sclient.exactName,dinero))
+              client.message('%s tiene: ^2%s ^7Coins' % (sclient.exactName,dinero))
             else:
-              client.message('%s has: ^2%s ^7$' % (sclient.exactName,dinero))
+              client.message('%s has: ^2%s ^7Coins' % (sclient.exactName,dinero))
             cursor.close()
             return True
         
