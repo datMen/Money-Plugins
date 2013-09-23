@@ -485,6 +485,10 @@ class MoneyPlugin(b3.plugin.Plugin):
         if data is None or data=='':
             client.message('^7Pay Who?')
             return False
+        cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+        r = cursor.getRow()
+        iduser = r['iduser']
+        dinero = r['dinero']
         input = self._adminPlugin.parseUserCmd(data)
     	cname = input[0]
     	dato = (u"%s" % input[1])
@@ -492,10 +496,27 @@ class MoneyPlugin(b3.plugin.Plugin):
         if dato.isnumeric():
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, sclient.id))
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, client.id))
-            client.message('^7You paid ^2%s ^7Coins to %s' % (dato, sclient.exactName))
-            sclient.message('^7%s paid you ^2%s ^7Coins' % (client.exactName, dato))
-        else:
-            client.message('^7Type a correct number of Coins')
+            cursor.close()
+            cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+            r = cursor.getRow()
+            iduser = r['iduser']
+            dinero = r['dinero']
+            if dinero < 0:
+                self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, sclient.id))
+                self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, client.id))
+                cursor.close()
+                cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+                r = cursor.getRow()
+                iduser = r['iduser']
+                dinero = r['dinero']
+                idioma = r['idioma']
+                if(idioma == "ES"):
+                    client.message('^7NO tienes suficiente DINERO Tienes: ^2%s' % (dinero))
+                else:
+                    client.message('^7You dont have enough money. You have: ^2%s' % dinero)
+            else:
+                client.message('^7You paid ^2%s ^7Coins to %s' % (dato, sclient.exactName))
+                sclient.message('^7%s paid you ^2%s ^7Coins' % (client.exactName, dato))
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
         if client.id==2:
