@@ -200,7 +200,7 @@ class MoneyPlugin(b3.plugin.Plugin):
           q=('SELECT * FROM automoney WHERE client_id ="%s"' % (c.id))     
           cursor = self.console.storage.query(q)
           r = cursor.getRow()
-          veces =r['veces']
+          veces = r['veces']
           fin = r['datefin']
           datenow = cdate()
           self.debug('%s - %s' % (fin, datenow))
