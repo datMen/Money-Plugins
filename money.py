@@ -1894,7 +1894,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             	       client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             	     return True
                         	   ############################## Medkit ##############################
-            elif (weapon == "medickid") or (weapon == "MEDICKID") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
+            elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
             	if(status == "on") or (status == "ON"):
             	  matchObj = re.match(r'(.*)C(.*)', rojo, re.M|re.I)
             	  if not matchObj:
@@ -1953,7 +1953,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             	       client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             	     return True
                         	   ############################## TacGoggles ##############################
-            elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG"):
+            elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
             	if(client.maxLevel >= 100):
             		self.console.write("gi %s B" % client.cid)
             		return True
