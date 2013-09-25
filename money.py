@@ -13,12 +13,14 @@ from time import gmtime, strftime
 from b3 import clients
 
 def cdate():
-	time_epoch = time.time() 
-	time_struct = time.gmtime(time_epoch)
-	date = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
-	mysql_time_struct = time.strptime(date, '%Y-%m-%d %H:%M:%S')
-	cdate = calendar.timegm( mysql_time_struct)
-	return cdate
+        
+    time_epoch = time.time() 
+    time_struct = time.gmtime(time_epoch)
+    date = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
+    mysql_time_struct = time.strptime(date, '%Y-%m-%d %H:%M:%S') 
+    cdate = calendar.timegm( mysql_time_struct)
+
+    return cdate
 
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
@@ -872,15 +874,15 @@ class MoneyPlugin(b3.plugin.Plugin):
         status = input[1]
         if(weapon == "help") or (weapon == "ayuda"):
           if(idioma == "ES"):
-            client.message('^1Escribe ^7!bl ^1para ver las armas y items')
-            client.message('^2Usa ^6!b y escriba el arma o el item que desea comprar')
-            client.message('^5Usa ^6!tp nick ^5 para Teletransportarte a un companero')
-            client.message('^6Escribe ^2!kill nick ^6para matar a un enemigo')
+            client.message('^7Escribe ^2!bl ^7para ver las armas y items')
+            client.message('^7Usa ^2!b ^7y escriba el arma o el item que desea comprar')
+            client.message('^7Usa ^2!tp <jugador> ^7 para Teletransportarte a un jugador')
+            client.message('^7Escribe ^2!kill <jugador> ^7para matar a un enemigo')
           else:
-            client.message('^1Type ^7!BL ^1for see the weapons and items')
-            client.message('^2Type ^6!B and type the weapon o item that you want buy')
-            client.message('^5Type ^6!tp nick ^5for teleport whit a partner')
-            client.message('^6Type ^2!KL nick ^6for kill a enemy')
+            client.message('^7Type ^2!bl ^7to see the weapons and items')
+            client.message('^7Type ^2!b ^7and type the weapon o item that you want buy')
+            client.message('^7Type ^2!tp <player> ^7to teleport to a player')
+            client.message('^7Type ^2!kill <player> ^7to kill a enemy')
           return True
         if client.team == b3.TEAM_BLUE:
                         	   ############################## Remington SR8 ##############################
@@ -1592,7 +1594,11 @@ class MoneyPlugin(b3.plugin.Plugin):
             	       client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             	     return True
             else:
-            	client.message('^7La Arma NO se ha Encontrado')
+            	if(idioma == "ES"):
+                    client.message("^7No se encontro: ''^2%s^7''" % input[0])
+                else:
+                    client.message("^7Couldn't find: ''^2%s^7''" % input[0])
+            return False
                 
         if client.team == b3.TEAM_RED:
             weapon = input[0]
@@ -1717,15 +1723,21 @@ class MoneyPlugin(b3.plugin.Plugin):
             		      client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             		    return True
                         	   ############################## Flash Grenade ##############################
-#            elif (weapon == "FLASH") or (weapon == "flash") or (weapon == "fla") or (weapon == "FLA"):
-#            	if(client.maxLevel >= 100):
- #           	  if(veces):
-  #          	    self.console.write("gw %s L %s" % (client.cid,veces))
-   #         	    return True
-    #        	  else:
-     #       	    self.console.write("gw %s L" % client.cid)
-      #      	    return True
-       #     	else:
+            elif (weapon == "FLASH") or (weapon == "flash") or (weapon == "fla") or (weapon == "FLA"):
+            	if(client.maxLevel >= 100):
+            	  if(veces):
+            	    self.console.write("gw %s L %s" % (client.cid,veces))
+            	    return True
+            	  else:
+            	    self.console.write("gw %s L" % client.cid)
+            	    return True
+            	else:
+                    if(idioma == "ES"):
+                        client.message('^2Flash nade ^7no esta permitida..')
+                    else:
+                        client.message('^2Flash nade ^7is not allowed..')
+                    return False
+                    
         #    		if(veces):
          #   		  if(veces == "1"):
           #  		    valor = "350" ######### PRECIO
@@ -2030,7 +2042,11 @@ class MoneyPlugin(b3.plugin.Plugin):
                                 client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
                             return True
             else:
-            	client.message('^7NO se Econtro lo Solicitado')
+            	if(idioma == "ES"):
+                    client.message("^7No se encontro: ''^2%s^7''" % input[0])
+                else:
+                    client.message("^7Couldn't find: ''^2%s^7''" % input[0])
+            return False
                 
     def autoMessage(self, event):
         for c in self.console.clients.getList():
