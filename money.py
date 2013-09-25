@@ -66,51 +66,6 @@ class MoneyPlugin(b3.plugin.Plugin):
     
     def onEvent(self, event):
         if event.type == b3.events.EVT_GAME_ROUND_START:
-          for c in self.console.clients.getList():
-          	################### AZUL ###################
-             if(c.team == b3.TEAM_BLUE):
-             	 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
-             	 cursor = self.console.storage.query(q)
-             	 r = cursor.getRow()
-             	 dinero = r['dinero']
-             	 azul = r['azul']
-             	 precio_azul = r['precio_azul']
-             	 idioma = r['idioma']
-             	 if(c.maxLevel >= 100):
-             	   self.console.write("gw %s %s" % (c.cid,azul))
-             	 else:
-             	   if azul:
-             	     if(dinero > precio_azul):
-                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_azul,c.id))
-             	 	     self.console.storage.query(q)
-             	 	     self.console.write("gw %s %s" % (c.cid,azul))
-             	     else:
-             	     	 if(idioma == "ES"):
-             	 	       c.message('^7NO tienes suficiente DINERO Tienes: %s' % dinero)
-             	     	 else:
-             	 	     	 c.message('^7You DONT have coins. Your coins are: ^2%s' % dinero)
-          	################### ROJO ################### 	     	 
-             if(c.team == b3.TEAM_RED):
-             	 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
-             	 cursor = self.console.storage.query(q)
-             	 r = cursor.getRow()
-             	 dinero = r['dinero']
-             	 rojo = r['rojo']
-             	 precio_rojo = r['precio_rojo']
-             	 idioma = r['idioma']
-             	 if(c.maxLevel >= 100):
-             	   self.console.write("gi %s %s" % (c.cid,rojo))
-             	 else:
-             	   if rojo:
-             	     if(dinero > precio_rojo):
-             	 	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_rojo,c.id))
-             	 	     self.console.storage.query(q)
-             	 	     self.console.write("gi %s %s" % (c.cid,rojo))
-             	     else:
-             	     	 if(idioma == "ES"):
-             	 	       c.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
-             	     	 else:
-             	 	     	 c.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
           self.autoMessage(event)
              	                
         if(event.type == b3.events.EVT_CLIENT_AUTH):
@@ -2058,50 +2013,80 @@ class MoneyPlugin(b3.plugin.Plugin):
                 cursor = self.console.storage.query(q)
                 r = cursor.getRow()
                 azul = r['azul']
-                if azul:
-                    weapon = []
-                    if 'N' in azul:
-                        weapon.insert( 1, 'Sr8')
-                    if 'D' in azul:
-                        weapon.insert( 1, 'Spas')
-                    if 'E' in azul:
-                        weapon.insert( 1, 'MP5K')
-                    if 'F' in azul:
-                        weapon.insert( 1, 'UMP45')
-                    if 'G' in azul:
-                        weapon.insert( 1, 'HK69')
-                    if 'H' in azul:
-                        weapon.insert( 1, 'LR300')
-                    if 'I' in azul:
-                        weapon.insert( 1, 'G36')
-                    if 'J' in azul:
-                        weapon.insert( 1, 'PSG1')
-                    if 'O' in azul:
-                        weapon.insert( 1, 'AK103')
-                    if 'Q' in azul:
-                        weapon.insert( 1, 'Negev')
-                    if 'S' in azul:
-                        weapon.insert( 1, 'M4A1')
-                    c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
+                dinero = r['dinero']
+                precio_azul = r['precio_azul']
+                idioma = r['idioma']
+                if(c.maxLevel >= 100):
+                    self.console.write("gw %s %s" % (c.cid,azul))
+                else:
+                    if azul:
+                        weapon = []
+                        if 'N' in azul:
+                            weapon.insert( 1, 'Sr8')
+                        if 'D' in azul:
+                            weapon.insert( 1, 'Spas')
+                        if 'E' in azul:
+                            weapon.insert( 1, 'MP5K')
+                        if 'F' in azul:
+                            weapon.insert( 1, 'UMP45')
+                        if 'G' in azul:
+                            weapon.insert( 1, 'HK69')
+                        if 'H' in azul:
+                            weapon.insert( 1, 'LR300')
+                        if 'I' in azul:
+                            weapon.insert( 1, 'G36')
+                        if 'J' in azul:
+                            weapon.insert( 1, 'PSG1')
+                        if 'O' in azul:
+                            weapon.insert( 1, 'AK103')
+                        if 'Q' in azul:
+                            weapon.insert( 1, 'Negev')
+                        if 'S' in azul:
+                            weapon.insert( 1, 'M4A1')
+                        if(dinero > precio_azul):
+                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_azul,c.id))
+                            self.console.storage.query(q)
+                            self.console.write("gw %s %s" % (c.cid,azul))
+                            c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
+                        else:
+                            if(idioma == "ES"):
+                                c.message('^1NO tienes ^7suficiente dinero. Tienes: %s' % dinero)
+                            elif(idioma == "EN"):
+                                c.message('^7You ^1dont have ^7enough coins. You have: ^2%s' % dinero)
             if(c.team == b3.TEAM_RED):
                 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
                 cursor = self.console.storage.query(q)
                 r = cursor.getRow()
                 rojo = r['rojo']
-                if rojo:
-                    weapon = []
-                    if 'K' in rojo:
-                        weapon.insert( 1, 'HE Nade')
-                    if 'L' in rojo:
-                        weapon.insert( 1, 'Flash Nade')
-                    if 'M' in rojo:
-                        weapon.insert( 1, 'Smoke Nade')
-                    if 'A' in rojo:
-                        weapon.insert( 1, 'Kevlar')
-                    if 'B' in rojo:
-                        weapon.insert( 1, 'TacGoggles')
-                    if 'C' in rojo:
-                        weapon.insert( 1, 'MedKit')
-                    if 'F' in rojo:
-                        weapon.insert( 1, 'Helmet')
-                    c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
+                dinero = r['dinero']
+                precio_rojo = r['precio_rojo']
+                idioma = r['idioma']
+                if(c.maxLevel >= 100):
+                    self.console.write("gw %s %s" % (c.cid,rojo))
+                else:
+                    if rojo:
+                        weapon = []
+                        if 'K' in rojo:
+                            weapon.insert( 1, 'HE Nade')
+                        if 'L' in rojo:
+                            weapon.insert( 1, 'Flash Nade')
+                        if 'M' in rojo:
+                            weapon.insert( 1, 'Smoke Nade')
+                        if 'A' in rojo:
+                            weapon.insert( 1, 'Kevlar')
+                        if 'B' in rojo:
+                            weapon.insert( 1, 'TacGoggles')
+                        if 'C' in rojo:
+                            weapon.insert( 1, 'MedKit')
+                        if 'F' in rojo:
+                            weapon.insert( 1, 'Helmet')
+                        if(dinero > precio_rojo):
+                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_rojo,c.id))
+                            self.console.storage.query(q)
+                            self.console.write("gw %s %s" % (c.cid,rojo))
+                            c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
+                        else:
+                            if(idioma == "ES"):
+                                c.message('^1NO tienes ^7suficiente dinero. Tienes: %s' % dinero)
+                            elif(idioma == "EN"):
+                                c.message('^7You ^1dont have ^7enough coins. You have: ^2%s' % dinero)
