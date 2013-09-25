@@ -485,6 +485,9 @@ class MoneyPlugin(b3.plugin.Plugin):
     	client.message('^2Done.')
         
     def cmd_pay(self, data, client, cmd=None):
+        if client.connections < 10:
+            client.message('^7You need at least ^610 ^7connections to use this command')
+            return False
         if data is None or data=='':
             client.message('^7Pay Who?')
             return False
