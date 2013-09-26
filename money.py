@@ -553,9 +553,16 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message('^2%s ^7Costo: ^2%s' % (name, valor))
                 else:
                     client.message("^2%s ^7Price: ^2%s" % (name, valor))
+            elif (weapon == "disarm") or (weapon == "dis"):
+                valor = "4.000"
+                name = "disarm"
+                if(idioma == "ES"):
+                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
+                else:
+                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
             elif (weapon == "god") or (weapon == "godmode"):
                 valor = "30.000"
-                name = "GoD"
+                name = "god"
                 if(idioma == "ES"):
                     client.message('^2%s ^7Costo: ^2%s' % (name, valor))
                 else:
