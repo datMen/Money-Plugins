@@ -1580,10 +1580,10 @@ class MoneyPlugin(b3.plugin.Plugin):
             if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
             	if(client.maxLevel >= 100):
             	  if(veces):
-            	    self.console.write("gw %s K %s" % (client.cid,veces))
+            	    self.console.write("gw %s K +%s" % (client.cid,veces))
             	    return True
             	  else:
-            	    self.console.write("gw %s K" % client.cid)
+            	    self.console.write("gw %s K +1" % client.cid)
             	    return True
             	else:
             		if(veces):
@@ -1617,8 +1617,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  return False
             		else:
             		  if(veces):
-            		    if(int(veces) <=5):
-            		      self.console.write("gw %s K %s" % (client.cid,veces))
+            		    if(int(veces)<=5):
+                              q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                              self.console.storage.query(q)
+            		      sobran=dinero-valor2
+            		      self.console.write("gw %s K +%s" % (client.cid,veces))
+                              if(idioma == "ES"):
+                                client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
+                              else:
+                                client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
+            		      return True
             		    else:
             		      if(idioma == "ES"):
             		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Granadas')
@@ -1626,7 +1634,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             		        client.message('^7You can buy ^21^7-^25 ^7Grenade')
             		      return False
             		  else:
-            		    self.console.write("gw %s K" % (client.cid))
+            		    self.console.write("gw %s K +1" % (client.cid))
             		  q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             		  self.console.storage.query(q)
             		  sobran=dinero-valor2
@@ -1639,10 +1647,10 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
             	if(client.maxLevel >= 100):
             	  if(veces):
-            	    self.console.write("gw %s M %s" % (client.cid,veces))
+            	    self.console.write("gw %s M +%s" % (client.cid,veces))
             	    return True
             	  else:
-            	    self.console.write("gw %s M" % client.cid)
+            	    self.console.write("gw %s M +1" % client.cid)
             	    return True
             	else:
             		if(veces):
@@ -1659,8 +1667,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		    valor = "850" ######### PRECIO
             		    valor2 = 850  ######### PRECIO
             		  elif(veces == "5"):
-            		    valor = "1050" ######### PRECIO
-            		    valor2 = 1050  ######### PRECIO
+            		    valor = "1000" ######### PRECIO
+            		    valor2 = 1000  ######### PRECIO
             		  else:
             		    valor = "300" ######### PRECIO
             		    valor2 = 300  ######### PRECIO
@@ -1676,8 +1684,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  return False
             		else:
             		  if(veces):
-            		    if(int(veces) <=5):
-            		      self.console.write("gw %s M %s" % (client.cid,veces))
+            		    if(int(veces)<=5):
+                              q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                              self.console.storage.query(q)
+            		      sobran=dinero-valor2
+            		      self.console.write("gw %s M +%s" % (client.cid,veces))
+                              if(idioma == "ES"):
+                                client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
+                              else:
+                                client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
+            		      return True
             		    else:
             		      if(idioma == "ES"):
             		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Granadas')
