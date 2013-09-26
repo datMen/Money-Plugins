@@ -2046,32 +2046,32 @@ class MoneyPlugin(b3.plugin.Plugin):
             	     return True
                         	   ############################## Health ##############################
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL"):
-                scname = input[1]
-                sclient = self._adminPlugin.findClientPrompt(scname, client)
-                if scname:
-                    if(client.maxLevel >= 100):
-                        self.console.write("gh %s +100" % sclient.cid)
-                        return True
-                    else:
-                        valor = "2000" ######### PRECIO
-                        valor2 = 2000  ######### PRECIO
-                        nombre = 'Health'  ######### NOMBRE ARMA
-                        if (valor2 > dinero):
-                            if(idioma == "ES"):
-                                client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
-                            else:
-                                client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
-                            return False
-                        else:
-                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                            self.console.storage.query(q)
+                if input[1]:
+                    sclient = self._adminPlugin.findClientPrompt(input[1], client)
+                    if sclient:
+                        if(client.maxLevel >= 100):
                             self.console.write("gh %s +100" % sclient.cid)
-                            sobran=dinero-valor2
-                            if(idioma == "ES"):
-                                client.message('^7Has Comprado ^2%s ^7a %s. Te Quedan:^2%s ^7coins' % (nombre,sclient.exactName,sobran))
-                            else:
-                                client.message('^7You have Bought ^2%s^7 to %s. You have:^2%s ^7coins' % (nombre,sclient.exactName,sobran))
                             return True
+                        else:
+                            valor = "2000" ######### PRECIO
+                            valor2 = 2000  ######### PRECIO
+                            nombre = 'Health'  ######### NOMBRE ARMA
+                            if (valor2 > dinero):
+                                if(idioma == "ES"):
+                                    client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
+                                else:
+                                    client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
+                                return False
+                            else:
+                                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                                self.console.storage.query(q)
+                                self.console.write("gh %s +100" % sclient.cid)
+                                sobran=dinero-valor2
+                                if(idioma == "ES"):
+                                    client.message('^7Has Comprado ^2%s ^7a %s. Te Quedan:^2%s ^7coins' % (nombre,sclient.exactName,sobran))
+                                else:
+                                    client.message('^7You have Bought ^2%s^7 to %s. You have:^2%s ^7coins' % (nombre,sclient.exactName,sobran))
+                                return True
                 else:
                     if(client.maxLevel >= 100):
                         self.console.write("gh %s +100" % client.cid)
