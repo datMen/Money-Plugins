@@ -136,6 +136,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.console.storage.query('UPDATE `configmoney` SET nim="2" WHERE id = "1"')
                   else:
                     self.console.storage.query('UPDATE `configmoney` SET `swap_num` ="False" WHERE `id` = "1"')
+                  cursor.close()
         		  
         if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
           sclient = event.client
