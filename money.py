@@ -613,174 +613,123 @@ class MoneyPlugin(b3.plugin.Plugin):
         else:
             input = self._adminPlugin.parseUserCmd(data)
             weapon = input[0]
-            r = cursor.getRow()
-            idioma = r['idioma']
             if (weapon == "sr8") or (weapon == "SR8"):
                 valor = "600"
                 name = "Sr8"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "disarm") or (weapon == "dis"):
                 valor = "4.000"
                 name = "disarm"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "god") or (weapon == "godmode"):
                 valor = "30.000"
                 name = "god"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "inv") or (weapon == "invisible"): 
                 valor = "150.000"
                 name = "Invisible"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
                 valor = "400"
                 name = "Spas"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "mp5") or (weapon == "MP5") or (weapon == "MP5K") or (weapon == "mp5k"): 
                 valor = "500"
                 name = "MP5K"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "ump") or (weapon == "UMP") or (weapon == "UMP45") or (weapon == "ump45"):
                 valor = "550"
                 name = "UMP45"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "HK69") or (weapon == "hk69") or (weapon == "hk") or (weapon == "HK"):
                 valor = "2.000"
                 name = "HK69"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
                 valor = "650"
                 name = "LR300"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "PSG") or (weapon == "psg") or (weapon == "PSG1") or (weapon == "psg1"):
                 valor = "1.000"
                 name = "PSG1"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
                 valor = "650"
                 name = "LR300"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "g36") or (weapon == "G36"):
                 valor = "1.000"
                 name = "G36"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "ak") or (weapon == "AK") or (weapon == "AK103") or (weapon == "ak103"):
                 valor = "700"
                 name = "AK103"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "NEGEV") or (weapon == "negev") or (weapon == "NE") or (weapon == "ne"):
                 valor = "750"
                 name = "Negev"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "M4") or (weapon == "m4") or (weapon == "m4a") or (weapon == "M4A"):
                 valor = "650"
                 name = "M4A1"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
                 valor = "300"
                 name = "HE"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
                 valor = "250"
                 name = "Smoke"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "KN") or (weapon == "kn"):
                 valor = "300"
                 name = "Knife"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
                 valor = "1.200"
                 name = "Kevlar"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
                 valor = "800"
                 name = "Helmet"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
                 valor = "500"
                 name = "Medkit"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
                 valor = "5.000"
                 name = "TacGoggles"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
-            elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL"):
+                self.price(client, name, valor)
+            elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
                 valor = "2.000"
                 name = "Health"
-                if(idioma == "ES"):
-                    client.message('^2%s ^7Costo: ^2%s' % (name, valor))
-                else:
-                    client.message("^2%s ^7Price: ^2%s" % (name, valor))
+                self.price(client, name, valor)
             else:
-                if(idioma == "ES"):
-                    client.message('^7No se ha enclontrado lo solicitado')
-                else:
-                    client.message("^7Couldn't find your request")
+                if(idioma == "EN"):
+                    client.message("Couldn't find: ^2%s" % input[0])
+                elif(idioma == "ES"):
+                    client.message("No se encontro: ^2%s" % input[0])
+                elif(idioma == "FR"):
+                    client.message("In French: Couldn't find: ''^2%s" % input[0])
+                elif(idioma == "DE"):
+                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                return True
+                    
+    def price(self, client, name, valor):
+        q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+        cursor = self.console.storage.query(q)
+        r = cursor.getRow()
+        idioma = r['idioma']
+        if(idioma == "EN"):
+            client.message("^2%s ^7Price: ^2%s" % (name, valor))
+        elif(idioma == "ES"):
+            client.message('^2%s ^7Costo: ^2%s' % (name, valor))
+        elif(idioma == "FR"):
+            client.message("In French: ^2%s ^7Price: ^2%s" % (name, valor))
+        elif(idioma == "DE"):
+            client.message("In German: ^2%s ^7Price: ^2%s" % (name, valor))
+        return True
         
     def cmd_moneytopstats(self, data, client, cmd=None, ext=False):
         """\
