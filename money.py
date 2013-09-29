@@ -106,7 +106,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                  sclient.message('^7Se ha definido tu lenguaje como ^2"CASTELLANO"')
                  sclient.message('^7Puedes cambiarlo si quieres utilizando ^2!lang <en/es/fr/de>')
              elif idioma == "FR":
-                 sclient.message("Ton langage a été defini en ^2''FRANCAIS''")
+                 sclient.message("Ton langage a ete defini en ^2''FRANCAIS''")
                  sclient.message("Tu peux le changer en utilisant ^2!lang <en/es/fr/de>")
              elif idioma == "DE":
                  sclient.message("In german: Your language was defined itself to ^2''ENGLISH''")
@@ -462,29 +462,45 @@ class MoneyPlugin(b3.plugin.Plugin):
                 q=('UPDATE `dinero` SET `dinero` = dinero-4000 WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
                 self.console.write("gw %s -@" % (sclient.cid))
-                if(idioma == "ES"):
-                  client.message('^7Has desarmado a %s! ^1-4000 ^7Coins' % (sclient.exactName))
-                else:
-                  client.message('^7You disarmed %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                if(idioma == "EN"):
+                    client.message('You disarmed %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                elif(idioma == "ES"):
+                    client.message('Has desarmado a %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                elif(idioma == "FR"):
+                    client.message("In French: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                elif(idioma == "DE"):
+                    client.message("In German: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
                 return True
               else:
-    	    	if(idioma == "ES"):
-    	    	  client.message('^2!disarm ^7solo puede ser utlizado por el equipo rojo.')
-    	    	else:
-    	    	  client.message('^2!disarm ^7can only be used by the red team')
-    	    	return False
+                if(idioma == "EN"):
+                    client.message('^2!disarm ^7can only be used by the red team')
+                elif(idioma == "ES"):
+                    client.message('^2!disarm ^7solo puede ser utlizado por el equipo rojo.')
+                elif(idioma == "FR"):
+                    client.message("In French: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
+                elif(idioma == "DE"):
+                    client.message("In German: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
+                return True
             else:
-              if(idioma == "ES"):
-                client.message('^7Solo Puedes desarmar a enemigos.')
-              else:
+              if(idioma == "EN"):
                 client.message('^7You Can only disarm Enemies.')
-              return False
+              elif(idioma == "ES"):
+                client.message('^7Solo Puedes desarmar a enemigos.')
+              elif(idioma == "FR"):
+                client.message("In French: You Can only disarm Enemies.")
+              elif(idioma == "DE"):
+                client.message("In German: You Can only disarm Enemies.")
+              return True
     	  else:
-    	  	if(idioma == "ES"):
-    	  	  client.message('^7NO tienes suficiente DINERO Tienes: ^2%s' % dinero)
-    	  	else:
-    	  	  client.message('^7You dont have enough money. You have: ^2%s' % dinero)
-    	  return False
+            if(idioma == "EN"):
+                client.message("You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+            elif(idioma == "ES"):
+                client.message('^1No tienes ^7suficiente dinero. Tienes: ^2%s ^7Coins' % dinero)
+            elif(idioma == "FR"):
+                client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
+            elif(idioma == "DE"):
+                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+            return False
     	  cursor.close()
           
     def cmd_update(self, data, client, cmd=None):
@@ -502,9 +518,6 @@ class MoneyPlugin(b3.plugin.Plugin):
     	client.message('^2Done.')
         
     def cmd_pay(self, data, client, cmd=None):
-        if client.connections < 10:
-            client.message('^7You need at least ^610 ^7connections to use this command')
-            return False
         if data is None or data=='':
             client.message('^7Pay Who?')
             return False
@@ -512,6 +525,16 @@ class MoneyPlugin(b3.plugin.Plugin):
         r = cursor.getRow()
         iduser = r['iduser']
         dinero = r['dinero']
+        if client.connections < 10:
+            if(idioma == "EN"):
+                client.message('You need at least ^610 ^7connections to the server to use this command')
+            elif(idioma == "ES"):
+                client.message('Necesitas tener ^610 ^7conexiones al servidor para usar este comando')
+            elif(idioma == "FR"):
+                client.message("In French: You need at least ^610 ^7connections to the server to use this command")
+            elif(idioma == "DE"):
+                client.message("In German: You need at least ^610 ^7connections to the server to use this command")
+            return True
         input = self._adminPlugin.parseUserCmd(data)
     	cname = input[0]
     	dato = (u"%s" % input[1])
@@ -533,13 +556,29 @@ class MoneyPlugin(b3.plugin.Plugin):
                 iduser = r['iduser']
                 dinero = r['dinero']
                 idioma = r['idioma']
-                if(idioma == "ES"):
-                    client.message('^7NO tienes suficiente DINERO Tienes: ^2%s' % (dinero))
-                else:
-                    client.message('^7You dont have enough money. You have: ^2%s' % dinero)
+                if(idioma == "EN"):
+                    client.message("You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                elif(idioma == "ES"):
+                    client.message('^1No tienes ^7suficiente dinero. Tienes: ^2%s ^7Coins' % dinero)
+                elif(idioma == "FR"):
+                    client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
+                elif(idioma == "DE"):
+                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                return False
             else:
-                client.message('^7You paid ^2%s ^7Coins to %s' % (dato, sclient.exactName))
-                sclient.message('^7%s paid you ^2%s ^7Coins' % (client.exactName, dato))
+                if(idioma == "EN"):
+                    client.message("You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+                    sclient.message("^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                elif(idioma == "ES"):
+                    client.message("You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+                    sclient.message("^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                elif(idioma == "FR"):
+                    client.message("In French: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+                    sclient.message("In French: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                elif(idioma == "DE"):
+                    client.message("In German: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+                    sclient.message("In German: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                return False
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
         if client.id==2:
@@ -570,10 +609,14 @@ class MoneyPlugin(b3.plugin.Plugin):
             iduser = r['iduser']
             dinero = r['dinero']
             idioma = r['idioma']
-            if(idioma == "ES"):
-              client.message('^7Tienes: ^2%s ^7Coins' % (dinero))
-            else:
-              client.message("^7You have: ^2%s ^7Coins" % (dinero))
+            if(idioma == "EN"):
+                client.message("You have: ^2%s ^7Coins" % (dinero))
+            elif(idioma == "ES"):
+                client.message('Tienes: ^2%s ^7Coins' % (dinero))
+            elif(idioma == "FR"):
+                client.message("In French: You have: ^2%s ^7Coins" % (dinero))
+            elif(idioma == "DE"):
+                client.message("In German: You have: ^2%s ^7Coins" % (dinero))
             cursor.close()
             return True
         else:
@@ -590,16 +633,22 @@ class MoneyPlugin(b3.plugin.Plugin):
             iduser = r['iduser']
             dinero = r['dinero']
             idioma = r['idioma']
-            if(idioma == "ES"):
-              client.message('%s tiene: ^2%s ^7Coins' % (sclient.exactName,dinero))
-            else:
-              client.message('%s has: ^2%s ^7Coins' % (sclient.exactName,dinero))
+            if(idioma == "EN"):
+                client.message("%s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
+            elif(idioma == "ES"):
+                client.message('%s tiene: ^2%s ^7Coins' % (sclient.exactName,dinero))
+            elif(idioma == "FR"):
+                client.message("In French: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
+            elif(idioma == "DE"):
+                client.message("In German: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
             cursor.close()
             return True
         
     def cmd_price(self, data, client, cmd=None):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         cursor = self.console.storage.query(q)
+        r = cursor.getRow()
+        idioma = r['idioma']
         if not data:
     	      if(idioma == "EN"):
     	        client.message('Correct usage is ^2!price ^4<weapon>')
@@ -778,67 +827,129 @@ class MoneyPlugin(b3.plugin.Plugin):
         r = cursor.getRow()
         idioma = r['idioma']
         if client.team == b3.TEAM_BLUE:
-            if(idioma == "ES"):
-              self.console.write('tell %s ^7Valor:^2SR8^7 / Arma:^2Remington SR8^7 / Costo: ^2600' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2SPAS^7 / Arma:^2Franchi SPAS12^7 / Costo: ^2300' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2MP5^7 / Arma:^2HK MP5K^7 / Costo: ^2500' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2UMP^7 / Arma:^2UMP45^7 / Costo: ^2550' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2LR^7 / Arma:^2ZM LR300^7 / Costo: ^2650' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2PSG^7 / Arma:^2HK PSG1^7 / Costo: ^21000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2HK^7 / Arma:^2HK69 40mm^7 / Costo: ^22000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2G36^7 / Arma:^2HK G36^7 / Costo: ^21000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2AK^7 / Arma:^2AK103 7.62mm^7 / Costo: ^2700' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2NE^7 / Arma:^2IMI Negev^7 / Costo: ^2750' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2M4^7 / Arma:^2Colt M4A1^7 / Costo: ^2650' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2INV^7 / ^2Invisible^7 / Costo: ^2150000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2GOD^7 / ^2Godmode^7 / Costo: ^230000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2KL^7 / ^2Kill^7 / Costo: ^210000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2TP^7 / ^2Teleport^7 / Equipo: ^21000 ^7Enemigo: ^25000' % (client.cid))
-              return True
-            else:
-              self.console.write('tell %s ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
-              self.console.write('tell %s ^7Key:^2SPAS^7 / Weapon:^2Franchi SPAS12^7 / Price: ^2300' % (client.cid))
-              self.console.write('tell %s ^7Key:^2MP5^7 / Weapon:^2HK MP5K^7 / Price: ^2500' % (client.cid))
-              self.console.write('tell %s ^7Key:^2UMP^7 / Weapon:^2UMP45^7 / Price: ^2550' % (client.cid))
-              self.console.write('tell %s ^7Key:^2LR^7 / Weapon:^2ZM LR300^7 / Price: ^2650' % (client.cid))
-              self.console.write('tell %s ^7Key:^2PSG^7 / Weapon:^2HK PSG1^7 / Price: ^21000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2HK^7 / Weapon:^2HK69 40mm^7 / Price: ^22000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2G36^7 / Weapon:^2HK G36^7 / Price: ^21000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2AK^7 / Weapon:^2AK103 7.62mm^7 / Price: ^2700' % (client.cid))
-              self.console.write('tell %s ^7Key:^2NE^7 / Weapon:^2IMI Negev^7 / Price: ^2750' % (client.cid))
-              self.console.write('tell %s ^7Key:^2M4^7 / Weapon:^2Colt M4A1^7 / Price: ^2650' % (client.cid))
-              self.console.write('tell %s ^7Key:^2INV^7 / ^2Invisible^7 / Price: ^2150000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2GOD^7 / ^2Godmode^7 / Price: ^230000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
-              return True
+            if(idioma == "EN"):
+                self.console.write('tell %s ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
+                self.console.write('tell %s ^7Key:^2SPAS^7 / Weapon:^2Franchi SPAS12^7 / Price: ^2300' % (client.cid))
+                self.console.write('tell %s ^7Key:^2MP5^7 / Weapon:^2HK MP5K^7 / Price: ^2500' % (client.cid))
+                self.console.write('tell %s ^7Key:^2UMP^7 / Weapon:^2UMP45^7 / Price: ^2550' % (client.cid))
+                self.console.write('tell %s ^7Key:^2LR^7 / Weapon:^2ZM LR300^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Key:^2PSG^7 / Weapon:^2HK PSG1^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HK^7 / Weapon:^2HK69 40mm^7 / Price: ^22000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2G36^7 / Weapon:^2HK G36^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2AK^7 / Weapon:^2AK103 7.62mm^7 / Price: ^2700' % (client.cid))
+                self.console.write('tell %s ^7Key:^2NE^7 / Weapon:^2IMI Negev^7 / Price: ^2750' % (client.cid))
+                self.console.write('tell %s ^7Key:^2M4^7 / Weapon:^2Colt M4A1^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Key:^2INV^7 / ^2Invisible^7 / Price: ^2150000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2GOD^7 / ^2Godmode^7 / Price: ^230000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
+            elif(idioma == "ES"):
+                self.console.write('tell %s ^7Valor:^2SR8^7 / Arma:^2Remington SR8^7 / Costo: ^2600' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2SPAS^7 / Arma:^2Franchi SPAS12^7 / Costo: ^2300' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2MP5^7 / Arma:^2HK MP5K^7 / Costo: ^2500' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2UMP^7 / Arma:^2UMP45^7 / Costo: ^2550' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2LR^7 / Arma:^2ZM LR300^7 / Costo: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2PSG^7 / Arma:^2HK PSG1^7 / Costo: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2HK^7 / Arma:^2HK69 40mm^7 / Costo: ^22000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2G36^7 / Arma:^2HK G36^7 / Costo: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2AK^7 / Arma:^2AK103 7.62mm^7 / Costo: ^2700' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2NE^7 / Arma:^2IMI Negev^7 / Costo: ^2750' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2M4^7 / Arma:^2Colt M4A1^7 / Costo: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2INV^7 / ^2Invisible^7 / Costo: ^2150000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2GOD^7 / ^2Godmode^7 / Costo: ^230000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2KL^7 / ^2Kill^7 / Costo: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2TP^7 / ^2Teleport^7 / Equipo: ^21000 ^7Enemigo: ^25000' % (client.cid))
+                return True
+            elif(idioma == "FR"):
+                self.console.write('tell %s In French: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2SPAS^7 / Weapon:^2Franchi SPAS12^7 / Price: ^2300' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2MP5^7 / Weapon:^2HK MP5K^7 / Price: ^2500' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2UMP^7 / Weapon:^2UMP45^7 / Price: ^2550' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2LR^7 / Weapon:^2ZM LR300^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2PSG^7 / Weapon:^2HK PSG1^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2HK^7 / Weapon:^2HK69 40mm^7 / Price: ^22000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2G36^7 / Weapon:^2HK G36^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2AK^7 / Weapon:^2AK103 7.62mm^7 / Price: ^2700' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2NE^7 / Weapon:^2IMI Negev^7 / Price: ^2750' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2M4^7 / Weapon:^2Colt M4A1^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2INV^7 / ^2Invisible^7 / Price: ^2150000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2GOD^7 / ^2Godmode^7 / Price: ^230000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
+            elif(idioma == "DE"):
+                self.console.write('tell %s In German: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2SPAS^7 / Weapon:^2Franchi SPAS12^7 / Price: ^2300' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2MP5^7 / Weapon:^2HK MP5K^7 / Price: ^2500' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2UMP^7 / Weapon:^2UMP45^7 / Price: ^2550' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2LR^7 / Weapon:^2ZM LR300^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2PSG^7 / Weapon:^2HK PSG1^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2HK^7 / Weapon:^2HK69 40mm^7 / Price: ^22000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2G36^7 / Weapon:^2HK G36^7 / Price: ^21000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2AK^7 / Weapon:^2AK103 7.62mm^7 / Price: ^2700' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2NE^7 / Weapon:^2IMI Negev^7 / Price: ^2750' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2M4^7 / Weapon:^2Colt M4A1^7 / Price: ^2650' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2INV^7 / ^2Invisible^7 / Price: ^2150000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2GOD^7 / ^2Godmode^7 / Price: ^230000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
         if client.team == b3.TEAM_RED:
-            if(idioma == "ES"):
-              self.console.write('tell %s ^7Valor:^2HE^7 / Arma:^2HE Grenade^7 / Costo:^2 350' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2SM^7 / Arma:^2SMOKE Grenade^7 / Costo:^2 250' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2KN^7 / Arma:^2Knife^7 / Costo:^2 300' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2KEV^7 / Arma:^2Kevlar Vest^7 / Costo:^2 1200' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2HEL^7 / Arma:^2Helmet^7 / Costo:^2 800' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2MED^7 / Arma:^2Medkit^7 / Costo:^2 500' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2NVG^7 / Arma:^2TacGoggles^7 / Costo:^2 200' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2HEAL^7 / Arma:^2Health^7 / Costo:^2 2000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2KL^7 / ^2Kill^7 / Costo: ^210000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2DIS^7 / ^2Disarm^7 / Costo: ^23000' % (client.cid))
-              self.console.write('tell %s ^7Valor:^2TP^7 / ^2Teleport^7 / Equipo: ^21000 ^7Enemigo: ^25000' % (client.cid))
-              return True
-            else:
-              self.console.write('tell %s ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
-              self.console.write('tell %s ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
-              self.console.write('tell %s ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
-              self.console.write('tell %s ^7Key:^2KEV^7 / Weapon:^2Kevlar Vest^7 / Price:^2 1200' % (client.cid))
-              self.console.write('tell %s ^7Key:^2HEL^7 / Weapon:^2Helmet^7 / Price:^2 800' % (client.cid))
-              self.console.write('tell %s ^7Key:^2MED^7 / Weapon:^2Medkit^7 / Price:^2 500' % (client.cid))
-              self.console.write('tell %s ^7Key:^2NVG^7 / Weapon:^2TacGoggles^7 / Price:^2 200' % (client.cid))
-              self.console.write('tell %s ^7Key:^2HEAL^7 / Weapon:^2Health^7 / Price:^2 2000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2DIS^7 / ^2Disarm^7 / Price: ^23000' % (client.cid))
-              self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
-              return True
+            if(idioma == "EN"):
+                self.console.write('tell %s ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
+                self.console.write('tell %s ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KEV^7 / Weapon:^2Kevlar Vest^7 / Price:^2 1200' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HEL^7 / Weapon:^2Helmet^7 / Price:^2 800' % (client.cid))
+                self.console.write('tell %s ^7Key:^2MED^7 / Weapon:^2Medkit^7 / Price:^2 500' % (client.cid))
+                self.console.write('tell %s ^7Key:^2NVG^7 / Weapon:^2TacGoggles^7 / Price:^2 200' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HEAL^7 / Weapon:^2Health^7 / Price:^2 2000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2DIS^7 / ^2Disarm^7 / Price: ^23000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
+            elif(idioma == "ES"):
+                self.console.write('tell %s ^7Valor:^2HE^7 / Arma:^2HE Grenade^7 / Costo:^2 350' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2SM^7 / Arma:^2SMOKE Grenade^7 / Costo:^2 250' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2KN^7 / Arma:^2Knife^7 / Costo:^2 300' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2KEV^7 / Arma:^2Kevlar Vest^7 / Costo:^2 1200' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2HEL^7 / Arma:^2Helmet^7 / Costo:^2 800' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2MED^7 / Arma:^2Medkit^7 / Costo:^2 500' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2NVG^7 / Arma:^2TacGoggles^7 / Costo:^2 200' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2HEAL^7 / Arma:^2Health^7 / Costo:^2 2000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2KL^7 / ^2Kill^7 / Costo: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2DIS^7 / ^2Disarm^7 / Costo: ^23000' % (client.cid))
+                self.console.write('tell %s ^7Valor:^2TP^7 / ^2Teleport^7 / Equipo: ^21000 ^7Enemigo: ^25000' % (client.cid))
+                return True
+            elif(idioma == "FR"):
+                self.console.write('tell %s In French: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2KEV^7 / Weapon:^2Kevlar Vest^7 / Price:^2 1200' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2HEL^7 / Weapon:^2Helmet^7 / Price:^2 800' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2MED^7 / Weapon:^2Medkit^7 / Price:^2 500' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2NVG^7 / Weapon:^2TacGoggles^7 / Price:^2 200' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2HEAL^7 / Weapon:^2Health^7 / Price:^2 2000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2DIS^7 / ^2Disarm^7 / Price: ^23000' % (client.cid))
+                self.console.write('tell %s In French: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
+            elif(idioma == "DE"):
+                self.console.write('tell %s In German: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2KEV^7 / Weapon:^2Kevlar Vest^7 / Price:^2 1200' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2HEL^7 / Weapon:^2Helmet^7 / Price:^2 800' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2MED^7 / Weapon:^2Medkit^7 / Price:^2 500' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2NVG^7 / Weapon:^2TacGoggles^7 / Price:^2 200' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2HEAL^7 / Weapon:^2Health^7 / Price:^2 2000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2DIS^7 / ^2Disarm^7 / Price: ^23000' % (client.cid))
+                self.console.write('tell %s In German: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                return True
             
     def cmd_getweapon(self, data, client=None, cmd=None):
         """\
@@ -2184,7 +2295,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             	       client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             	     return True
                         	   ############################## Health ##############################
-            elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL"):
+            elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
                 if input[1]:
                     sclient = self._adminPlugin.findClientPrompt(input[1], client)
                     if sclient:
@@ -2244,11 +2355,15 @@ class MoneyPlugin(b3.plugin.Plugin):
                                 client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
                             return True
             else:
-            	if(idioma == "ES"):
-                    client.message("^7No se encontro: ''^2%s^7''" % input[0])
-                else:
-                    client.message("^7Couldn't find: ''^2%s^7''" % input[0])
-            return False
+            	if(idioma == "EN"):
+                    client.message("Couldn't find: ^2%s" % input[0])
+                elif(idioma == "ES"):
+                    client.message("No se encontro: ^2%s" % input[0])
+                elif(idioma == "FR"):
+                    client.message("In French: Couldn't find: ''^2%s" % input[0])
+                elif(idioma == "DE"):
+                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                return False
                 
     def autoMessage(self, event):
         for c in self.console.clients.getList():
