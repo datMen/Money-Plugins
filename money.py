@@ -923,7 +923,6 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s ^7Valor:^2TP^7 / ^2Teleport^7 / Equipo: ^21000 ^7Enemigo: ^25000' % (client.cid))
                 return True
             elif(idioma == "FR"):
-                self.console.write('tell %s In French: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
                 self.console.write('tell %s In French: ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
                 self.console.write('tell %s In French: ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
                 self.console.write('tell %s In French: ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
@@ -937,7 +936,6 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s In French: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
                 return True
             elif(idioma == "DE"):
-                self.console.write('tell %s In German: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
                 self.console.write('tell %s In German: ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
                 self.console.write('tell %s In German: ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
                 self.console.write('tell %s In German: ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
