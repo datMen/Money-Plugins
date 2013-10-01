@@ -109,16 +109,11 @@ class MoneyPlugin(b3.plugin.Plugin):
                  sclient.message("Ton langage a ete defini en ^2''FRANCAIS''")
                  sclient.message("Tu peux le changer en utilisant ^2!lang <en/es/fr/de/it>")
              elif idioma == "DE":
-<<<<<<< .merge_file_CmfBqc
-                 sclient.message("In german: Your language was defined itself to ^2''ENGLISH''")
-                 sclient.message("In german: You can change it if you want using ^2!lang <en/es/fr/de/it>")
+                 sclient.message("Deine Sprache wurde erkannt als ^2''Deutsch''")
+                 sclient.message("Um die Sprache zu aendern, nutze ^2!lang <en/es/fr/de>")
              elif idioma == "IT":
                  sclient.message("La tua lingua è stata impostata in ^2''ITALIANO''")
                  sclient.message("Puoi cambiarla usando ^2!lang <en/es/fr/de/it>")
-=======
-                 sclient.message("Deine Sprache wurde erkannt als ^2''Deutsch''")
-                 sclient.message("Um die Sprache zu aendern, nutze ^2!lang <en/es/fr/de>")
->>>>>>> .merge_file_1amBCW
           cursor.close()
           	
         if(event.type == b3.events.EVT_CLIENT_DISCONNECT):
@@ -202,13 +197,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 self.console.say("Pour avoir joue ^21 heure^7, tu gagnes ^2%s'" % (c.exactName,veces2))
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                self.console.say("In German: For having played ^21 hour ^7you won ^2%s'" % (c.exactName,veces2))
+                self.console.say("Du hast ^21 Stunde gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
               elif(idioma == "IT"):
                 self.console.say("Per aver giocato ^21 ora ^7hai vinto ^2%s'" % (c.exactName,veces2))
-=======
-                self.console.say("Du hast ^21 Stunde gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
->>>>>>> .merge_file_1amBCW
             else:
               if(idioma == "EN"):
                 self.console.say('%s ^7For having played ^2%s hours ^7you won ^2%s' % (c.exactName,veces,veces2))
@@ -217,15 +208,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 self.console.say("Pour avoir joue ^2%s heures^7, tu gagnes ^2%s'" % (c.exactName,veces2))
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                self.console.say("In German: For having played ^2%s hours ^7you won ^2%s'" % (c.exactName,veces2))
+                self.console.say("Du hast ^2%s Stunden gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
               elif(idioma == "IT"):
                 self.console.say("Per aver giocato ^2%s ore ^7hai vinto ^2%s'" % (c.exactName,veces2))
-    
-=======
-                self.console.say("Du hast ^2%s Stunden gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
-                
->>>>>>> .merge_file_1amBCW
 
 #    def get_client_location(self, client):
 #        if client.isvar(self,'localization'):
@@ -275,13 +260,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2300 ^7Coins" % (target.exactName))
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("^7In german: For kill %s you won ^2300 ^7Coins" % (target.exactName))
+                    client.message("^7Für den Kill %s gewinnst du ^2300 ^7Coins" % (target.exactName))
                 elif(idioma == "IT"):
                     client.message("^7Per aver ucciso %s hai guadagnato ^2300 ^7Coins" % (target.exactName))
-=======
-                    client.message("^7Für den Kill %s gewinnst du ^2300 ^7Coins" % (target.exactName))
->>>>>>> .merge_file_1amBCW
     	        	
     	    if(client.team == b3.TEAM_BLUE):
     	      if(data[1] == self.console.UT_MOD_BERETTA or self.console.UT_MOD_DEAGLE or self.console.UT_MOD_MP5K or self.console.UT_MOD_SPAS 
@@ -296,14 +277,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2600 ^7Coins" % (target.exactName))
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("^7In german: For kill %s you won ^2600 ^7Coins" % (target.exactName))
+                    client.message("^7Für den Kill %s gewinnst du ^2600 ^7Coins" % (target.exactName))
                 elif(idioma == "IT"):
                     client.message("^7Per aver ucciso %s hai guadagnato ^2600 ^7Coins" % (target.exactName))
-=======
-                    client.message("^7Für den Kill %s gewinnst du ^2600 ^7Coins" % (target.exactName))
->>>>>>> .merge_file_1amBCW
-                        
+                    
             if(data[1] == self.console.UT_MOD_KICKED):
                 self.console.write("gh %s +25" % (client.cid))
                 self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7hps" % client.exactName)
@@ -332,15 +309,11 @@ class MoneyPlugin(b3.plugin.Plugin):
             if(valor == "DE" or valor == "de"):
     	      q=('UPDATE `dinero` SET `idioma` ="DE" WHERE iduser = "%s"' % (client.id))
     	      self.console.storage.query(q)
-<<<<<<< .merge_file_CmfBqc
-    	      client.message("^7In german: You defined your language correctly.")
+    	      client.message("^7Du hast deine Sprache richtig gesetzt.")
             if(valor == "IT" or valor == "it"):
               q=('UPDATE `dinero` SET `idioma` ="IT" WHERE iduser = "%s"' % (client.id))
               self.console.storage.query(q)
               client.message("^7Hai impostato la tua lingua correttamente.")
-=======
-    	      client.message("^7Du hast deine Sprache richtig gesetzt.")
->>>>>>> .merge_file_1amBCW
     	  else:
             client.message('Correct usage is ^2!lang ^4<en/es/fr/de/it>')
 
@@ -369,13 +342,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!teleport ^4<joueur>")
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-    	        client.message("In German: Correct usage is ^2!teleport ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!teleport ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto è ^2!teleport ^4<player>")
-=======
-    	        client.message("Richtiger Gebrauch: ^2!teleport ^4<player>")
->>>>>>> .merge_file_1amBCW
               return False
     	    sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	    if not sclient: return False
@@ -391,13 +360,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu t'es teleporte a %s^7. ^1-1000 ^7Coins" % sclient.exactName)
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You teleported to %s^7. ^1-1000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-1000 ^7Coins" % sclient.exactName)
                 elif(idioma == "IT"):
                     client.message("Ti sei teletrasportato a %s^7. ^1-1000 ^7Coins" % sclient.exactName)
-=======
-                    client.message("Du teleportiertest dich zu %s^7. ^1-1000 ^7Coins" % sclient.exactName)
->>>>>>> .merge_file_1amBCW
                 return True
     	      elif (dinero  > 5000):
     	      	q=('UPDATE `dinero` SET `dinero` = dinero-5000 WHERE iduser = "%s"' % (client.id))
@@ -410,13 +375,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu t'es teleporte a %s^7. ^1-5000 ^7Coins" % sclient.exactName)
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You teleported to %s^7. ^1-5000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-5000 ^7Coins" % sclient.exactName)
                 elif(idioma == "IT"):
                     client.message("Ti sei teletrasportato a %s^7. ^1-5000 ^7Coins" % sclient.exactName)
-=======
-                    client.message("Du teleportiertest dich zu %s^7. ^1-5000 ^7Coins" % sclient.exactName)
->>>>>>> .merge_file_1amBCW
     	        return True
               else:
                 if(idioma == "EN"):
@@ -426,13 +387,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                 elif(idioma == "IT"):
                     client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                 return False
     	    else:
               if(idioma == "IT"):
@@ -442,13 +399,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
               elif(idioma == "IT"):
                 client.message("Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
               return False
     	    cursor.close()
 
@@ -473,13 +426,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!kill ^4<joueur>")
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-    	        client.message("In German: Correct usage is ^2!kill ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!kill ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto è ^2!kill ^4<player>")
-=======
-    	        client.message("Richtiger Gebrauch: ^2!kill ^4<player>")
->>>>>>> .merge_file_1amBCW
               return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
@@ -494,13 +443,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu as ordonne la mort de %s! ^1-10000 ^7Coins" % (sclient.exactName))
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You killed %s! ^1-10000 ^7Coins" % (sclient.exactName))
+                client.message("Du hast %s gekillt! ^1-10000 ^7Coins" % (sclient.exactName))
             elif(idioma == "IT"):
                 client.message("Hai ucciso %s! ^1-10000 ^7Coins" % (sclient.exactName))
-=======
-                client.message("Du hast %s gekillt! ^1-10000 ^7Coins" % (sclient.exactName))
->>>>>>> .merge_file_1amBCW
             return True
     	  else:
             if(idioma == "EN"):
@@ -510,13 +455,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             elif(idioma == "IT"):
                 client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
             return False
     	  cursor.close()
           
@@ -541,13 +482,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!disarm ^4<player>")
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-    	        client.message("In German: Correct usage is ^2!disarm ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!disarm ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto è ^2!disarm ^4<player>")
-=======
-    	        client.message("Richtiger Gebrauch: ^2!disarm ^4<player>")
->>>>>>> .merge_file_1amBCW
               return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
@@ -564,13 +501,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("Du hast %s entwaffnet! ^1-4000 ^7Coins" % (sclient.exactName))
                 elif(idioma == "IT"):
                     client.message("Hai disarmato %s! ^1-4000 ^7Coins" % (sclient.exactName))
-=======
-                    client.message("Du hast %s entwaffnet! ^1-4000 ^7Coins" % (sclient.exactName))
->>>>>>> .merge_file_1amBCW
                 return True
               else:
                 if(idioma == "EN"):
@@ -580,13 +513,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
+                    client.message("^2!disarm ^7kann nur vom roten team genutzt werden" % (sclient.exactName))
                 elif(idioma == "IT"):
                     client.message("^2!disarm ^7può essere usato solo dal team rosso" % (sclient.exactName))
-=======
-                    client.message("^2!disarm ^7kann nur vom roten team genutzt werden" % (sclient.exactName))
->>>>>>> .merge_file_1amBCW
                 return True
             else:
               if(idioma == "EN"):
@@ -596,13 +525,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 client.message("In French: ^7You Can only disarm Enemies.")
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: ^7You Can only disarm Enemies.")
+                client.message("Du kannst nur gegnerische Spieler entwaffnen")
               elif(idioma == "IT"):
                 client.message("^7Puoi solo disarmare i nemici.")
-=======
-                client.message("Du kannst nur gegnerische Spieler entwaffnen")
->>>>>>> .merge_file_1amBCW
               return True
     	  else:
             if(idioma == "EN"):
@@ -612,13 +537,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             elif(idioma == "IT"):
                 client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
             return False
     	  cursor.close()
           
@@ -652,13 +573,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: You need at least ^610 ^7connections to the server to use this command")
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You need at least ^610 ^7connections to the server to use this command")
+                client.message("Du brauchst mindestens ^610 ^7connections auf dem server um dieses Kommando zu nutzen")
             elif(idioma == "IT"):
                 client.message("Devi connetterti almeno ^610 ^7volte al server per poter usare questo comando")
-=======
-                client.message("Du brauchst mindestens ^610 ^7connections auf dem server um dieses Kommando zu nutzen")
->>>>>>> .merge_file_1amBCW
             return True
         input = self._adminPlugin.parseUserCmd(data)
     	cname = input[0]
@@ -688,13 +605,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                 elif(idioma == "IT"):
                     client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                 return False
             else:
                 if(idioma == "EN"):
@@ -707,16 +620,11 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message("In French: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
                     sclient.message("In French: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
-                    sclient.message("In German: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                    client.message("du hast ^2%s ^7Coins an %s gegeben" % (dato, sclient.exactName))
+                    sclient.message("^7%s hat dir ^2%s ^7Coins gezahlt" % (client.exactName, dato))
                 elif(idioma == "IT"):
                     client.message("Hai dato ^2%s ^7Coins a %s" % (dato, sclient.exactName))
                     sclient.message("^7%s ti ha dato ^2%s ^7Coins" % (client.exactName, dato))
-=======
-                    client.message("du hast ^2%s ^7Coins an %s gegeben" % (dato, sclient.exactName))
-                    sclient.message("^7%s hat dir ^2%s ^7Coins gezahlt" % (client.exactName, dato))
->>>>>>> .merge_file_1amBCW
                 return False
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
@@ -755,13 +663,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: You have: ^2%s ^7Coins" % (dinero))
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: You have: ^2%s ^7Coins" % (dinero))
+                client.message("Du hast ^2%s ^7Coins" % (dinero))
             elif(idioma == "IT"):
                 client.message("Hai: ^2%s ^7Coins" % (dinero))
-=======
-                client.message("Du hast ^2%s ^7Coins" % (dinero))
->>>>>>> .merge_file_1amBCW
             cursor.close()
             return True
         else:
@@ -785,13 +689,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                client.message("In German: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
+                client.message("%s hat: ^2%s ^7Coins" % (sclient.exactName,dinero))
             elif(idioma == "IT"):
                 client.message("%s ha: ^2%s ^7Coins" % (sclient.exactName,dinero))
-=======
-                client.message("%s hat: ^2%s ^7Coins" % (sclient.exactName,dinero))
->>>>>>> .merge_file_1amBCW
             cursor.close()
             return True
         
@@ -808,13 +708,9 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("In French: Correct usage is ^2!price ^4<weapon>")
               elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-    	        client.message("In German: Correct usage is ^2!price ^4<weapon>")
+    	        client.message("Richtiger Gebrauch: ^2!price ^4<weapon>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto è ^2!price ^4<weapon>")
-=======
-    	        client.message("Richtiger Gebrauch: ^2!price ^4<weapon>")
->>>>>>> .merge_file_1amBCW
               return False
         else:
             input = self._adminPlugin.parseUserCmd(data)
@@ -919,13 +815,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: Couldn't find: ''^2%s" % input[0])
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                    client.message("Konnte ^2%s nicht finden" % input[0])
                 elif(idioma == "IT"):
                     client.message("Impossibile trovare: ^2%s" % input[0])
-=======
-                    client.message("Konnte ^2%s nicht finden" % input[0])
->>>>>>> .merge_file_1amBCW
                 return True
                     
     def price(self, client, name, valor):
@@ -940,13 +832,9 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: ^2%s ^7Price: ^2%s" % (name, valor))
         elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-            client.message("In German: ^2%s ^7Price: ^2%s" % (name, valor))
+            client.message("^2%s ^7Preis: ^2%s" % (name, valor))
         elif(idioma == "IT"):
             client.message("^2%s ^7Costo: ^2%s" % (name, valor))
-=======
-            client.message("^2%s ^7Preis: ^2%s" % (name, valor))
->>>>>>> .merge_file_1amBCW
         return True
         
     def cmd_moneytopstats(self, data, client, cmd=None, ext=False):
@@ -1170,13 +1058,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
     	        client.message("In French: Type ^2!buy help ^7to see how to use this command")
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-    	        client.message("In German: Type ^2!buy help ^7to see how to use this command")
+    	        client.message("Schreibe ^2!buy help ^7um den Gebrauch dieses Kommandos zu erfahren")
             elif(idioma == "IT"):
                 client.message("Scrivi ^2!buy help ^7per vedere come utilizzare questo comando")
-=======
-    	        client.message("Schreibe ^2!buy help ^7um den Gebrauch dieses Kommandos zu erfahren")
->>>>>>> .merge_file_1amBCW
             return False
         weapon = input[0]
         status = input[1]
@@ -1217,18 +1101,17 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s In French: ^7Type ^2!b god ^7to buy godmode(for one round)' % (client.cid))
                 self.console.write('tell %s In French: ^7Type ^2!b inv ^7to buy invisible(until teams swap)' % (client.cid))
             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                self.console.write('tell %s In German: ^7Type ^2!money ^7to see your money' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!bl ^7to see the weapons and items prices' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b ^4<weapon or item> ^7to buy whatever you want' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!price <weapon, item or command> ^7to see a concrete price' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!pay ^4<player> <amount> ^7to give money to a player' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!disarm ^4<player> ^7to disarm a human enemy' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!moneytopstats ^7to see money top players' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!tp ^4<player> ^7to teleport to a player' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!kill ^4<player> ^7to kill a enemy' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b god ^7to buy godmode(for one round)' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b inv ^7to buy invisible(until teams swap)' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!money ^7um die Menge deiner Coins zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!bl ^7um die Preise der Waffen und Items zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b ^4<weapon oder item> ^7um etwas zu kaufen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!price <weapon, item oder command> ^7um einen einzelnen Preis zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!pay ^4<player> <amount> ^7um einem Spieler Coins zu geben' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!disarm ^4<player> ^7um einen Human-Spieler zu entwaffnen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!moneytopstats ^7um die Ersten in der Coin-Rangliste zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!tp ^4<player> ^7um dich zu einem Spieler zu teleportieren' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!kill ^4<player> ^7um einen Spieler zu toeten' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b god ^7um den GODMODE fuer eine Runde zu aktivieren' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b inv ^7um Unsichtbarkeit zu kaufen (bis die Teams tauschen)' % (client.cid)
             elif(idioma == "IT"):
                 self.console.write('tell %s ^7Scrivi ^2!money ^7per sapere quanti coins hai' % (client.cid))
                 self.console.write('tell %s ^7Scrivi ^2!bl ^7per vedere i prezzi delle armi e degli oggetti' % (client.cid))
@@ -1241,19 +1124,6 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s ^7Scrivi ^2!kill ^4<player> ^7per uccidere un nemico' % (client.cid))
                 self.console.write('tell %s ^7Scrivi ^2!b god ^7per acquistare godmode(per un turno)' % (client.cid))
                 self.console.write('tell %s ^7Scrivi ^2!b inv ^7per diventare invisibile(fino a che i team non vengono invertiti)' % (client.cid))
-=======
-                self.console.write('tell %s ^7Schreibe ^2!money ^7um die Menge deiner Coins zu sehen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!bl ^7um die Preise der Waffen und Items zu sehen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!b ^4<weapon oder item> ^7um etwas zu kaufen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!price <weapon, item oder command> ^7um einen einzelnen Preis zu sehen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!pay ^4<player> <amount> ^7um einem Spieler Coins zu geben' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!disarm ^4<player> ^7um einen Human-Spieler zu entwaffnen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!moneytopstats ^7um die Ersten in der Coin-Rangliste zu sehen' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!tp ^4<player> ^7um dich zu einem Spieler zu teleportieren' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!kill ^4<player> ^7um einen Spieler zu toeten' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!b god ^7um den GODMODE fuer eine Runde zu aktivieren' % (client.cid))
-                self.console.write('tell %s ^7Schreibe ^2!b inv ^7um Unsichtbarkeit zu kaufen (bis die Teams tauschen)' % (client.cid)
->>>>>>> .merge_file_1amBCW
             return True
         if client.team == b3.TEAM_BLUE:
                         	   ############################## Remington SR8 ##############################
@@ -1292,13 +1162,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                         elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                         elif(idioma == "IT"):
                             client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                         return False
             if (weapon == "inv") or (weapon == "invisible"):     
                 if(client.maxLevel >= 100):
@@ -1318,7 +1184,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     	    		self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
     	    		if(idioma == "ES"):
     	    			client.message('^7Activaste Correctamente ^4Invisible^7. ^1-1500000 ^7coins')
-                    elif(idioma == "IT"):
+                        elif(idioma == "IT"):
     	    			client.message('^7Sei diventato ^4Invisibile^7. ^1-1500000 ^7coins')
     	    		else:
     	    			client.message('^7You activated Correctly ^4Invisible^7. ^1-1500000 ^7coins')
@@ -1331,13 +1197,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                         elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                         elif(idioma == "IT"):
                             client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
     	    		return False
                 
             if (weapon == "sr8") or (weapon == "SR8"):
@@ -1349,16 +1211,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
-            	  else:
+                    else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya estas autocomprando este arma')
-                    elif(idioma == "IT"):
-                      client.message('^7Stai già comprando automaticamente quest\'arma')
+                        elif(idioma == "IT"):
+                          client.message('^7Stai già comprando automaticamente quest\'arma')
             	  	else:
             	  	  client.message('^7You are already autobuying this weapon.')
             		  return False
@@ -1370,16 +1232,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You didnt activate Autobuy')
             	  	return False
@@ -1398,13 +1260,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1477,13 +1335,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1556,13 +1410,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1635,15 +1485,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
                     return False
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
-            	    return False
->>>>>>> .merge_file_1amBCW
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -1715,14 +1560,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -1794,14 +1635,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -1873,14 +1710,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -1952,14 +1785,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2031,14 +1860,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2110,14 +1935,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2189,14 +2010,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2263,14 +2080,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                           elif(idioma == "IT"):
                             client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            		  return False
+                          return False
             		else:
             		  if(veces):
             		    if(int(veces)<=5):
@@ -2346,14 +2159,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                           elif(idioma == "IT"):
                             client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            		  return False
+                          return False
             		else:
             		  if(veces):
             		    if(int(veces)<=5):
@@ -2430,14 +2239,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                           elif(idioma == "IT"):
                             client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            		  return False
+                          return False
             		else:
             		  if(veces):
             		    if(int(veces)<=5):
@@ -2598,14 +2403,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2677,14 +2478,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2756,14 +2553,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2793,14 +2586,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                     elif(idioma == "IT"):
                         client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
-            	    return False
+                    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
             	     self.console.storage.query(q)
@@ -2833,13 +2622,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                                 elif(idioma == "FR"):
                                     client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                                 elif(idioma == "IT"):
                                     client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                                 return False
                             else:
                                 q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2869,13 +2654,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             elif(idioma == "IT"):
                                 client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                             return False
                         else:
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2897,13 +2678,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: Couldn't find: ''^2%s" % input[0])
                 elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                    client.message("Konnte ^2%s ^7nicht finden" % input[0])
                 elif(idioma == "IT"):
                     client.message("Impossibile trovare: ^2%s" % input[0])
-=======
-                    client.message("Konnte ^2%s nicht finden" % input[0])
->>>>>>> .merge_file_1amBCW
                 return False
                 
     def autoMessage(self, event):
@@ -2956,13 +2733,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             elif(idioma == "IT"):
                                 client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                             return False
             if(c.team == b3.TEAM_RED):
                 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
@@ -3004,12 +2777,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-<<<<<<< .merge_file_CmfBqc
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             elif(idioma == "IT"):
                                 client.message("^1Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-=======
-                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
->>>>>>> .merge_file_1amBCW
                             return False
                         
