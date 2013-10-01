@@ -1294,8 +1294,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1307,16 +1307,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1361,19 +1361,19 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
-            		  	client.message('^7You have Activated Autobuy.')
+                            client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
-            		  return False
+                        return False
             	if(status == "off") or (status == "OFF"):
             	  matchObj = re.match(r'(.*)E(.*)', azul, re.M|re.I)
             	  if matchObj:
@@ -1382,16 +1382,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1436,16 +1436,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1457,16 +1457,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1511,16 +1511,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1532,16 +1532,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy.')
             	  	return False
@@ -1586,16 +1586,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1607,16 +1607,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1661,16 +1661,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1682,16 +1682,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1736,16 +1736,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1757,16 +1757,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1811,16 +1811,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1832,16 +1832,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1886,16 +1886,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -1907,16 +1907,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -1961,19 +1961,19 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
-            		  return False
+                        return False
             	if(status == "off") or (status == "OFF"):
             	  matchObj = re.match(r'(.*)S(.*)', azul, re.M|re.I)
             	  if matchObj:
@@ -1982,16 +1982,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -2113,8 +2113,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  sobran=dinero-valor2
             		  if(idioma == "ES"):
             		    client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-                      elif(idioma == "IT"):
-                        client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
+                          elif(idioma == "IT"):
+                            client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
             		  else:
             		    client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             		  return True
@@ -2172,7 +2172,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             		      self.console.write("gw %s M +%s" % (client.cid,veces))
                               if(idioma == "ES"):
                                 client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-                            elif(idioma == "IT"):
+                              elif(idioma == "IT"):
                                 client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
                               else:
                                 client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
@@ -2180,8 +2180,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		    else:
             		      if(idioma == "ES"):
             		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Granadas')
-                          elif(idioma == "IT"):
-                            client.message('^7Puoi comprare ^21 ^7a ^25 ^7Granate')
+                              elif(idioma == "IT"):
+                                client.message('^7Puoi comprare ^21 ^7a ^25 ^7Granate')
             		      else:
             		        client.message('^7You can buy ^21^7-^25 ^7Grenade')
             		      return False
@@ -2192,9 +2192,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		    sobran=dinero-valor2
             		    if(idioma == "ES"):
             		      client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-                        elif(idioma == "IT"):
-                          client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
-
+                            elif(idioma == "IT"):
+                              client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
             		    else:
             		      client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             		    return True
@@ -2252,7 +2251,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             		      self.console.write("gw %s A +%s" % (client.cid,veces))
                               if(idioma == "ES"):
                                 client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-                            elif(idioma == "IT"):
+                              elif(idioma == "IT"):
                                 client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
                               else:
                                 client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
@@ -2260,8 +2259,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		    else:
             		      if(idioma == "ES"):
             		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Cuchillos')
-                          elif(idioma == "IT"):
-                            client.message('^7Puoi comprare ^21 ^7a ^25 ^7Coltelli')
+                              elif(idioma == "IT"):
+                                client.message('^7Puoi comprare ^21 ^7a ^25 ^7Coltelli')
             		      else:
             		        client.message('^7You can buy ^21^7-^25 ^7Knives')
             		      return False
@@ -2272,8 +2271,8 @@ class MoneyPlugin(b3.plugin.Plugin):
             		    sobran=dinero-valor2
             		    if(idioma == "ES"):
             		      client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-                        elif(idioma == "IT"):
-                          client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
+                            elif(idioma == "IT"):
+                              client.message('^7Hai comprato ^2%s ^7Hai:^2%s ^7coins' % (nombre,sobran))
             		    else:
             		      client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
             		    return True
@@ -2354,16 +2353,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -2375,16 +2374,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -2429,16 +2428,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -2450,16 +2449,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
@@ -2504,16 +2503,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Activado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai attivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai attivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Activated Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             	  	  client.message('^7Ya habias puesto autocomprar para esta arma.')
-                    elif(idioma == "IT"):
-                      client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
+                        elif(idioma == "IT"):
+                          client.message('^7Hai già impostato l\'autoacquisto di quest\'arma.')
             	  	else:
             	  	  client.message('^7You had already put to autobuy for this weapon.')
             		  return False
@@ -2525,16 +2524,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             		  self.console.storage.query(q)
             		  if(idioma == "ES"):
             		    client.message('^7Has Desactivado Autocomprar.')
-                      elif(idioma == "IT"):
-                        client.message('^7Hai disattivato l\'autoacquisto.')
+                          elif(idioma == "IT"):
+                            client.message('^7Hai disattivato l\'autoacquisto.')
             		  else:
             		  	client.message('^7You have Deactivated to Autobuy.')
             		  return True
             	  else:
             	  	if(idioma == "ES"):
             		    client.message('^7NO has activado Autocomprar.')
-                    elif(idioma == "IT"):
-                        client.message('^7NON hai attivato l\'autoacquisto.')
+                        elif(idioma == "IT"):
+                            client.message('^7NON hai attivato l\'autoacquisto.')
             	  	else:
             		  	client.message('^7You have NOT activated Autobuy')
             	  	return False
