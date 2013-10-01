@@ -268,7 +268,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message('^7Por matar a %s has ganado ^2600 ^7Coins' % (target.exactName))
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2600 ^7Coins" % (target.exactName))
-                elif(idioma == "ES"):
+                elif(idioma == "DE"):
                     client.message("^7In german: For kill %s you won ^2600 ^7Coins" % (target.exactName))
                         
             if(data[1] == self.console.UT_MOD_KICKED):
@@ -296,7 +296,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     	      q=('UPDATE `dinero` SET `idioma` ="FR" WHERE iduser = "%s"' % (client.id))
     	      self.console.storage.query(q)
     	      client.message("^7Tu as bien change ta langue.")
-            if(valor == "DE" or valor == "DE"):
+            if(valor == "DE" or valor == "de"):
     	      q=('UPDATE `dinero` SET `idioma` ="DE" WHERE iduser = "%s"' % (client.id))
     	      self.console.storage.query(q)
     	      client.message("^7In german: You defined your language correctly.")
