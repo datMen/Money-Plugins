@@ -109,8 +109,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                  sclient.message("Ton langage a ete defini en ^2''FRANCAIS''")
                  sclient.message("Tu peux le changer en utilisant ^2!lang <en/es/fr/de>")
              elif idioma == "DE":
-                 sclient.message("In german: Your language was defined itself to ^2''ENGLISH''")
-                 sclient.message("In german: You can change it if you want using ^2!lang <en/es/fr/de>")
+                 sclient.message("Deine Sprache wurde erkannt als ^2''Deutsch''")
+                 sclient.message("Um die Sprache zu aendern, nutze ^2!lang <en/es/fr/de>")
           cursor.close()
           	
         if(event.type == b3.events.EVT_CLIENT_DISCONNECT):
@@ -194,7 +194,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 self.console.say("Pour avoir joue ^21 heure^7, tu gagnes ^2%s'" % (c.exactName,veces2))
               elif(idioma == "DE"):
-                self.console.say("In German: For having played ^21 hour ^7you won ^2%s'" % (c.exactName,veces2))
+                self.console.say("Du hast ^21 Stunde gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
             else:
               if(idioma == "EN"):
                 self.console.say('%s ^7For having played ^2%s hours ^7you won ^2%s' % (c.exactName,veces,veces2))
@@ -203,7 +203,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 self.console.say("Pour avoir joue ^2%s heures^7, tu gagnes ^2%s'" % (c.exactName,veces2))
               elif(idioma == "DE"):
-                self.console.say("In German: For having played ^2%s hours ^7you won ^2%s'" % (c.exactName,veces2))
+                self.console.say("Du hast ^2%s Stunden gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
                 
 
 #    def get_client_location(self, client):
@@ -253,8 +253,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message('^7Por matar a %s has ganado ^2300 ^7Coins' % (target.exactName))
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2300 ^7Coins" % (target.exactName))
-                elif(idioma == "ES"):
-                    client.message("^7In german: For kill %s you won ^2300 ^7Coins" % (target.exactName))
+                elif(idioma == "DE"):
+                    client.message("^7Für den Kill %s gewinnst du ^2300 ^7Coins" % (target.exactName))
     	        	
     	    if(client.team == b3.TEAM_BLUE):
     	      if(data[1] == self.console.UT_MOD_BERETTA or self.console.UT_MOD_DEAGLE or self.console.UT_MOD_MP5K or self.console.UT_MOD_SPAS 
@@ -269,7 +269,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2600 ^7Coins" % (target.exactName))
                 elif(idioma == "DE"):
-                    client.message("^7In german: For kill %s you won ^2600 ^7Coins" % (target.exactName))
+                    client.message("^7Für den Kill %s gewinnst du ^2600 ^7Coins" % (target.exactName))
                         
             if(data[1] == self.console.UT_MOD_KICKED):
                 self.console.write("gh %s +25" % (client.cid))
@@ -299,7 +299,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             if(valor == "DE" or valor == "de"):
     	      q=('UPDATE `dinero` SET `idioma` ="DE" WHERE iduser = "%s"' % (client.id))
     	      self.console.storage.query(q)
-    	      client.message("^7In german: You defined your language correctly.")
+    	      client.message("^7Du hast deine Sprache richtig gesetzt.")
     	  else:
             client.message('Correct usage is ^2!lang ^4<en/es/fr/de>')
 
@@ -328,7 +328,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!teleport ^4<joueur>")
               elif(idioma == "DE"):
-    	        client.message("In German: Correct usage is ^2!teleport ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!teleport ^4<player>")
               return False
     	    sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	    if not sclient: return False
@@ -344,7 +344,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu t'es teleporte a %s^7. ^1-1000 ^7Coins" % sclient.exactName)
                 elif(idioma == "DE"):
-                    client.message("In German: You teleported to %s^7. ^1-1000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-1000 ^7Coins" % sclient.exactName)
                 return True
     	      elif (dinero  > 5000):
     	      	q=('UPDATE `dinero` SET `dinero` = dinero-5000 WHERE iduser = "%s"' % (client.id))
@@ -357,7 +357,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu t'es teleporte a %s^7. ^1-5000 ^7Coins" % sclient.exactName)
                 elif(idioma == "DE"):
-                    client.message("In German: You teleported to %s^7. ^1-5000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-5000 ^7Coins" % sclient.exactName)
     	        return True
               else:
                 if(idioma == "EN"):
@@ -367,7 +367,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
                 elif(idioma == "DE"):
-                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                 return False
     	    else:
               if(idioma == "EN"):
@@ -377,7 +377,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
               elif(idioma == "DE"):
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
               return False
     	    cursor.close()
 
@@ -402,7 +402,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!kill ^4<joueur>")
               elif(idioma == "DE"):
-    	        client.message("In German: Correct usage is ^2!kill ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!kill ^4<player>")
               return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
@@ -417,7 +417,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu as ordonne la mort de %s! ^1-10000 ^7Coins" % (sclient.exactName))
             elif(idioma == "DE"):
-                client.message("In German: You killed %s! ^1-10000 ^7Coins" % (sclient.exactName))
+                client.message("Du hast %s gekillt! ^1-10000 ^7Coins" % (sclient.exactName))
             return True
     	  else:
             if(idioma == "EN"):
@@ -427,7 +427,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
             elif(idioma == "DE"):
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             return False
     	  cursor.close()
           
@@ -452,7 +452,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("Utilisation: ^2!disarm ^4<player>")
               elif(idioma == "DE"):
-    	        client.message("In German: Correct usage is ^2!disarm ^4<player>")
+    	        client.message("Richtiger Gebrauch: ^2!disarm ^4<player>")
               return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
@@ -469,7 +469,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
                 elif(idioma == "DE"):
-                    client.message("In German: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("Du hast %s entwaffnet! ^1-4000 ^7Coins" % (sclient.exactName))
                 return True
               else:
                 if(idioma == "EN"):
@@ -479,7 +479,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
                 elif(idioma == "DE"):
-                    client.message("In German: ^2!disarm ^7can only be used by the red team" % (sclient.exactName))
+                    client.message("^2!disarm ^7kann nur vom roten team genutzt werden" % (sclient.exactName))
                 return True
             else:
               if(idioma == "EN"):
@@ -489,7 +489,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
                 client.message("In French: You Can only disarm Enemies.")
               elif(idioma == "DE"):
-                client.message("In German: You Can only disarm Enemies.")
+                client.message("Du kannst nur gegnerische Spieler entwaffnen")
               return True
     	  else:
             if(idioma == "EN"):
@@ -499,7 +499,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
             elif(idioma == "DE"):
-                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             return False
     	  cursor.close()
           
@@ -533,7 +533,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: You need at least ^610 ^7connections to the server to use this command")
             elif(idioma == "DE"):
-                client.message("In German: You need at least ^610 ^7connections to the server to use this command")
+                client.message("Du brauchst mindestens ^610 ^7connections auf dem server um dieses Kommando zu nutzen")
             return True
         input = self._adminPlugin.parseUserCmd(data)
     	cname = input[0]
@@ -563,7 +563,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
                 elif(idioma == "DE"):
-                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                 return False
             else:
                 if(idioma == "EN"):
@@ -576,8 +576,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message("In French: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
                     sclient.message("In French: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
                 elif(idioma == "DE"):
-                    client.message("In German: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
-                    sclient.message("In German: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+                    client.message("du hast ^2%s ^7Coins an %s gegeben" % (dato, sclient.exactName))
+                    sclient.message("^7%s hat dir ^2%s ^7Coins gezahlt" % (client.exactName, dato))
                 return False
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
@@ -616,7 +616,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: You have: ^2%s ^7Coins" % (dinero))
             elif(idioma == "DE"):
-                client.message("In German: You have: ^2%s ^7Coins" % (dinero))
+                client.message("Du hast ^2%s ^7Coins" % (dinero))
             cursor.close()
             return True
         else:
@@ -640,7 +640,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
                 client.message("In French: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
             elif(idioma == "DE"):
-                client.message("In German: %s has: ^2%s ^7Coins" % (sclient.exactName,dinero))
+                client.message("%s hat: ^2%s ^7Coins" % (sclient.exactName,dinero))
             cursor.close()
             return True
         
@@ -657,7 +657,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "FR"):
     	        client.message("In French: Correct usage is ^2!price ^4<weapon>")
               elif(idioma == "DE"):
-    	        client.message("In German: Correct usage is ^2!price ^4<weapon>")
+    	        client.message("Richtiger Gebrauch: ^2!price ^4<weapon>")
               return False
         else:
             input = self._adminPlugin.parseUserCmd(data)
@@ -762,7 +762,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: Couldn't find: ''^2%s" % input[0])
                 elif(idioma == "DE"):
-                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                    client.message("Konnte ^2%s nicht finden" % input[0])
                 return True
                     
     def price(self, client, name, valor):
@@ -777,7 +777,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: ^2%s ^7Price: ^2%s" % (name, valor))
         elif(idioma == "DE"):
-            client.message("In German: ^2%s ^7Price: ^2%s" % (name, valor))
+            client.message("^2%s ^7Preis: ^2%s" % (name, valor))
         return True
         
     def cmd_moneytopstats(self, data, client, cmd=None, ext=False):
@@ -879,21 +879,21 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s In French: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
                 return True
             elif(idioma == "DE"):
-                self.console.write('tell %s In German: ^7Key:^2SR8^7 / Weapon:^2Remington SR8^7 / Price: ^2600' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2SPAS^7 / Weapon:^2Franchi SPAS12^7 / Price: ^2300' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2MP5^7 / Weapon:^2HK MP5K^7 / Price: ^2500' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2UMP^7 / Weapon:^2UMP45^7 / Price: ^2550' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2LR^7 / Weapon:^2ZM LR300^7 / Price: ^2650' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2PSG^7 / Weapon:^2HK PSG1^7 / Price: ^21000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2HK^7 / Weapon:^2HK69 40mm^7 / Price: ^22000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2G36^7 / Weapon:^2HK G36^7 / Price: ^21000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2AK^7 / Weapon:^2AK103 7.62mm^7 / Price: ^2700' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2NE^7 / Weapon:^2IMI Negev^7 / Price: ^2750' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2M4^7 / Weapon:^2Colt M4A1^7 / Price: ^2650' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2INV^7 / ^2Invisible^7 / Price: ^2150000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2GOD^7 / ^2Godmode^7 / Price: ^230000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2SR8^7 / Waffe:^2Remington SR8^7 / Preis: ^2600' % (client.cid))
+                self.console.write('tell %s ^7Key:^2SPAS^7 / Waffe:^2Franchi SPAS12^7 / Preis: ^2300' % (client.cid))
+                self.console.write('tell %s ^7Key:^2MP5^7 / Waffe:^2HK MP5K^7 / Preis: ^2500' % (client.cid))
+                self.console.write('tell %s ^7Key:^2UMP^7 / Waffe:^2UMP45^7 / Preis: ^2550' % (client.cid))
+                self.console.write('tell %s ^7Key:^2LR^7 / Waffe:^2ZM LR300^7 / Preis: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Key:^2PSG^7 / Waffe:^2HK PSG1^7 / Preis: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HK^7 / Waffe:^2HK69 40mm^7 / Preis: ^22000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2G36^7 / Waffe:^2HK G36^7 / Preis: ^21000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2AK^7 / Waffe:^2AK103 7.62mm^7 / Preis: ^2700' % (client.cid))
+                self.console.write('tell %s ^7Key:^2NE^7 / Waffe:^2IMI Negev^7 / Preis: ^2750' % (client.cid))
+                self.console.write('tell %s ^7Key:^2M4^7 / Waffe:^2Colt M4A1^7 / Preis: ^2650' % (client.cid))
+                self.console.write('tell %s ^7Key:^2INV^7 / ^2Unsichtbarkeit^7 / Preis: ^2150000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2GOD^7 / ^2Godmode^7 / Preis: ^230000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Preis: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
                 return True
         if client.team == b3.TEAM_RED:
             if(idioma == "EN"):
@@ -936,17 +936,17 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s In French: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
                 return True
             elif(idioma == "DE"):
-                self.console.write('tell %s In German: ^7Key:^2HE^7 / Weapon:^2HE Grenade^7 / Price:^2 350' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2SM^7 / Weapon:^2SMOKE Grenade^7 / Price:^2 250' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2KN^7 / Weapon:^2Knife^7 / Price:^2 300' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2KEV^7 / Weapon:^2Kevlar Vest^7 / Price:^2 1200' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2HEL^7 / Weapon:^2Helmet^7 / Price:^2 800' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2MED^7 / Weapon:^2Medkit^7 / Price:^2 500' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2NVG^7 / Weapon:^2TacGoggles^7 / Price:^2 200' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2HEAL^7 / Weapon:^2Health^7 / Price:^2 2000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2KL^7 / ^2Kill^7 / Price: ^210000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2DIS^7 / ^2Disarm^7 / Price: ^23000' % (client.cid))
-                self.console.write('tell %s In German: ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HE^7 / Waffe:^2HE Grenade^7 / Preis:^2 350' % (client.cid))
+                self.console.write('tell %s ^7Key:^2SM^7 / Waffe:^2SMOKE Grenade^7 / Preis:^2 250' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KN^7 / Waffe:^2Knife^7 / Preis:^2 300' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KEV^7 / Waffe:^2Kevlar Vest^7 / Preis:^2 1200' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HEL^7 / Waffe:^2Helmet^7 / Preis:^2 800' % (client.cid))
+                self.console.write('tell %s ^7Key:^2MED^7 / Waffe:^2Medkit^7 / Preis:^2 500' % (client.cid))
+                self.console.write('tell %s ^7Key:^2NVG^7 / Waffe:^2TacGoggles^7 / Preis:^2 200' % (client.cid))
+                self.console.write('tell %s ^7Key:^2HEAL^7 / Waffe:^2Health^7 / Preis:^2 2000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2KL^7 / ^2Kill^7 / Preis: ^210000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2DIS^7 / ^Entwaffnen^7 / Preis: ^23000' % (client.cid))
+                self.console.write('tell %s ^7Key:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Enemy: ^25000' % (client.cid))
                 return True
             
     def cmd_getweapon(self, data, client=None, cmd=None):
@@ -971,7 +971,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "FR"):
     	        client.message("In French: Type ^2!buy help ^7to see how to use this command")
             elif(idioma == "DE"):
-    	        client.message("In German: Type ^2!buy help ^7to see how to use this command")
+    	        client.message("Schreibe ^2!buy help ^7um den Gebrauch dieses Kommandos zu erfahren")
             return False
         weapon = input[0]
         status = input[1]
@@ -1012,17 +1012,17 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s In French: ^7Type ^2!b god ^7to buy godmode(for one round)' % (client.cid))
                 self.console.write('tell %s In French: ^7Type ^2!b inv ^7to buy invisible(until teams swap)' % (client.cid))
             elif(idioma == "DE"):
-                self.console.write('tell %s In German: ^7Type ^2!money ^7to see your money' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!bl ^7to see the weapons and items prices' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b ^4<weapon or item> ^7to buy whatever you want' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!price <weapon, item or command> ^7to see a concrete price' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!pay ^4<player> <amount> ^7to give money to a player' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!disarm ^4<player> ^7to disarm a human enemy' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!moneytopstats ^7to see money top players' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!tp ^4<player> ^7to teleport to a player' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!kill ^4<player> ^7to kill a enemy' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b god ^7to buy godmode(for one round)' % (client.cid))
-                self.console.write('tell %s In German: ^7Type ^2!b inv ^7to buy invisible(until teams swap)' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!money ^7um die Menge deiner Coins zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!bl ^7um die Preise der Waffen und Items zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b ^4<weapon oder item> ^7um etwas zu kaufen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!price <weapon, item oder command> ^7um einen einzelnen Preis zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!pay ^4<player> <amount> ^7um einem Spieler Coins zu geben' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!disarm ^4<player> ^7um einen Human-Spieler zu entwaffnen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!moneytopstats ^7um die Ersten in der Coin-Rangliste zu sehen' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!tp ^4<player> ^7um dich zu einem Spieler zu teleportieren' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!kill ^4<player> ^7um einen Spieler zu toeten' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b god ^7um den GODMODE fuer eine Runde zu aktivieren' % (client.cid))
+                self.console.write('tell %s ^7Schreibe ^2!b inv ^7um Unsichtbarkeit zu kaufen (bis die Teams tauschen)' % (client.cid)
             return True
         if client.team == b3.TEAM_BLUE:
                         	   ############################## Remington SR8 ##############################
@@ -1059,7 +1059,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                         elif(idioma == "DE"):
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                         return False
             if (weapon == "inv") or (weapon == "invisible"):     
                 if(client.maxLevel >= 100):
@@ -1090,7 +1090,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                         elif(idioma == "DE"):
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
     	    		return False
                 
             if (weapon == "sr8") or (weapon == "SR8"):
@@ -1143,7 +1143,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1206,7 +1206,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1269,7 +1269,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1332,7 +1332,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1395,7 +1395,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1458,7 +1458,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1521,7 +1521,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1584,7 +1584,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1647,7 +1647,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1710,7 +1710,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1773,7 +1773,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -1837,7 +1837,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             		  return False
             		else:
             		  if(veces):
@@ -1908,7 +1908,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             		  return False
             		else:
             		  if(veces):
@@ -1979,7 +1979,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                           elif(idioma == "FR"):
                             client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                           elif(idioma == "DE"):
-                            client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             		  return False
             		else:
             		  if(veces):
@@ -2125,7 +2125,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2188,7 +2188,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2251,7 +2251,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2280,7 +2280,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     elif(idioma == "FR"):
                         client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                     elif(idioma == "DE"):
-                        client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                        client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
             	    return False
             	  else:
             	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2312,7 +2312,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                                 elif(idioma == "FR"):
                                     client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                                 elif(idioma == "DE"):
-                                    client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                    client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                                 return False
                             else:
                                 q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2340,7 +2340,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             return False
                         else:
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
@@ -2360,7 +2360,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "FR"):
                     client.message("In French: Couldn't find: ''^2%s" % input[0])
                 elif(idioma == "DE"):
-                    client.message("In German: Couldn't find: ^2%s" % input[0])
+                    client.message("Konnte ^2%s nicht finden" % input[0])
                 return False
                 
     def autoMessage(self, event):
@@ -2413,7 +2413,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             return False
             if(c.team == b3.TEAM_RED):
                 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
@@ -2455,6 +2455,6 @@ class MoneyPlugin(b3.plugin.Plugin):
                             elif(idioma == "FR"):
                                 client.message("In French: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
                             elif(idioma == "DE"):
-                                client.message("In German: You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+                                client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
                             return False
                         
