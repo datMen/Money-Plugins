@@ -22,10 +22,15 @@ def cdate():
 
     return cdate
 
+class SpreeStats:
+    kills                  = 0
+    deaths                 = 0
+
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
     _cronTab = None
     time_swap = 10
+    _clientvar_name = 'spree_info'
     
     def onStartup(self):
         # get the admin plugin so we can register commands
@@ -63,6 +68,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
         self._adminPlugin.registerCommand(self, 'makeloukadmin', 80, self.cmd_makeloukadmin, 'mla')
+        self._adminPlugin.registerCommand(self, 'spree', 0, self.cmd_spree)
     
     def onEvent(self, event):
         if event.type == b3.events.EVT_GAME_ROUND_START:
@@ -158,6 +164,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         	
         if event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
+           self.spreeKill(event.client, event.target)
            
     def Fin_S1(self):
         self.console.write("restart")
@@ -285,6 +292,98 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write("gh %s +25" % (client.cid))
                 self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7hps" % client.exactName)
     	    cursor.close()
+            
+    def spreeKill(self, client=None, victim=None):
+        if client:
+            spreeStats = self.get_spree_stats(client)
+            spreeStats.kills += 1
+            if client.team == b3.TEAM_RED:
+                if spreeStats.kills==5:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+500 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row and won ^2500 ^7Coins!' % client.exactName)
+                if spreeStats.kills==10:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+1000 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^510 ^7kills in a row and won ^21000 ^7Coins!' % client.exactName)
+                if spreeStats.kills==15:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+1500 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row and won ^21500 ^7Coins!' % client.exactName)
+                if spreeStats.kills==20:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+2500 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row, you won ^22500 ^7Coins!' % client.exactName)
+                    
+            elif client.team == b3.TEAM_BLUE:
+                if spreeStats.kills==5:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+1000 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row and won ^21000 ^7Coins!' % client.exactName)
+                if spreeStats.kills==10:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+2000 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^510 ^7kills in a row and won ^22000 ^7Coins!' % client.exactName)
+                if spreeStats.kills==15:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+3000 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row and won ^23000 ^7Coins!' % client.exactName)
+                if spreeStats.kills==20:
+                    q=('UPDATE `dinero` SET `dinero` = dinero+5000 WHERE iduser = "%s"' % (client.id))
+                    self.debug(q)
+                    cursor = self.console.storage.query(q)
+                    cursor.close()
+                    self.console.say('%s made ^55 ^7kills in a row, you won ^25000 ^7Coins!' % client.exactName)
+            spreeStats.deaths = 0
+
+        if victim:
+            spreeStats = self.get_spree_stats(victim)
+            spreeStats.deaths += 1
+            spreeStats.kills = 0
+            
+    def init_spree_stats(self, client):
+        client.setvar(self, self._clientvar_name, SpreeStats())
+            
+    def get_spree_stats(self, client):
+        if not client.isvar(self, self._clientvar_name):
+            client.setvar(self, self._clientvar_name, SpreeStats())
+            
+        return client.var(self, self._clientvar_name).value
+    
+    def cmd_spree(self, data, client, cmd=None):
+        spreeStats = self.get_spree_stats(client)
+
+        if spreeStats.kills > 0:
+            cmd.sayLoudOrPM(client, '^7You have ^2%s^7 kills in a row' % spreeStats.kills)
+        elif spreeStats.deaths > 0:
+            cmd.sayLoudOrPM(client, '^7You have ^1%s^7 deaths in a row' % spreeStats.deaths)
+        else:
+            cmd.sayLoudOrPM(client, '^7You\'re not having a spree right now')
+                            
+        if client.team == b3.TEAM_BLUE:
+            cmd.sayLoudOrPM(client, '^55 ^7Kills ^1-> ^21000 ^7Coins')
+            cmd.sayLoudOrPM(client, '^510 ^7Kills ^1-> ^22000 ^7Coins')
+            cmd.sayLoudOrPM(client, '^515 ^7Kills ^1-> ^23000 ^7Coins')
+            cmd.sayLoudOrPM(client, '^520 ^7Kills ^1-> ^25000 ^7Coins')
+        elif client.team == b3.TEAM_RED:
+            cmd.sayLoudOrPM(client, '^55 ^7Kills ^1-> ^2500 ^7Coins')
+            cmd.sayLoudOrPM(client, '^510 ^7Kills ^1-> ^21000 ^7Coins')
+            cmd.sayLoudOrPM(client, '^515 ^7Kills ^1-> ^21500 ^7Coins')
+            cmd.sayLoudOrPM(client, '^520 ^7Kills ^1-> ^22500 ^7Coins')
 
     def cmd_idioma(self, data, client, cmd=None):
     	  input = self._adminPlugin.parseUserCmd(data)
