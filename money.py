@@ -1007,7 +1007,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You ^2started ^7to autobuy ^2%s" % weapon)
         elif(idioma == "DE"):
-            client.message("In German: You ^2started ^7to autobuy ^2%s" % weapon)
+            client.message("Du ^2aktiviertest ^7autobuy ^2%s" % weapon)
         elif(idioma == "IT"):
             client.message("In Ita: You ^2started ^7to autobuy ^2%s" % weapon)
         return False
@@ -1020,7 +1020,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You ^1stopped ^7to autobuy ^2%s" % weapon)
         elif(idioma == "DE"):
-            client.message("In German: You ^1stopped ^7to autobuy ^2%s" % weapon)
+            client.message("Du ^1deaktiviertest ^7autobuy ^2%s" % weapon)
         elif(idioma == "IT"):
             client.message("In Ita: You ^1stopped ^7to autobuy ^2%s" % weapon)
         return False
@@ -1033,7 +1033,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You ^2are already^7 autobuying ^2%s" % weapon)
         elif(idioma == "DE"):
-            client.message("In German: You ^2are already^7 autobuying ^2%s" % weapon)
+            client.message("Du ^2hast die Waffe schon ^7im autobuy ^2%s" % weapon)
         elif(idioma == "IT"):
             client.message("In Ita: You ^2are already^7 autobuying ^2%s" % weapon)
         return False
@@ -1046,7 +1046,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You ^1have not^7 activated Autobuy")
         elif(idioma == "DE"):
-            client.message("In German: You ^1have not^7 activated Autobuy")
+            client.message("Du hast Autobuy ^1nicht ^7Aktiviert")
         elif(idioma == "IT"):
             client.message('^1Non hai ^7attivato l\'autoacquisto.')
         return False
@@ -1059,7 +1059,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You Have Bought ^2%s ^7You have: ^2%s ^7Coins" % (nombre,sobran))
         elif(idioma == "DE"):
-            client.message("In German: You Have Bought ^2%s ^7You have: ^2%s ^7Coins" % (nombre,sobran))
+            client.message("Du hast ^2%s ^7gekauft. Du hast noch: ^2%s ^7Coins" % (nombre,sobran))
         elif(idioma == "IT"):
             client.message('Hai Comprato ^2%s ^7Hai: ^2%s ^7Coins' % (nombre,sobran))
         return True
@@ -1072,7 +1072,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "FR"):
             client.message("In French: You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
         elif(idioma == "DE"):
-            client.message("In German: You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
+            client.message("Du hast ^5%s und ^2%s ^7gekauft.Du hast noch: ^2%s ^7Coins" % (veces, nombre, sobran))
         elif(idioma == "IT"):
             client.message('Hai comprato ^5%s ^2%s ^7Hai:^2%s ^7coins' % (veces, nombre, sobran))
             
