@@ -66,6 +66,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
         self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
+        self._adminPlugin.registerCommand(self, 'setlanguage', 80, self.cmd_setidioma, 'setlang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
         self._adminPlugin.registerCommand(self, 'makeloukadmin', 80, self.cmd_makeloukadmin, 'mla')
         self._adminPlugin.registerCommand(self, 'spree', 0, self.cmd_spree)
@@ -390,7 +391,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     	  input = data.split(' ',1)
     	  valor = input[0]
     	  if not data:
-    	    client.message('^7Type !lang <en/es/fr/de>')
+    	    client.message('^7Type !lang <en/es/fr/de/it>')
     	    return False
     	  if(valor == "EN" or valor == "en" or valor == "ES" or valor == "es" or valor == "FR" or valor == "fr" or valor == "DE" or valor == "de" or valor == "IT" or valor == "it" ):
     	    if(valor == "EN" or valor == "en"):
@@ -415,6 +416,49 @@ class MoneyPlugin(b3.plugin.Plugin):
               client.message("^7Hai impostato la tua lingua correttamente.")
     	  else:
             client.message('Correct usage is ^2!lang ^4<en/es/fr/de/it>')
+            
+    def cmd_setidioma(self, data, client, cmd=None):
+          if not data:
+    	    client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
+    	    return False
+    	  input = self._adminPlugin.parseUserCmd(data)
+    	  scname = input[0]
+          valor = input[1]
+          sclient = self._adminPlugin.findClientPrompt(scname, client)
+          if not sclient:
+    	    client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
+    	    return False
+          q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
+          self.debug(q)
+          cursor = self.console.storage.query(q)
+          r = cursor.getRow()
+          idioma = r['idioma']
+    	  if(valor == "EN" or valor == "ES" or valor == "FR" or valor == "DE" or valor == "IT"):
+            q=('UPDATE `dinero` SET `idioma` ="%s" WHERE iduser = "%s"' % (valor, sclient.id))
+            self.console.storage.query(q)
+            if valor == "EN":
+                lang = "English"
+            elif valor == "ES":
+                lang = "Spanish"
+            elif valor == "FR":
+                lang = "French"
+            elif valor == "DE":
+                lang = "German"
+            elif valor == "IT":
+                lang = "Italian"
+            client.message("You changed %s^7's language to ^2%s" % (sclient.exactName, lang))
+    	    if idioma == "EN":
+    	      sclient.message('%s changed your language to ^2%s' % (client.exactName, lang))
+    	    elif idioma == "ES":
+    	      client.message('%s ha cambiado tu idioma a ^2%s' % (client.exactName, lang))
+            elif idioma == "FR":
+    	      client.message("In French: %s changed your language to ^2%s" % (client.exactName, lang))
+            elif idioma == "DE":
+    	      client.message("In German: %s changed your language to ^2%s" % (client.exactName, lang))
+            elif idioma == "IT":
+              client.message("In Italian: %s changed your language to ^2%s" % (client.exactName, lang))
+    	  else:
+            client.message('Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
 
     def cmd_teleport(self, data, client, cmd=None):
     	  if(client.maxLevel >= 100):
