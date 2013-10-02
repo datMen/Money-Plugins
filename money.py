@@ -454,7 +454,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif idioma == "FR":
     	      client.message("In French: %s changed your language to ^2%s" % (client.exactName, lang))
             elif idioma == "DE":
-    	      client.message("In German: %s changed your language to ^2%s" % (client.exactName, lang))
+    	      client.message("%s hat seine Sprache zu ^2%s geaendert" % (client.exactName, lang))
             elif idioma == "IT":
               client.message("In Italian: %s changed your language to ^2%s" % (client.exactName, lang))
     	  else:
