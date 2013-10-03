@@ -668,6 +668,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         r = cursor.getRow()
         iduser = r['iduser']
         dinero = r['dinero']
+        dinero = r['idioma']
         if client.connections < 10:
             if(idioma == "EN"):
                 client.message('You need at least ^610 ^7connections to the server to use this command')
