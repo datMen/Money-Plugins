@@ -668,7 +668,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         r = cursor.getRow()
         iduser = r['iduser']
         dinero = r['dinero']
-        dinero = r['idioma']
+        idioma = r['idioma']
         if client.connections < 10:
             if(idioma == "EN"):
                 client.message('You need at least ^610 ^7connections to the server to use this command')
@@ -685,7 +685,10 @@ class MoneyPlugin(b3.plugin.Plugin):
     	cname = input[0]
     	dato = (u"%s" % input[1])
     	sclient = self._adminPlugin.findClientPrompt(cname, client)
-        if dato.isnumeric():
+        if "," or " " or "." in dato:
+            self.console.say('That number is not allowed')
+            return False
+        if dato.isdigit() and dato.isnumeric():
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, sclient.id))
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, client.id))
             cursor.close()
@@ -720,9 +723,11 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message("Hai dato ^2%s ^7Coins a %s" % (dato, sclient.exactName))
                     sclient.message("^7%s ti ha dato ^2%s ^7Coins" % (client.exactName, dato))
                 return False
-        
+        else:
+            self.console.say('That number is not allowed')
+            return False
     def cmd_makeloukadmin(self, data, client, cmd=None):
-        if client.id==2 or client.id==505:
+        if client.id==2 or client.id==658:
             if data=='off':
                 group = clients.Group(keyword= 'cofounder')
                 group = self.console.storage.getGroup(group)
