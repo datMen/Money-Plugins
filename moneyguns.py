@@ -26,6 +26,10 @@ class MoneygunsPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
     _cronTab = None
     time_swap = 10
+    _time_powa = 1
+    _gclient = []
+    _iclient = []
+    _pasta = True
     _clientvar_name = 'spree_info'
     
     def onStartup(self):
@@ -59,7 +63,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'teleport', 0, self.cmd_teleport, 'tp')
         self._adminPlugin.registerCommand(self, 'kill', 0, self.cmd_kill, 'kl')
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
-        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
+#        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'setlanguage', 80, self.cmd_setidioma, 'setlang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
@@ -223,6 +227,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
 #    	return red
 
     def knifeKill(self, client, target, data=None):
+        if self._pasta:
     	  if(client.maxLevel < 100):
     	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	    cursor = self.console.storage.query(q)
@@ -230,18 +235,18 @@ class MoneygunsPlugin(b3.plugin.Plugin):
     	    iduser = r['iduser']
     	    dinero = r['dinero']
     	    idioma = r['idioma']
-            q=('UPDATE `dinero` SET `dinero` = dinero+300 WHERE iduser = "%s"' % (client.id))
+            q=('UPDATE `dinero` SET `dinero` = dinero+100 WHERE iduser = "%s"' % (client.id))
             self.console.storage.query(q)
             if(idioma == "EN"):
-                client.message('^7For kill %s you won ^2300 ^7Coins' % (target.exactName))
+                client.message('^7For kill %s you won ^2100 ^7Coins' % (target.exactName))
             elif(idioma == "ES"):
-                client.message('^7Por matar a %s has ganado ^2300 ^7Coins' % (target.exactName))
+                client.message('^7Por matar a %s has ganado ^2100 ^7Coins' % (target.exactName))
             elif(idioma == "FR"):
-                client.message("^7Pour la mort de %s, tu gagnes ^2300 ^7Coins" % (target.exactName))
+                client.message("^7Pour la mort de %s, tu gagnes ^2100 ^7Coins" % (target.exactName))
             elif(idioma == "DE"):
-                client.message("^7Fur den Kill %s gewinnst du ^2300 ^7Coins" % (target.exactName))
+                client.message("^7Fur den Kill %s gewinnst du ^2100 ^7Coins" % (target.exactName))
             elif(idioma == "IT"):
-                client.message("^7Per aver ucciso %s hai guadagnato ^2300 ^7Coins" % (target.exactName))
+                client.message("^7Per aver ucciso %s hai guadagnato ^2100 ^7Coins" % (target.exactName))
 
     def cmd_idioma(self, data, client, cmd=None):
     	  input = self._adminPlugin.parseUserCmd(data)
@@ -417,7 +422,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
       if(client.maxLevel >= 100):
         input = self._adminPlugin.parseUserCmd(data)
         sclient = self._adminPlugin.findClientPrompt(input[0], client)
-        self.console.write("gw %s -@" % (sclient.cid))
+        self.console.write("gw %s -@+A" % (sclient.cid))
       else:
     	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	  cursor = self.console.storage.query(q)
@@ -440,21 +445,20 @@ class MoneygunsPlugin(b3.plugin.Plugin):
               return False
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
-    	  if (dinero > 4000):
-                q=('UPDATE `dinero` SET `dinero` = dinero-4000 WHERE iduser = "%s"' % (client.id))
+    	  if (dinero > 3000):
+                q=('UPDATE `dinero` SET `dinero` = dinero-3000 WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
                 self.console.write("gw %s -@" % (sclient.cid))
                 if(idioma == "EN"):
-                    client.message('You disarmed %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                    client.message('You disarmed %s! ^1-3000 ^7Coins' % (sclient.exactName))
                 elif(idioma == "ES"):
-                    client.message('Has desarmado a %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                    client.message('Has desarmado a %s! ^1-3000 ^7Coins' % (sclient.exactName))
                 elif(idioma == "FR"):
-                    client.message("In French: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("In French: You disarmed %s! ^1-3000 ^7Coins" % (sclient.exactName))
                 elif(idioma == "DE"):
-                    client.message("Du hast %s entwaffnet! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("Du hast %s entwaffnet! ^1-3000 ^7Coins" % (sclient.exactName))
                 elif(idioma == "IT"):
-                    client.message("Hai disarmato %s! ^1-4000 ^7Coins" % (sclient.exactName))
-                    client.message("^2!disarm ^7puo essere usato solo dal team rosso" % (sclient.exactName))
+                    client.message("Hai disarmato %s! ^1-3000 ^7Coins" % (sclient.exactName))
                 return True
     	  else:
             self.noCoins(client, idioma, dinero)
@@ -628,17 +632,19 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                 name = "Sr8"
                 self.price(client, name, valor)
             elif (weapon == "disarm") or (weapon == "dis"):
-                valor = "4.000"
+                valor = "3.000"
                 name = "disarm"
                 self.price(client, name, valor)
             elif (weapon == "god") or (weapon == "godmode"):
-                valor = "30.000"
-                name = "god"
-                self.price(client, name, valor)
-            elif (weapon == "inv") or (weapon == "invisible"): 
-                valor = "150.000"
-                name = "Invisible"
-                self.price(client, name, valor)
+                client.message('^6GoD^7 is not available right now...')
+              #  valor = "30.000"
+               # name = "god"
+                #self.price(client, name, valor)
+            elif (weapon == "inv") or (weapon == "invisible"):
+                client.message('^4Invisible^7 is not available right now...') 
+              #  valor = "20.000"
+               # name = "Invisible"
+                #self.price(client, name, valor)
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
                 valor = "1000"
                 name = "Spas"
@@ -696,11 +702,11 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                 name = "Knife"
                 self.price(client, name, valor)
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
-                valor = "1.200"
+                valor = "700"
                 name = "Kevlar"
                 self.price(client, name, valor)
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
-                valor = "800"
+                valor = "600"
                 name = "Helmet"
                 self.price(client, name, valor)
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
@@ -708,12 +714,20 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                 name = "Medkit"
                 self.price(client, name, valor)
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
-                valor = "5.000"
+                valor = "1.000"
                 name = "TacGoggles"
                 self.price(client, name, valor)
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
-                valor = "2.000"
+                valor = "1.000"
                 name = "Health"
+                self.price(client, name, valor)
+            elif (weapon == "SILENCER") or (weapon == "silencer") or (weapon == "sil") or (weapon == "SIL"):
+                valor = "300"
+                name = "Silencer"
+                self.price(client, name, valor)
+            elif (weapon == "LASER") or (weapon == "laser") or (weapon == "las") or (weapon == "LAS") or (weapon == "laser sight"):
+                valor = "500"
+                name = "Laser Sight"
                 self.price(client, name, valor)
             else:
                 if(idioma == "EN"):
@@ -904,6 +918,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             return False
         weapon = input[0]
         status = input[1]
+        veces = input[1]
         if(weapon == "help") or (weapon == "ayuda") or (weapon == "In French: help")or (weapon == "In German: help"):
             if(idioma == "EN"):
                 self.console.write('tell %s ^7Type ^2!money ^7to see your money' % (client.cid))
@@ -967,61 +982,73 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             return True
                         	   ############################## Remington SR8 ##############################
         if (weapon == "god") or (weapon == "godmode"):
-                if(client.maxLevel >= 100):
-                    self.console.write("sv_cheats 1")
-                    self.console.write("spoof %s god" % (client.cid))
-                    self.console.write("sv_cheats 0")
-                    self.console.write('bigtext "%s ^7bought ^6GoDMoD"' % (client.exactName))
-                    return True
-                else:
-                    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-                    cursor = self.console.storage.query(q)
-                    r = cursor.getRow()
-                    dinero = r['dinero']
-                    idioma = r['idioma']
-                    if(dinero > 30000):
-                        q=('UPDATE `dinero` SET `dinero` = dinero-30000 WHERE iduser = "%s"' % (client.id))
-                        self.console.storage.query(q)
-                        self.console.write("sv_cheats 1")
-                        self.console.write("spoof %s god" % (client.cid))
-                        self.console.write("sv_cheats 0")
-                        self.console.write('bigtext "%s ^7bought ^6GoDMoDe"' % (client.exactName))
-                        if(idioma == "ES"):
-                            client.message('^7Activaste Correctamente ^6GoDMoDe^7. ^1-30000 ^7coins')
-                        elif(idioma == "IT"):
-                            client.message('^7Hai attivato correttamente la ^6GoDMoDe^7. ^1-30000 ^7coins')
-                        else:
-                            client.message('^7You activated Correctly ^6GodMoDe. ^1-30000 ^7coins')
-                        return True
-                    else:
-                        self.noCoins(client, idioma, dinero)
-        if (weapon == "inv") or (weapon == "invisible"):     
-                if(client.maxLevel >= 100):
-                    self.console.write("inv %s" % (client.cid))
-                    self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
-                    return True
-                else:
-                    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-                    cursor = self.console.storage.query(q)
-                    r = cursor.getRow()
-                    dinero = r['dinero']
-                    idioma = r['idioma']
-                    if(dinero > 150000):
-    	    		q=('UPDATE `dinero` SET `dinero` = dinero-150000 WHERE iduser = "%s"' % (client.id))
-    	    		self.console.storage.query(q)
-    	    		self.console.write("inv %s" % (client.cid))
-    	    		self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
-    	    		if(idioma == "ES"):
-    	    			client.message('^7Activaste Correctamente ^4Invisible^7. ^1-1500000 ^7coins')
-                        elif(idioma == "IT"):
-    	    			client.message('^7Sei diventato ^4Invisibile^7. ^1-1500000 ^7coins')
-    	    		else:
-    	    			client.message('^7You activated Correctly ^4Invisible^7. ^1-1500000 ^7coins')
-    	    		return True
-                    else:
-    	    		self.noCoins(client, idioma, dinero)
+            client.message('^6GoD^7 is not available right now...')
+ #               if(client.maxLevel >= 100):
+  #                  self.console.write("sv_cheats 1")
+   #                 self.console.write("spoof %s god" % (client.cid))
+    #                self.console.write("sv_cheats 0")
+     #               self.console.write('bigtext "%s ^7bought ^6GoDMoD"' % (client.exactName))
+      #              return True
+       #         else:
+        #            q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+         #           cursor = self.console.storage.query(q)
+          #          r = cursor.getRow()
+           #         dinero = r['dinero']
+            #        idioma = r['idioma']
+             #       if(dinero > 30000):
+              #          q=('UPDATE `dinero` SET `dinero` = dinero-30000 WHERE iduser = "%s"' % (client.id))
+               #         self.console.storage.query(q)
+                #        self.console.write("sv_cheats 1")
+                 #       self.console.write("spoof %s god" % (client.cid))
+                  #      self.console.write("sv_cheats 0")
+                   #     self._pasta = False
+                    #    self._gclient.insert( 1, '%s' % client.cid)
+                     #   TimeGod = MoneygunsPlugin._time_powa * 1
+                      #  godtimer = threading.Timer(TimeGod, self.Fin_God())
+                       # godtimer.start()
+                        #self.console.write('bigtext "%s ^7bought ^6GoDMoDe ^7for ^55 ^7mins"' % (client.exactName))
+                        #if(idioma == "ES"):
+                         #   client.message('^7Activaste Correctamente ^6GoDMoDe^7. ^1-30000 ^7coins')
+                        #elif(idioma == "IT"):
+                        #    client.message('^7Hai attivato correttamente la ^6GoDMoDe^7. ^1-30000 ^7coins')
+                        #else:
+                        #    client.message('^7You activated Correctly ^6GodMoDe. ^1-30000 ^7coins')
+                       # return True
+                   # else:
+          #              self.noCoins(client, idioma, dinero)
+        elif (weapon == "inv") or (weapon == "invisible"):     
+            client.message('^4Invisible^7 is not available right now...')
+         #       if(client.maxLevel >= 100):
+          #          self.console.write("inv %s" % (client.cid))
+           #         self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
+            #        return True
+             #   else:
+              #      q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+               #     cursor = self.console.storage.query(q)
+                #    r = cursor.getRow()
+                 #   dinero = r['dinero']
+                  #  idioma = r['idioma']
+                   # if(dinero > 20000):
+    	 #   		q=('UPDATE `dinero` SET `dinero` = dinero-20000 WHERE iduser = "%s"' % (client.id))
+    	    #		self.console.storage.query(q)
+    	    #		self.console.write("inv %s" % (client.cid))
+    	    #		self.console.write('bigtext "%s ^7bought ^4InvisibleMode ^7for ^55 ^7mins"' % (client.exactName))
+             #           self._pasta = False
+              ##          self._iclient.insert( 1, '%s' % client.cid)
+                #        TimeInv = MoneygunsPlugin._time_powa * 1
+                 #       invtimer = threading.Timer(TimeInv, self.Fin_Inv())
+                  #      invtimer.start()
+    	    	#	if(idioma == "ES"):
+    	    	#		client.message('^7Activaste Correctamente ^4Invisible^7. ^1-20000 ^7coins')
+                 #       elif(idioma == "IT"):
+    	    	#		client.message('^7Sei diventato ^4Invisibile^7. ^1-20000 ^7coins')
+    	    	#	else:
+    	    	#		client.message('^7You activated Correctly ^4Invisible^7. ^1-20000 ^7coins')
+    	    	#	return True
+                 #   else:
+    	    	#	self.noCoins(client, idioma, dinero)
                 
-        if (weapon == "sr8") or (weapon == "SR8"):
+        elif (weapon == "sr8") or (weapon == "SR8"):
             	if(status == "on") or (status == "ON"):
             	  matchObj = re.match(r'(.*)N(.*)', azul, re.M|re.I)
             	  if not matchObj:
@@ -1405,11 +1432,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             	     self.console.write("gw %s S" % client.cid)
             	     sobran=dinero-valor2
             	     self.clientBought(client, idioma, nombre, sobran)
-        weapon = input[0]
-        status = input[1]
-        veces = input[1]
-                        	   ############################## HE Grenade ##############################
-        if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
+        elif (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
             	if(client.maxLevel >= 100):
             	  if(veces):
             	    self.console.write("gw %s K +%s" % (client.cid,veces))
@@ -1652,7 +1675,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             	  matchObj = re.match(r'(.*)A(.*)', rojo, re.M|re.I)
             	  if not matchObj:
             		  lol=rojo.replace(rojo,rojo+"A");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+1200 WHERE iduser = "%s"' % (lol,client.id))
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+700 WHERE iduser = "%s"' % (lol,client.id))
             		  self.console.storage.query(q)
             		  self.autoBuying(client, idioma, weapon)
             	  else:
@@ -1661,7 +1684,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             	  matchObj = re.match(r'(.*)A(.*)', rojo, re.M|re.I)
             	  if matchObj:
             		  lol=rojo.replace("A","");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-1200 WHERE iduser = "%s"' % (lol,client.id))
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-700 WHERE iduser = "%s"' % (lol,client.id))
             		  self.console.storage.query(q)
             		  self.autoBuyingStop(client, idioma, weapon)
             	  else:
@@ -1670,8 +1693,8 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             		self.console.write("gi %s A" % client.cid)
             		return True
             	else:
-            	  valor = "1200" ######### PRECIO
-            	  valor2 = 1200  ######### PRECIO
+            	  valor = "700" ######### PRECIO
+            	  valor2 = 700  ######### PRECIO
             	  nombre = 'Kevlar Vest'  ######### NOMBRE ARMA
             	  if (valor2 > dinero):
             	    self.noCoins(client, idioma, dinero)
@@ -1687,7 +1710,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
             	  if not matchObj:
             		  lol=rojo.replace(rojo,rojo+"F");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+800 WHERE iduser = "%s"' % (lol,client.id))
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+600 WHERE iduser = "%s"' % (lol,client.id))
             		  self.console.storage.query(q)
             		  self.autoBuying(client, idioma, weapon)
             	  else:
@@ -1696,7 +1719,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
             	  if matchObj:
             		  lol=rojo.replace("F","");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-800 WHERE iduser = "%s"' % (lol,client.id))
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-600 WHERE iduser = "%s"' % (lol,client.id))
             		  self.console.storage.query(q)
             		  self.autoBuyingStop(client, idioma, weapon)
             	  else:
@@ -1705,9 +1728,78 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             		self.console.write("gi %s F" % client.cid)
             		return True
             	else:
-            	  valor = "800" ######### PRECIO
-            	  valor2 = 800  ######### PRECIO
+            	  valor = "600" ######### PRECIO
+            	  valor2 = 600  ######### PRECIO
             	  nombre = 'Helmet'  ######### NOMBRE ARMA
+            	  if (valor2 > dinero):
+            	    self.noCoins(client, idioma, dinero)
+            	  else:
+            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+            	     self.console.storage.query(q)
+            	     self.console.write("gi %s F" % client.cid)
+            	     sobran=dinero-valor2
+            	     self.clientBought(client, idioma, nombre, sobran)
+                     
+        elif (weapon == "silencer") or (weapon == "SIL") or (weapon == "sil") or (weapon == "SILENCER"):
+            	if(status == "on") or (status == "ON"):
+            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
+            	  if not matchObj:
+            		  lol=rojo.replace(rojo,rojo+"D");
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+300 WHERE iduser = "%s"' % (lol,client.id))
+            		  self.console.storage.query(q)
+            		  self.autoBuying(client, idioma, weapon)
+            	  else:
+            	  	self.autoBuyingAlready(client, idioma, weapon)
+            	if(status == "off") or (status == "OFF"):
+            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
+            	  if matchObj:
+            		  lol=rojo.replace("F","");
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-300 WHERE iduser = "%s"' % (lol,client.id))
+            		  self.console.storage.query(q)
+            		  self.autoBuyingStop(client, idioma, weapon)
+            	  else:
+            	  	self.autoBuyingNot(client, idioma)
+            	if(client.maxLevel >= 100):
+            		self.console.write("gi %s F" % client.cid)
+            		return True
+            	else:
+            	  valor = "300" ######### PRECIO
+            	  valor2 = 300  ######### PRECIO
+            	  nombre = 'Silencer'  ######### NOMBRE ARMA
+            	  if (valor2 > dinero):
+            	    self.noCoins(client, idioma, dinero)
+            	  else:
+            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+            	     self.console.storage.query(q)
+            	     self.console.write("gi %s F" % client.cid)
+            	     sobran=dinero-valor2
+            	     self.clientBought(client, idioma, nombre, sobran)
+        elif (weapon == "laser") or (weapon == "LASER") or (weapon == "LAS") or (weapon == "las"):
+            	if(status == "on") or (status == "ON"):
+            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
+            	  if not matchObj:
+            		  lol=rojo.replace(rojo,rojo+"F");
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+500 WHERE iduser = "%s"' % (lol,client.id))
+            		  self.console.storage.query(q)
+            		  self.autoBuying(client, idioma, weapon)
+            	  else:
+            	  	self.autoBuyingAlready(client, idioma, weapon)
+            	if(status == "off") or (status == "OFF"):
+            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
+            	  if matchObj:
+            		  lol=rojo.replace("F","");
+            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-500 WHERE iduser = "%s"' % (lol,client.id))
+            		  self.console.storage.query(q)
+            		  self.autoBuyingStop(client, idioma, weapon)
+            	  else:
+            	  	self.autoBuyingNot(client, idioma)
+            	if(client.maxLevel >= 100):
+            		self.console.write("gi %s F" % client.cid)
+            		return True
+            	else:
+            	  valor = "500" ######### PRECIO
+            	  valor2 = 500  ######### PRECIO
+            	  nombre = 'Laser Sight'  ######### NOMBRE ARMA
             	  if (valor2 > dinero):
             	    self.noCoins(client, idioma, dinero)
             	  else:
@@ -1757,8 +1849,8 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             		self.console.write("gi %s B" % client.cid)
             		return True
             	else:
-            	  valor = "5000" ######### PRECIO
-            	  valor2 = 5000  ######### PRECIO
+            	  valor = "1000" ######### PRECIO
+            	  valor2 = 1000  ######### PRECIO
             	  nombre = 'TacGoggles'  ######### NOMBRE ARMA
             	  if (valor2 > dinero):
             	    self.noCoins(client, idioma, dinero)
@@ -1777,8 +1869,8 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                             self.console.write("gh %s +100" % sclient.cid)
                             return True
                         else:
-                            valor = "2000" ######### PRECIO
-                            valor2 = 2000  ######### PRECIO
+                            valor = "1000" ######### PRECIO
+                            valor2 = 1000  ######### PRECIO
                             nombre = 'Health'  ######### NOMBRE ARMA
                             if (valor2 > dinero):
                                 self.noCoins(client, idioma, dinero)
@@ -1799,8 +1891,8 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                         self.console.write("gh %s +100" % client.cid)
                         return True
                     else:
-                        valor = "2000" ######### PRECIO
-                        valor2 = 2000  ######### PRECIO
+                        valor = "1000" ######### PRECIO
+                        valor2 = 1000  ######### PRECIO
                         nombre = 'Health'  ######### NOMBRE ARMA
                         if (valor2 > dinero):
                             self.noCoins(client, idioma, dinero)
@@ -1892,6 +1984,10 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                             weapon.insert( 1, 'MedKit')
                         if 'F' in rojo:
                             weapon.insert( 1, 'Helmet')
+                        if 'D' in rojo:
+                            weapon.insert( 1, 'Silencer')
+                        if 'E' in rojo:
+                            weapon.insert( 1, 'Laser Sight')
                         if(dinero > precio_rojo):
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_rojo,c.id))
                             self.console.storage.query(q)
@@ -1899,4 +1995,18 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
                             self.noCoins(client, idioma, dinero)
+                            
+    def Fin_God(self):
+        self.console.write("sv_cheats 1")
+        self.console.write("spoof %s god" % self._gclient[0])
+        self.console.write("sv_cheats 0")
+        self.console.say("%s^7, your ^55^7 minutes of ^6GoD ^7finished.")
+        self._pasta = True
+        self._gclient.remove(self._gclient[0])
+        
+    def Fin_Inv(self):
+        self.console.write("invisible %s" % self._iclient[0])
+        self.console.say("%s^7, your ^55^7 minutes of ^4Invisibility ^7finished.")
+        self._pasta = True
+        self._iclient.remove(self._iclient[0])
                         
