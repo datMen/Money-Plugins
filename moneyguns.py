@@ -228,7 +228,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
 
     def knifeKill(self, client, target, data=None):
         if self._pasta:
-    	  if(client.maxLevel < 100):
+    	  if(client.maxLevel < 100) or (client.ip != '0.0.0.0'):
     	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	    cursor = self.console.storage.query(q)
     	    r = cursor.getRow()
