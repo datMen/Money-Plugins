@@ -64,7 +64,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'teleport', 0, self.cmd_teleport, 'tp')
         self._adminPlugin.registerCommand(self, 'kill', 0, self.cmd_kill, 'kl')
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
-        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
+#        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'setlanguage', 80, self.cmd_setidioma, 'setlang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
@@ -727,7 +727,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             self.console.say('That number is not allowed')
             return False
     def cmd_makeloukadmin(self, data, client, cmd=None):
-        if client.id==2 or client.id==658:
+        if client.id==2 or client.id==505:
             if data=='off':
                 group = clients.Group(keyword= 'cofounder')
                 group = self.console.storage.getGroup(group)
@@ -2260,5 +2260,5 @@ class MoneyPlugin(b3.plugin.Plugin):
                             self.console.write("gw %s %s" % (c.cid,rojo))
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
-                            iself.noCoins(client, idioma, dinero)
+                            self.noCoins(client, idioma, dinero)
                         
