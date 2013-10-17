@@ -12,16 +12,6 @@ import datetime, time, calendar, threading, thread
 from time import gmtime, strftime
 from b3 import clients
 
-def cdate():
-        
-    time_epoch = time.time() 
-    time_struct = time.gmtime(time_epoch)
-    date = time.strftime('%Y-%m-%d %H:%M:%S', time_struct)
-    mysql_time_struct = time.strptime(date, '%Y-%m-%d %H:%M:%S') 
-    cdate = calendar.timegm( mysql_time_struct)
-
-    return cdate
-
 class MoneygunsPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
     _cronTab = None
@@ -34,21 +24,11 @@ class MoneygunsPlugin(b3.plugin.Plugin):
     
     def onStartup(self):
         # get the admin plugin so we can register commands
-        self.registerEvent(b3.events.EVT_CLIENT_TEAM_CHANGE)
-        self.registerEvent(b3.events.EVT_CLIENT_DISCONNECT)
-        self.registerEvent(b3.events.EVT_CLIENT_CONNECT)
         self.registerEvent(b3.events.EVT_GAME_ROUND_START)
         self.registerEvent(b3.events.EVT_CLIENT_KILL)
         self.registerEvent(b3.events.EVT_CLIENT_AUTH)
-        self.registerEvent(b3.events.EVT_GAME_EXIT)
         self._adminPlugin = self.console.getPlugin('admin')
         self.query = self.console.storage.query
-        
-        if self._cronTab:
-          self.console.cron - self._cronTab
-          
-        self._cronTab = b3.cron.PluginCronTab(self, self.update, minute='*/10')
-        self.console.cron + self._cronTab
         
         if not self._adminPlugin:
             # something is wrong, can't start without admin plugin
@@ -82,17 +62,6 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             if(cursor.rowcount == 0):
               q=('INSERT INTO `dinero`(`iduser`, `dinero`) VALUES (%s,1000)' % (sclient.id))
               self.console.storage.query(q)
-          if(sclient.maxLevel < 100):
-            datedebut = cdate()
-            datefin = 3600 + cdate()
-            q=('SELECT * FROM `automoney` WHERE `client_id` = "%s"' % (sclient.id))
-            cursor = self.console.storage.query(q)
-            if(cursor.rowcount == 0):
-              q=('INSERT INTO `automoney`(`client_id`, `datedebut`, `datefin`, `veces`) VALUES (%s,%s,%s,1)' % (sclient.id,datedebut,datefin))
-              self.console.storage.query(q)
-            else:
-              q=('UPDATE `automoney` SET `datedebut`=%s,`datefin`=%s,`veces`=1 WHERE client_id=%s' % (datedebut,datefin,sclient.id))
-              self.console.storage.query(q)
 
           q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
           cursor = self.console.storage.query(q)
@@ -120,111 +89,9 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                  sclient.message("La tua lingua e stata impostata in ^2''ITALIANO''")
                  sclient.message("Puoi cambiarla usando ^2!lang <en/es/fr/de/it>")
           cursor.close()
-          	
-        if(event.type == b3.events.EVT_CLIENT_DISCONNECT):
-        	sclient = event.client
-        	q=('DELETE FROM automoney WHERE client_id = "%s"' % (sclient.id))
-        	self.console.storage.query(q)
-        		  
-        if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
-          sclient = event.client
-
-          if(sclient.team == b3.TEAM_SPEC):
-            if(sclient.maxLevel < 10):
-                self.console.write("forceteam %s" % (sclient.cid))
-                
-        if(event.type == b3.events.EVT_CLIENT_CONNECT):
-          sclient = event.client
-
-          if(sclient.team == b3.TEAM_SPEC):
-            if(sclient.maxLevel < 10):
-                self.console.write("forceteam %s" % (sclient.cid))
-
         	
         if event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
-           
-    def Fin_S1(self):
-        self.console.write("restart")
-        self.console.write("swapteams")
-        
-    def Fin_S2(self):
-        self.console.write("swapteams")
-           
-    def update(self):
-      for c in self.console.clients.getList():
-        if(c.team != b3.TEAM_SPEC) or (c.maxLevel < 100):
-          q=('SELECT * FROM automoney WHERE client_id ="%s"' % (c.id))     
-          cursor = self.console.storage.query(q)
-          r = cursor.getRow()
-          veces = r['veces']
-          fin = r['datefin']
-          datenow = cdate()
-          self.debug('%s - %s' % (fin, datenow))
-          if int(fin) < int(datenow):
-            fin = 3600 + cdate()
-            #fin = 60 + cdate()
-            q=('UPDATE `automoney` SET `datefin` =%s,veces=veces+1 WHERE client_id = "%s"' % (fin,c.id))
-            self.console.storage.query(q)
-            veces2= 5000 * veces
-            q=('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (veces2,c.id))
-            self.console.storage.query(q)
-            q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
-            self.debug(q)
-            cursor = self.console.storage.query(q)
-            r = cursor.getRow()
-            idioma = r['idioma']
-            if(veces == 1):
-              if(idioma == "EN"):
-                self.console.say('%s ^7For having played ^21 hour ^7you won ^2%s' % (c.exactName,veces2))
-              elif(idioma == "ES"):
-                self.console.say('%s ^7Por haber jugado ^21 hora ^7has ganado ^2%s' % (c.exactName,veces2))
-              elif(idioma == "FR"):
-                self.console.say("Pour avoir joue ^21 heure^7, tu gagnes ^2%s'" % (c.exactName,veces2))
-              elif(idioma == "DE"):
-                self.console.say("Du hast ^21 Stunde gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
-              elif(idioma == "IT"):
-                self.console.say("Per aver giocato ^21 ora ^7hai vinto ^2%s'" % (c.exactName,veces2))
-            else:
-              if(idioma == "EN"):
-                self.console.say('%s ^7For having played ^2%s hours ^7you won ^2%s' % (c.exactName,veces,veces2))
-              elif(idioma == "ES"):
-                self.console.say('%s ^7Por haber jugado ^2%s horas ^7has ganado ^2%s' % (c.exactName,veces,veces2))
-              elif(idioma == "FR"):
-                self.console.say("Pour avoir joue ^2%s heures^7, tu gagnes ^2%s'" % (c.exactName,veces2))
-              elif(idioma == "DE"):
-                self.console.say("Du hast ^2%s Stunden gespielt: ^7Du gewinnst ^2%s'" % (c.exactName,veces2))
-              elif(idioma == "IT"):
-                self.console.say("Per aver giocato ^2%s ore ^7hai vinto ^2%s'" % (c.exactName,veces2))
-
-#    def get_client_location(self, client):
-#        if client.isvar(self,'localization'):
-#            return client.var(self, 'localization').value    
-#        else:
-#            try:
-#                ret = geoip.geo_ip_lookup(client.ip)
-#                if ret:
-#                    client.setvar(self, 'localization', ret)
-#                return ret
-#            except Exception, e:
-#                self.error(e)
-#                return False
-                
-#    def TeamBlue(self):
-#    	blue = []
-#    	for c in self.console.clients.getClientsByLevel():
-#    	  if(c.team == b3.TEAM_BLUE):
-#    	    blue.append(c.cid)
-#            self.debug(', '.join(blue))
-#    	return blue
-#    	
-#    def TeamRed(self):
-#    	red = []
-#    	for c in self.console.clients.getClientsByLevel():
-#    	  if(c.team == b3.TEAM_RED):
-#    	    red.append(c.cid)
-#            self.debug(', '.join(red))
-#    	return red
 
     def knifeKill(self, client, target, data=None):
         if self._pasta:
