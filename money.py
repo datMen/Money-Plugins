@@ -2257,7 +2257,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         if(dinero > precio_rojo):
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_rojo,c.id))
                             self.console.storage.query(q)
-                            self.console.write("gw %s %s" % (c.cid,rojo))
+                            self.console.write("gi %s %s" % (c.cid,rojo))
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
                             self.noCoins(client, idioma, dinero)
