@@ -69,7 +69,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'teleport', 0, self.cmd_teleport, 'tp')
         self._adminPlugin.registerCommand(self, 'kill', 0, self.cmd_kill, 'kl')
         self._adminPlugin.registerCommand(self, 'givemoney', 100, self.cmd_update, 'gm')
-#        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
+        self._adminPlugin.registerCommand(self, 'pay', 0, self.cmd_pay, 'give')
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'setlanguage', 80, self.cmd_setidioma, 'setlang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
@@ -674,8 +674,11 @@ class MoneyPlugin(b3.plugin.Plugin):
     	client.message('^7%s forced to spectator.' % sclient.exactName)
         
     def cmd_pay(self, data, client, cmd=None):
-        if data is None or data=='':
+        if data is None or data=="":
             client.message('^7Pay Who?')
+            return False
+        if '.' in data or ',' in data:
+            self.console.say('That number is not allowed')
             return False
         cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         r = cursor.getRow()
@@ -694,51 +697,45 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "IT"):
                 client.message("Devi connetterti almeno ^610 ^7volte al server per poter usare questo comando")
             return True
-        input = self._adminPlugin.parseUserCmd(data)
-    	cname = input[0]
-    	dato = (u"%s" % input[1])
-    	sclient = self._adminPlugin.findClientPrompt(cname, client)
-        if "," or " " or "." in dato:
-            self.console.say('That number is not allowed')
+        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""");
+        match = regex.match(data)
+
+        cname = match.group('string')
+        dato = int(match.group('number'))
+        sclient = self._adminPlugin.findClientPrompt(cname, client)
+        if dato > dinero:
+            self.noCoins(client, idioma, dinero)
             return False
-        if dato.isdigit() and dato.isnumeric():
+        else:
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, sclient.id))
             self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, client.id))
             cursor.close()
-            cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-            r = cursor.getRow()
-            iduser = r['iduser']
-            dinero = r['dinero']
-            if dinero < 0:
-                self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (dato, sclient.id))
-                self.console.storage.query('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (dato, client.id))
-                cursor.close()
-                cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-                r = cursor.getRow()
-                iduser = r['iduser']
-                dinero = r['dinero']
-                idioma = r['idioma']
-                self.noCoins(client, idioma, dinero)
-            else:
-                if(idioma == "EN"):
-                    client.message("You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
-                    sclient.message("^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
-                elif(idioma == "ES"):
-                    client.message("You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
-                    sclient.message("^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
-                elif(idioma == "FR"):
-                    client.message("In French: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
-                    sclient.message("In French: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
-                elif(idioma == "DE"):
-                    client.message("du hast ^2%s ^7Coins an %s gegeben" % (dato, sclient.exactName))
-                    sclient.message("^7%s hat dir ^2%s ^7Coins gezahlt" % (client.exactName, dato))
-                elif(idioma == "IT"):
-                    client.message("Hai dato ^2%s ^7Coins a %s" % (dato, sclient.exactName))
-                    sclient.message("^7%s ti ha dato ^2%s ^7Coins" % (client.exactName, dato))
-                return False
-        else:
-            self.console.say('That number is not allowed')
+            if(idioma == "EN"):
+                client.message("You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+            elif(idioma == "ES"):
+                client.message("Le has pagado ^2%s ^7Coins a %s" % (dato, sclient.exactName))
+            elif(idioma == "FR"):
+                client.message("In French: You paid ^2%s ^7Coins to %s" % (dato, sclient.exactName))
+            elif(idioma == "DE"):
+                client.message("du hast ^2%s ^7Coins an %s gegeben" % (dato, sclient.exactName))
+            elif(idioma == "IT"):
+                client.message("Hai dato ^2%s ^7Coins a %s" % (dato, sclient.exactName))
+            
+            cursor2 = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
+            r2 = cursor2.getRow()
+            idioma2 = r2['idioma']
+            if(idioma2 == "EN"):
+                sclient.message("^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+            elif(idioma2 == "ES"):
+                sclient.message("^7%s the ha pagado ^2%s ^7Coins" % (client.exactName, dato))
+            elif(idioma2 == "FR"):
+                sclient.message("In French: ^7%s paid you ^2%s ^7Coins" % (client.exactName, dato))
+            elif(idioma2 == "DE"):
+                sclient.message("^7%s hat dir ^2%s ^7Coins gezahlt" % (client.exactName, dato))
+            elif(idioma2 == "IT"):
+                sclient.message("^7%s ti ha dato ^2%s ^7Coins" % (client.exactName, dato))
             return False
+        
     def cmd_makeloukadmin(self, data, client, cmd=None):
         if client.id==2 or client.id==505:
             if data=='off':
