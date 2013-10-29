@@ -33,6 +33,9 @@ class MoneyPlugin(b3.plugin.Plugin):
     _cronTab = None
     time_swap = 10
     _clientvar_name = 'spree_info'
+    _swap_num = True
+    _nim = True
+    _swap_status = True
     
     def onStartup(self):
         # get the admin plugin so we can register commands
@@ -132,24 +135,21 @@ class MoneyPlugin(b3.plugin.Plugin):
         	self.console.storage.query(q)
         	
         if(event.type == b3.events.EVT_GAME_EXIT):
-        	cursor = self.console.storage.query('SELECT * FROM `configmoney` WHERE `id` = "1"')
-        	r = cursor.getRow()
-        	swap_num = r['swap_num']
-                nim = r['nim']
-        	if swap_num=="False":
-                  self.console.storage.query('UPDATE `configmoney` SET nim="1",`swap_num` ="True" WHERE `id` = "1"')
-                  TimeS1 = MoneyPlugin.time_swap * 1
-                  swaptimer = threading.Timer(TimeS1, self.Fin_S1)
-                  swaptimer.start()
-        	else:
-                  TimeS1 = MoneyPlugin.time_swap * 1
-                  swaptimer = threading.Timer(TimeS1, self.Fin_S2)
-                  swaptimer.start()
-                  if(nim == 1):
-                    self.console.storage.query('UPDATE `configmoney` SET nim="2" WHERE id = "1"')
-                  else:
-                    self.console.storage.query('UPDATE `configmoney` SET `swap_num` ="False" WHERE `id` = "1"')
-                  cursor.close()
+            if self._swap_status:
+                if self._swap_num:
+                    if self._nim:
+                        self._nim = False
+                        TimeS1 = SwapPlugin.time_swap * 1
+                        swaptimer = threading.Timer(TimeS1, self.Fin_S2)
+                        swaptimer.start()
+                    else:
+                        self._swap_num = False
+                        self._nim = True
+                else:
+                    self._swap_num = True
+                    TimeS1 = SwapPlugin.time_swap * 1
+                    swaptimer = threading.Timer(TimeS1, self.Fin_S1)
+                    swaptimer.start()
         		  
         if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
           sclient = event.client
