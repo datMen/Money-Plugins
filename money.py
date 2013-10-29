@@ -25,6 +25,8 @@ def cdate():
 class SpreeStats:
     kills                  = 0
     deaths                 = 0
+    
+    spec                   = True
 
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
@@ -70,6 +72,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
         self._adminPlugin.registerCommand(self, 'makeloukadmin', 80, self.cmd_makeloukadmin, 'mla')
         self._adminPlugin.registerCommand(self, 'spree', 0, self.cmd_spree)
+        self._adminPlugin.registerCommand(self, 'spec', 20, self.cmd_spec)
     
     def onEvent(self, event):
         if event.type == b3.events.EVT_GAME_ROUND_START:
@@ -153,14 +156,12 @@ class MoneyPlugin(b3.plugin.Plugin):
 
           if(sclient.team == b3.TEAM_SPEC):
             if(sclient.maxLevel < 10):
-                self.console.write("forceteam %s" % (sclient.cid))
+                Stats = self.get_spree_stats(sclient)
+                if Stats.spec:
+                    self.console.write("forceteam %s" % (sclient.cid))
                 
         if(event.type == b3.events.EVT_CLIENT_CONNECT):
           sclient = event.client
-
-          if(sclient.team == b3.TEAM_SPEC):
-            if(sclient.maxLevel < 10):
-                self.console.write("forceteam %s" % (sclient.cid))
 
         	
         if event.type == b3.events.EVT_CLIENT_KILL: 
@@ -659,6 +660,18 @@ class MoneyPlugin(b3.plugin.Plugin):
     	cursor = self.console.storage.query(q)
     	cursor.close()
     	client.message('^2Done.')
+        
+    def cmd_spec(self, data, client, cmd=None):
+    	input = self._adminPlugin.parseUserCmd(data)
+    	cname = input[0]
+    	sclient = self._adminPlugin.findClientPrompt(cname, client)
+        Stats = self.get_spree_stats(sclient)
+    	if not sclient: 
+            client.message('^7Force spec Who?')
+            return False
+        Stats.spec = False
+        self.console.write("forceteam %s s" % (sclient.cid))
+    	client.message('^7%s forced to spectator.' % sclient.exactName)
         
     def cmd_pay(self, data, client, cmd=None):
         if data is None or data=='':
