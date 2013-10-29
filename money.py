@@ -2236,7 +2236,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                             self.console.write("gw %s %s" % (c.cid,azul))
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
-                            self.noCoins(client, idioma, dinero)
+                            self.noCoins(c, idioma, dinero)
             if(c.team == b3.TEAM_RED):
                 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
                 cursor = self.console.storage.query(q)
@@ -2270,5 +2270,5 @@ class MoneyPlugin(b3.plugin.Plugin):
                             self.console.write("gi %s %s" % (c.cid,rojo))
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
-                            self.noCoins(client, idioma, dinero)
+                            self.noCoins(c, idioma, dinero)
                         
