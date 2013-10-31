@@ -139,7 +139,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 if self._swap_num:
                     if self._nim:
                         self._nim = False
-                        TimeS1 = SwapPlugin.time_swap * 1
+                        TimeS1 = MoneyPlugin.time_swap * 1
                         swaptimer = threading.Timer(TimeS1, self.Fin_S2)
                         swaptimer.start()
                     else:
