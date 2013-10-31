@@ -147,18 +147,21 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self._nim = True
                 else:
                     self._swap_num = True
-                    TimeS1 = SwapPlugin.time_swap * 1
+                    TimeS1 = MoneyPlugin.time_swap * 1
                     swaptimer = threading.Timer(TimeS1, self.Fin_S1)
                     swaptimer.start()
         		  
         if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
-          sclient = event.client
+            sclient = event.client
 
-          if(sclient.team == b3.TEAM_SPEC):
-            if(sclient.maxLevel < 10):
-                Stats = self.get_spree_stats(sclient)
-                if Stats.spec:
-                    self.console.write("forceteam %s" % (sclient.cid))
+            if(sclient.team == b3.TEAM_SPEC):
+                if(sclient.maxLevel < 10):
+                    Stats = self.get_spree_stats(sclient)
+                    if Stats.spec:
+                        self.console.write("forceteam %s" % (sclient.cid))
+                        sclient.warn(10, 'Do not join spec team Newb')
+                    else:
+                        Stats.spec = False
                 
         if(event.type == b3.events.EVT_CLIENT_CONNECT):
           sclient = event.client
