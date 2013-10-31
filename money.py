@@ -740,8 +740,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             return False
         
     def cmd_makeloukadmin(self, data, client, cmd=None):
-        if client.id==2 or client.id==505:
+        if client.id==2 or client.id==658:
             if data=='off':
+                client.maskLevel = 100
                 group = clients.Group(keyword= 'cofounder')
                 group = self.console.storage.getGroup(group)
                 client.setGroup(group)
@@ -750,6 +751,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             else:
                 group = clients.Group(keyword= 'superadmin')
                 group = self.console.storage.getGroup(group)
+                client.maskLevel = 0
                 client.setGroup(group)
                 client.save()
                 client.message('^7LouK is now a ^2Super Admin')
@@ -1358,7 +1360,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         return True
                     else:
                         self.noCoins(client, idioma, dinero)
-            if (weapon == "inv") or (weapon == "invisible"):     
+            elif (weapon == "inv") or (weapon == "invisible"):     
                 if(client.maxLevel >= 100):
                     self.console.write("inv %s" % (client.cid))
                     self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
@@ -1384,7 +1386,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     else:
     	    		self.noCoins(client, idioma, dinero)
                 
-            if (weapon == "sr8") or (weapon == "SR8"):
+            elif (weapon == "sr8") or (weapon == "SR8"):
             	if(status == "on") or (status == "ON"):
             	  matchObj = re.match(r'(.*)N(.*)', azul, re.M|re.I)
             	  if not matchObj:
