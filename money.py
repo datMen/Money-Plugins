@@ -1,4 +1,4 @@
-__version__ = '2.0'
+__version__ = '2.5'
 __author__  = 'LouK'
 
 import b3
@@ -36,6 +36,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     _swap_num = True
     _nim = True
     _swap_status = True
+    _not_connecting = True
     
     def onStartup(self):
         # get the admin plugin so we can register commands
@@ -73,7 +74,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin.registerCommand(self, 'language', 0, self.cmd_idioma, 'lang')
         self._adminPlugin.registerCommand(self, 'setlanguage', 80, self.cmd_setidioma, 'setlang')
         self._adminPlugin.registerCommand(self, 'disarm', 0, self.cmd_disarm, 'dis')
-        self._adminPlugin.registerCommand(self, 'makeloukadmin', 80, self.cmd_makeloukadmin, 'mla')
+        self._adminPlugin.registerCommand(self, 'makeloukadmin', 5, self.cmd_makeloukadmin, 'mla')
         self._adminPlugin.registerCommand(self, 'spree', 0, self.cmd_spree)
         self._adminPlugin.registerCommand(self, 'spec', 20, self.cmd_spec)
     
@@ -150,6 +151,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     TimeS1 = MoneyPlugin.time_swap * 1
                     swaptimer = threading.Timer(TimeS1, self.Fin_S1)
                     swaptimer.start()
+            self._connecting = True
+            t = threading.Timer(45, self.connOff)
+            t.start() 
         		  
         if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
             sclient = event.client
@@ -159,18 +163,27 @@ class MoneyPlugin(b3.plugin.Plugin):
                     Stats = self.get_spree_stats(sclient)
                     if Stats.spec:
                         self.console.write("forceteam %s" % (sclient.cid))
-                        sclient.warn(10, 'Do not join spec team Newb')
+                        if self._not_connecting:
+                            warnings = sclient.numWarnings
+                            sclient.warn(10, '^1WARNING^7 [^3%s^7]: Do not join spec team Newb' % (warnings +1))
+                            self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
+                            if warnings >= 2:
+                                sclient.tempban('Too many warnings: Do not join spec team', 10)
                     else:
                         Stats.spec = False
-                
-        if(event.type == b3.events.EVT_CLIENT_CONNECT):
-          sclient = event.client
-
         	
+        if(event.type == b3.events.EVT_CLIENT_CONNECT):
+            self._not_connecting = False
+            t = threading.Timer(30, self.connOff)
+            t.start() 
+            
         if event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
            self.spreeKill(event.client, event.target)
            
+    def connOff(self):
+        self._not_connecting = True
+        
     def Fin_S1(self):
         self.console.write("restart")
         self.console.write("swapteams")
