@@ -786,7 +786,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
         weapon = input[0]
         status = input[1]
         veces = input[1]
-        if(weapon == "help") or (weapon == "ayuda") or (weapon == "In French: help")or (weapon == "In German: help"):
+        if(weapon == "help") or (weapon == "ayuda") or (weapon == "In French: help")or (weapon == "hilfe"):
             if(idioma == "EN"):
                 self.console.write('tell %s ^7Type ^2!money ^7to see your money' % (client.cid))
                 self.console.write('tell %s ^7Type ^2!bl ^7to see the weapons and items prices' % (client.cid))
