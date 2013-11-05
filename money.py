@@ -27,6 +27,7 @@ class SpreeStats:
     deaths                 = 0
     
     spec                   = True
+    suicide                   = True
 
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
@@ -45,6 +46,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self.registerEvent(b3.events.EVT_CLIENT_CONNECT)
         self.registerEvent(b3.events.EVT_GAME_ROUND_START)
         self.registerEvent(b3.events.EVT_CLIENT_KILL)
+        self.registerEvent(b3.events.EVT_CLIENT_SUICIDE)
         self.registerEvent(b3.events.EVT_CLIENT_AUTH)
         self.registerEvent(b3.events.EVT_GAME_EXIT)
         self._adminPlugin = self.console.getPlugin('admin')
@@ -82,7 +84,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         if event.type == b3.events.EVT_GAME_ROUND_START:
           self.autoMessage(event)
              	                
-        if(event.type == b3.events.EVT_CLIENT_AUTH):
+        elif(event.type == b3.events.EVT_CLIENT_AUTH):
           sclient = event.client
           if(sclient.maxLevel < 100):
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
@@ -130,12 +132,12 @@ class MoneyPlugin(b3.plugin.Plugin):
                  sclient.message("Puoi cambiarla usando ^2!lang <en/es/fr/de/it>")
           cursor.close()
           	
-        if(event.type == b3.events.EVT_CLIENT_DISCONNECT):
+        elif(event.type == b3.events.EVT_CLIENT_DISCONNECT):
         	sclient = event.client
         	q=('DELETE FROM automoney WHERE client_id = "%s"' % (sclient.id))
         	self.console.storage.query(q)
         	
-        if(event.type == b3.events.EVT_GAME_EXIT):
+        elif(event.type == b3.events.EVT_GAME_EXIT):
             if self._swap_status:
                 if self._swap_num:
                     if self._nim:
@@ -155,7 +157,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             t = threading.Timer(45, self.connOff)
             t.start() 
         		  
-        if(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
+        elif(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
             sclient = event.client
 
             if(sclient.team == b3.TEAM_SPEC):
@@ -171,15 +173,25 @@ class MoneyPlugin(b3.plugin.Plugin):
                                 sclient.tempban('Too many warnings: Do not join spec team', 10)
                     else:
                         Stats.spec = False
+                        
+        elif(event.type == b3.events.EVT_CLIENT_SUICIDE):
+            sclient = event.client
+            Stats = self.get_spree_stats(sclient)
+            if Stats.suicide:
+                warnings = sclient.numWarnings
+                sclient.warn(10, '^1WARNING^7 [^3%s^7]: Do not kill yourself idiot' % (warnings +1))
+                self.console.say('%s, try to kill yourself again n00b!' % (sclient.exactName))
+                if warnings >= 1:
+                    sclient.tempban('Too many warnings: Do not kill yourself idiot', 10)
+                    
+        elif event.type == b3.events.EVT_CLIENT_KILL: 
+           self.knifeKill(event.client, event.target, event.data)
+           self.spreeKill(event.client, event.target)
         	
-        if(event.type == b3.events.EVT_CLIENT_CONNECT):
+        elif(event.type == b3.events.EVT_CLIENT_CONNECT):
             self._not_connecting = False
             t = threading.Timer(30, self.connOff)
             t.start() 
-            
-        if event.type == b3.events.EVT_CLIENT_KILL: 
-           self.knifeKill(event.client, event.target, event.data)
-           self.spreeKill(event.client, event.target)
            
     def connOff(self):
         self._not_connecting = True
@@ -549,7 +561,11 @@ class MoneyPlugin(b3.plugin.Plugin):
       if(client.maxLevel >= 100):
         input = self._adminPlugin.parseUserCmd(data)
         sclient = self._adminPlugin.findClientPrompt(input[0], client)
+        Stats = self.get_spree_stats(sclient)
+        Stats.suicide = False
         self.console.write("kill %s" % (sclient.cid))
+        time.sleep(2)
+        Stats.suicide = True
       else:
     	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	  cursor = self.console.storage.query(q)
@@ -575,7 +591,11 @@ class MoneyPlugin(b3.plugin.Plugin):
     	  if (dinero > 10000):
             q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
             self.console.storage.query(q)
+            Stats = self.get_spree_stats(sclient)
+            Stats.suicide = False
             self.console.write("kill %s" % (sclient.cid))
+            time.sleep(2)
+            Stats.suicide = True
             if(idioma == "EN"):
                 client.message('You killed %s! ^1-10000 ^7Coins' % (sclient.exactName))
             elif(idioma == "ES"):
