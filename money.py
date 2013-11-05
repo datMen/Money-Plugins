@@ -172,7 +172,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                             if warnings >= 2:
                                 sclient.tempban('Too many warnings: Do not join spec team', 10)
                     else:
-                        Stats.spec = False
+                        Stats.spec = True
                         
         elif(event.type == b3.events.EVT_CLIENT_SUICIDE):
             sclient = event.client
