@@ -41,12 +41,12 @@ class MoneyPlugin(b3.plugin.Plugin):
     
     def onStartup(self):
         # get the admin plugin so we can register commands
+        self.registerEvent(b3.events.EVT_CLIENT_SUICIDE)
         self.registerEvent(b3.events.EVT_CLIENT_TEAM_CHANGE)
         self.registerEvent(b3.events.EVT_CLIENT_DISCONNECT)
         self.registerEvent(b3.events.EVT_CLIENT_CONNECT)
         self.registerEvent(b3.events.EVT_GAME_ROUND_START)
         self.registerEvent(b3.events.EVT_CLIENT_KILL)
-        self.registerEvent(b3.events.EVT_CLIENT_SUICIDE)
         self.registerEvent(b3.events.EVT_CLIENT_AUTH)
         self.registerEvent(b3.events.EVT_GAME_EXIT)
         self._adminPlugin = self.console.getPlugin('admin')
@@ -159,7 +159,6 @@ class MoneyPlugin(b3.plugin.Plugin):
         		  
         elif(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
             sclient = event.client
-
             if(sclient.team == b3.TEAM_SPEC):
                 if(sclient.maxLevel < 10):
                     Stats = self.get_spree_stats(sclient)
@@ -167,10 +166,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self.console.write("forceteam %s" % (sclient.cid))
                         if self._not_connecting:
                             warnings = sclient.numWarnings
-                            sclient.warn(10, '^1WARNING^7 [^3%s^7]: Do not join spec team Newb' % (warnings +1))
+                            sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not join spec team ^3Newb' % (warnings +1))
                             self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
                             if warnings >= 2:
-                                sclient.tempban('Too many warnings: Do not join spec team', 10)
+                                sclient.tempban(duration='5m', reason='Too many warnings: Do not join spec team')
                     else:
                         Stats.spec = True
                         
@@ -179,10 +178,12 @@ class MoneyPlugin(b3.plugin.Plugin):
             Stats = self.get_spree_stats(sclient)
             if Stats.suicide:
                 warnings = sclient.numWarnings
-                sclient.warn(10, '^1WARNING^7 [^3%s^7]: Do not kill yourself idiot' % (warnings +1))
-                self.console.say('%s, try to kill yourself again n00b!' % (sclient.exactName))
-                if warnings >= 1:
-                    sclient.tempban('Too many warnings: Do not kill yourself idiot', 10)
+                sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not kill yourself idiot' % (warnings +1))
+                self.console.say('%s, try to kill yourself again ^1n00b' % (sclient.exactName))
+                if warnings >= 2:
+                    sclient.tempban(duration='5m', reason='Too many warnings: Do not kill yourself idiot')
+            else:
+                Stats.suicide = True
                     
         elif event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
@@ -564,8 +565,6 @@ class MoneyPlugin(b3.plugin.Plugin):
         Stats = self.get_spree_stats(sclient)
         Stats.suicide = False
         self.console.write("kill %s" % (sclient.cid))
-        time.sleep(2)
-        Stats.suicide = True
       else:
     	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	  cursor = self.console.storage.query(q)
@@ -589,13 +588,11 @@ class MoneyPlugin(b3.plugin.Plugin):
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
     	  if (dinero > 10000):
-            q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
-            self.console.storage.query(q)
             Stats = self.get_spree_stats(sclient)
             Stats.suicide = False
+            q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
+            self.console.storage.query(q)
             self.console.write("kill %s" % (sclient.cid))
-            time.sleep(2)
-            Stats.suicide = True
             if(idioma == "EN"):
                 client.message('You killed %s! ^1-10000 ^7Coins' % (sclient.exactName))
             elif(idioma == "ES"):
