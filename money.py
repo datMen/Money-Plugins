@@ -791,7 +791,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     def cmd_money(self, data, client, cmd=None):
         if data is None or data=='':
           if(client.maxLevel >= 100):
-            client.message('^7Tienes: Infinito')
+            client.message('^7Tienes: ^2Infinito')
             return True
           else:  
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
@@ -817,7 +817,7 @@ class MoneyPlugin(b3.plugin.Plugin):
           sclient = self._adminPlugin.findClientPrompt(input[0], client)
           if not sclient: return False
           if(sclient.maxLevel >= 100):
-            client.message('%s has: ^2Infinito' % (sclient.exactName))
+            client.message('%s has: ^2Infinite' % (sclient.exactName))
             return True
           else:
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
@@ -1299,20 +1299,40 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(status == "off") or (status == "OFF"):
             if client.team == b3.TEAM_BLUE:
                 if ("%s" % key) in azul:
-                    lol = azul.replace(("%s"  % key),"");
+                    lol = azul.replace(("%s" % key),"");
                     q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-%s WHERE iduser = "%s"' % (lol, valor, client.id))
                     self.console.storage.query(q)
-                    self.autoBuying(client, idioma, weapon)
+                    self.autoBuyingStop(client, idioma, weapon)
                 else:
-                    self.autoBuyingAlready(client, idioma, weapon)
+                    self.autoBuyingNot(client, idioma)
             elif client.team == b3.TEAM_RED:
                 if ("%s" % key) in rojo:
-                    lol = rojo.replace(("%s"  % key),"");
+                    lol = rojo.replace(("%s" % key),"");
                     q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-%s WHERE iduser = "%s"' % (lol, valor, client.id))
                     self.console.storage.query(q)
                     self.autoBuyingStop(client, idioma, weapon)
                 else:
                     self.autoBuyingNot(client, idioma)
+                    
+    def buyItem(self, client, key, valor, nombre):
+        q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+        self.debug(q)
+        cursor = self.console.storage.query(q)
+        r = cursor.getRow()
+        dinero = r['dinero']
+        idioma = r['idioma']
+        if(client.maxLevel >= 100):
+            self.console.write("gi %s %s" % (client.cid, key))
+            return True
+        else:
+            if (valor > dinero):
+                self.noCoins(client, idioma, dinero)
+            else:
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                self.console.storage.query(q)
+                self.console.write("gi %s %s" % (client.cid, key))
+                sobran = (dinero - valor)
+                self.clientBought(client, idioma, nombre, sobran)
                 
     def buyWeapon(self, client, key, valor, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
@@ -1334,27 +1354,13 @@ class MoneyPlugin(b3.plugin.Plugin):
                 sobran = (dinero - valor)
                 self.clientBought(client, idioma, nombre, sobran)
                 
-    def buyItem(self, client, key, valor, nombre):
+    def buyVeces(self, client, key, valor, nombre, veces):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         self.debug(q)
         cursor = self.console.storage.query(q)
         r = cursor.getRow()
         dinero = r['dinero']
         idioma = r['idioma']
-        if(client.maxLevel >= 100):
-            self.console.write("gi %s %s" % (client.cid, key))
-            return True
-        else:
-            if (valor > dinero):
-                self.noCoins(client, idioma, dinero)
-            else:
-                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                self.console.storage.query(q)
-                self.console.write("gi %s %s" % (client.cid, key))
-                sobran = (dinero - valor)
-                self.clientBought(client, idioma, nombre, sobran)
-                
-    def buyVeces(self, client, key, valor, nombre, veces):
         valorTotal = (valor * veces)
             
         if (valorTotal > dinero):
@@ -1455,9 +1461,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s ^7Scrivi ^2!kill ^4<player> ^7per uccidere un nemico' % (client.cid))
                 self.console.write('tell %s ^7Scrivi ^2!b god ^7per acquistare godmode(per un turno)' % (client.cid))
                 self.console.write('tell %s ^7Scrivi ^2!b inv ^7per diventare invisibile(fino a che i team non vengono invertiti)' % (client.cid))
-            return True
+            return False
         if client.team == b3.TEAM_BLUE:
-                        	   ############################## Remington SR8 ##############################
             if (weapon == "god") or (weapon == "godmode"):
                 if(client.maxLevel >= 100):
                     self.console.write("sv_cheats 1")
@@ -1809,7 +1814,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                             sobran=dinero-valor2
                             self.clientBought(client, idioma, nombre, sobran)
             else:
-            	if(idioma == "EN"):
+                if(idioma == "EN"):
                     client.message("Couldn't find: ^1%s" % input[0])
                 elif(idioma == "ES"):
                     client.message("No se encontro: ^1%s" % input[0])
