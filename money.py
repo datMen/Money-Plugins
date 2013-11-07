@@ -1280,31 +1280,39 @@ class MoneyPlugin(b3.plugin.Plugin):
         azul = r['azul']
         rojo = r['rojo']
         if(status == "on") or (status == "ON"):
-            matchObj = re.match(r'(.*)N(.*)', azul, re.M|re.I)
-            if not matchObj:
-                if client.team == b3.TEAM_BLUE:
+            if client.team == b3.TEAM_BLUE:
+                if ("%s" % key) not in azul:
                     lol = azul.replace(azul, azul+("%s" % key));
                     q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+%s WHERE iduser = "%s"' % (lol,valor,client.id))
-                elif client.team == b3.TEAM_RED:
+                    self.console.storage.query(q)
+                    self.autoBuying(client, idioma, weapon)
+                else:
+                    self.autoBuyingAlready(client, idioma, weapon)
+            elif client.team == b3.TEAM_RED:
+                if ("%s" % key) not in rojo:
                     lol = rojo.replace(rojo, rojo+("%s" % key));
                     q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+%s WHERE iduser = "%s"' % (lol,valor,client.id))
-                self.console.storage.query(q)
-                self.autoBuying(client, idioma, weapon)
-            else:
-                self.autoBuyingAlready(client, idioma, weapon)
+                    self.console.storage.query(q)
+                    self.autoBuying(client, idioma, weapon)
+                else:
+                    self.autoBuyingAlready(client, idioma, weapon)
         elif(status == "off") or (status == "OFF"):
-            matchObj = re.match(r'(.*)N(.*)', azul, re.M|re.I)
-            if matchObj:
-                if client.team == b3.TEAM_BLUE:
-                    lol = azul.replace("%s","" & key);
-                    q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-%s WHERE iduser = "%s"' % (lol, key, client.id))
-                elif client.team == b3.TEAM_RED:
-                    lol = rojo.replace("%s","" & key);
-                    q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-%s WHERE iduser = "%s"' % (lol, key, client.id))
-                self.console.storage.query(q)
-                self.autoBuyingStop(client, idioma, weapon)
-            else:
-                self.autoBuyingNot(client, idioma)
+            if client.team == b3.TEAM_BLUE:
+                if ("%s" % key) in azul:
+                    lol = azul.replace(("%s"  % key),"");
+                    q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-%s WHERE iduser = "%s"' % (lol, valor, client.id))
+                    self.console.storage.query(q)
+                    self.autoBuying(client, idioma, weapon)
+                else:
+                    self.autoBuyingAlready(client, idioma, weapon)
+            elif client.team == b3.TEAM_RED:
+                if ("%s" % key) in rojo:
+                    lol = rojo.replace(("%s"  % key),"");
+                    q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-%s WHERE iduser = "%s"' % (lol, valor, client.id))
+                    self.console.storage.query(q)
+                    self.autoBuyingStop(client, idioma, weapon)
+                else:
+                    self.autoBuyingNot(client, idioma)
                 
     def buyWeapon(self, client, name, key, valor, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
