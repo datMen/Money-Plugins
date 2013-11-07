@@ -1326,6 +1326,26 @@ class MoneyPlugin(b3.plugin.Plugin):
                 sobran = (dinero - valor)
                 self.clientBought(client, idioma, nombre, sobran)
                 
+    def buyItem(self, client, name, key, valor, nombre):
+        q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+        self.debug(q)
+        cursor = self.console.storage.query(q)
+        r = cursor.getRow()
+        dinero = r['dinero']
+        idioma = r['idioma']
+        if(client.maxLevel >= 100):
+            self.console.write("gi %s %s" % (client.cid, key))
+            return True
+        else:
+            if (valor > dinero):
+                self.noCoins(client, idioma, dinero)
+            else:
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                self.console.storage.query(q)
+                self.console.write("gi %s %s" % (client.cid, key))
+                sobran = (dinero - valor)
+                self.clientBought(client, idioma, nombre, sobran)
+                
             
     def cmd_getweapon(self, data, client=None, cmd=None):
         """\
@@ -1472,414 +1492,134 @@ class MoneyPlugin(b3.plugin.Plugin):
     	    		return True
                     else:
     	    		self.noCoins(client, idioma, dinero)
-                
+
             elif (weapon == "sr8") or (weapon == "SR8"):
                 nombre = 'Remington SR8'
                 key = 'N'
                 valor = 600
                 
-            	if status:
+                if status:
                     self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
                     return False
                 else:
                     self.buyWeapon(client, nombre, key, valor, nombre)
-                        	   ############################## Franchi SPAS12 ##############################
+                    
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)D(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"D");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+400 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)D(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("D","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-400 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s D" % client.cid)
-            		return True
-            	else:
-            	  valor = "400" ######### PRECIO
-            	  valor2 = 400  ######### PRECIO
-            	  nombre = 'Franchi SPAS12'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s D" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## HK MP5K ##############################
+                nombre = 'Franchi SPAS12'
+                key = 'D'
+                valor = 450
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "mp5") or (weapon == "MP5") or (weapon == "MP5K") or (weapon == "mp5k"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)E(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"E");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+500 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)E(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("E","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-500 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-                        self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s E" % client.cid)
-            		return True
-            	else:
-            	  valor = "500" ######### PRECIO
-            	  valor2 = 500  ######### PRECIO
-            	  nombre = 'HK MP5K'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s E" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## HK UMP45 ##############################
+                nombre = 'HK MP5K'
+                key = 'E'
+                valor = 300
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+
             elif (weapon == "ump") or (weapon == "UMP") or (weapon == "UMP45") or (weapon == "ump45"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)F(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"F");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+550 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)F(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("F","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-550 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s F" % client.cid)
-            		return True
-            	else:
-            	  valor = "550" ######### PRECIO
-            	  valor2 = 550  ######### PRECIO
-            	  nombre = 'HK UMP45'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s F" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## HK69 40mm ##############################
+                nombre = 'HK UMP45'
+                key = 'F'
+                valor = 350
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+
             elif (weapon == "HK69") or (weapon == "hk69") or (weapon == "hk") or (weapon == "HK"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)G(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"G");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+2000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)G(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("G","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-2000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s G" % client.cid)
-            		return True
-            	else:
-            	  valor = "2000" ######### PRECIO
-            	  valor2 = 2000  ######### PRECIO
-            	  nombre = 'HK69 40mm'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s G" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## ZM LR300 ##############################
+                nombre = 'HK69 40mm'
+                key = 'G'
+                valor = 2000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)H(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"H");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+650 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)H(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("H","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-650 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s H" % client.cid)
-            		return True
-            	else:
-            	  valor = "650" ######### PRECIO
-            	  valor2 = 650  ######### PRECIO
-            	  nombre = 'ZM LR300'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s H" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## HK PSG1 ##############################
+                nombre = 'ZM LR300'
+                key = 'H'
+                valor = 650
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+
             elif (weapon == "PSG") or (weapon == "psg") or (weapon == "PSG1") or (weapon == "psg1"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)J(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"J");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+1000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)J(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("J","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-1000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s J" % client.cid)
-            		return True
-            	else:
-            	  valor = "1000" ######### PRECIO
-            	  valor2 = 1000  ######### PRECIO
-            	  nombre = 'HK PSG1'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s J" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## HK G36 ##############################
+                nombre = 'HK PSG1'
+                key = 'J'
+                valor = 1000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "g36") or (weapon == "G36"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)I(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"I");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+1000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)I(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("I","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-1000 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s I" % client.cid)
-            		return True
-            	else:
-            	  valor = "1000" ######### PRECIO
-            	  valor2 = 1000  ######### PRECIO
-            	  nombre = 'HK G36'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s I" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## AK103 7.62mm ##############################
+                nombre = 'HK G36'
+                key = 'I'
+                valor = 1000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+
             elif (weapon == "ak") or (weapon == "AK") or (weapon == "AK103") or (weapon == "ak103"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)O(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"O");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+700 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)O(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("O","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-700 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s O" % client.cid)
-            		return True
-            	else:
-            	  valor = "700" ######### PRECIO
-            	  valor2 = 700  ######### PRECIO
-            	  nombre = 'AK103 7.62mm'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s O" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## IMI Negev ##############################
+                nombre = 'AK103 7.62mm'
+                key = 'O'
+                valor = 700
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+
             elif (weapon == "NEGEV") or (weapon == "negev") or (weapon == "NE") or (weapon == "ne"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)Q(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"Q");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+750 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)Q(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("Q","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-750 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s Q" % client.cid)
-            		return True
-            	else:
-            	  valor = "750" ######### PRECIO
-            	  valor2 = 750  ######### PRECIO
-            	  nombre = 'IMI Negev'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s Q" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Colt M4A1 ##############################
+                nombre = 'IMI Negev'
+                key = 'Q'
+                valor = 1000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "M4") or (weapon == "m4") or (weapon == "m4a") or (weapon == "M4A"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)S(.*)', azul, re.M|re.I)
-            	  if not matchObj:
-            		  lol=azul.replace(azul,azul+"S");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul+650 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)S(.*)', azul, re.M|re.I)
-            	  if matchObj:
-            		  lol=azul.replace("S","");
-            		  q=('UPDATE `dinero` SET `azul`="%s",`precio_azul`=precio_azul-650 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gw %s S" % client.cid)
-            		return True
-            	else:
-            	  valor = "650" ######### PRECIO
-            	  valor2 = 650  ######### PRECIO
-            	  nombre = 'Colt M4A1'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gw %s S" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
+                nombre = 'Colt M4A1'
+                key = 'S'
+                valor = 650
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyWeapon(client, nombre, key, valor, nombre)
             else:
             	if(idioma == "ES"):
-                    client.message("^7No se encontro: ^2%s^7" % input[0])
+                    client.message("^7No se encontro: ^1%s^7" % input[0])
                 elif(idioma == "IT"):
-                    client.message("^7Impossibile trovare: ^2%s^7" % input[0])
+                    client.message("^7Impossibile trovare: ^1%s^7" % input[0])
                 else:
-                    client.message("^7Couldn't find: ^2%s^7" % input[0])
+                    client.message("^7Couldn't find: ^1%s^7" % input[0])
             return False
                 
         if client.team == b3.TEAM_RED:
@@ -2105,139 +1845,49 @@ class MoneyPlugin(b3.plugin.Plugin):
             #		    return True
                         	   ############################## Kevlar Vest ##############################
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)A(.*)', rojo, re.M|re.I)
-            	  if not matchObj:
-            		  lol=rojo.replace(rojo,rojo+"A");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+1200 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)A(.*)', rojo, re.M|re.I)
-            	  if matchObj:
-            		  lol=rojo.replace("A","");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-1200 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gi %s A" % client.cid)
-            		return True
-            	else:
-            	  valor = "1200" ######### PRECIO
-            	  valor2 = 1200  ######### PRECIO
-            	  nombre = 'Kevlar Vest'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gi %s A" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Helmet ##############################
+                nombre = 'Kevlar Vest'
+                key = 'A'
+                valor = 1000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyItem(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
-            	  if not matchObj:
-            		  lol=rojo.replace(rojo,rojo+"F");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+800 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)F(.*)', rojo, re.M|re.I)
-            	  if matchObj:
-            		  lol=rojo.replace("F","");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-800 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gi %s F" % client.cid)
-            		return True
-            	else:
-            	  valor = "800" ######### PRECIO
-            	  valor2 = 800  ######### PRECIO
-            	  nombre = 'Helmet'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gi %s F" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Medkit ##############################
+                nombre = 'Helmet'
+                key = 'F'
+                valor = 800
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyItem(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
-            	if(status == "on") or (status == "ON"):
-            	  matchObj = re.match(r'(.*)C(.*)', rojo, re.M|re.I)
-            	  if not matchObj:
-            		  lol=rojo.replace(rojo,rojo+"C");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo+500 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuying(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingAlready(client, idioma, weapon)
-                        return False
-            	if(status == "off") or (status == "OFF"):
-            	  matchObj = re.match(r'(.*)C(.*)', rojo, re.M|re.I)
-            	  if matchObj:
-            		  lol=rojo.replace("C","");
-            		  q=('UPDATE `dinero` SET `rojo`="%s",`precio_rojo`=precio_rojo-500 WHERE iduser = "%s"' % (lol,client.id))
-            		  self.console.storage.query(q)
-            		  self.autoBuyingStop(client, idioma, weapon)
-                          return False
-            	  else:
-            	  	self.autoBuyingNot(client, idioma)
-                        return False
-            	if(client.maxLevel >= 100):
-            		self.console.write("gi %s C" % client.cid)
-            		return True
-            	else:
-            	  valor = "500" ######### PRECIO
-            	  valor2 = 500  ######### PRECIO
-            	  nombre = 'Medkit'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gi %s C" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## TacGoggles ##############################
+                nombre = 'Medkit'
+                key = 'C'
+                valor = 500
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyItem(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
-            	if(client.maxLevel >= 100):
-            		self.console.write("gi %s B" % client.cid)
-            		return True
-            	else:
-            	  valor = "5000" ######### PRECIO
-            	  valor2 = 5000  ######### PRECIO
-            	  nombre = 'TacGoggles'  ######### NOMBRE ARMA
-            	  if (valor2 > dinero):
-            	    self.noCoins(client, idioma, dinero)
-            	  else:
-            	     q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            	     self.console.storage.query(q)
-            	     self.console.write("gi %s B" % client.cid)
-            	     sobran=dinero-valor2
-            	     self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Health ##############################
+                nombre = 'TacGoggles'
+                key = 'B'
+                valor = 2000
+                
+                if status:
+                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    return False
+                else:
+                    self.buyItem(client, nombre, key, valor, nombre)
+                    
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
                 if input[1]:
                     sclient = self._adminPlugin.findClientPrompt(input[1], client)
@@ -2281,15 +1931,15 @@ class MoneyPlugin(b3.plugin.Plugin):
                             self.clientBought(client, idioma, nombre, sobran)
             else:
             	if(idioma == "EN"):
-                    client.message("Couldn't find: ^2%s" % input[0])
+                    client.message("Couldn't find: ^1%s" % input[0])
                 elif(idioma == "ES"):
-                    client.message("No se encontro: ^2%s" % input[0])
+                    client.message("No se encontro: ^1%s" % input[0])
                 elif(idioma == "FR"):
-                    client.message("In French: Couldn't find: ''^2%s" % input[0])
+                    client.message("In French: Couldn't find: ^1%s" % input[0])
                 elif(idioma == "DE"):
-                    client.message("Konnte ^2%s ^7nicht finden" % input[0])
+                    client.message("Konnte ^1%s ^7nicht finden" % input[0])
                 elif(idioma == "IT"):
-                    client.message("Impossibile trovare: ^2%s" % input[0])
+                    client.message("Impossibile trovare: ^1%s" % input[0])
                 return False
                 
     def autoMessage(self, event):
@@ -2345,7 +1995,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 precio_rojo = r['precio_rojo']
                 idioma = r['idioma']
                 if(c.maxLevel >= 100):
-                    self.console.write("gw %s %s" % (c.cid,rojo))
+                    self.console.write("gi %s %s" % (c.cid,rojo))
                 else:
                     if rojo:
                         weapon = []
