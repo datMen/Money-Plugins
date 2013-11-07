@@ -28,6 +28,7 @@ class SpreeStats:
     
     spec                   = True
     suicide                   = True
+    
 
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
@@ -1904,4 +1905,83 @@ class MoneyPlugin(b3.plugin.Plugin):
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
                             self.noCoins(c, idioma, dinero)
-                        
+                            
+class sr8():
+    nombre = 'Remington SR8'
+    key = 'N'
+    valor = 600
+class spas():
+    nombre = 'Franchi SPAS12'
+    key = 'D'
+    valor = 450
+class mp5():
+    nombre = 'HK MP5K'
+    key = 'E'
+    valor = 300
+class ump():
+    nombre = 'HK UMP45'
+    key = 'F'
+    valor = 350
+class hk():
+    nombre = 'HK69 40mm'
+    key = 'G'
+    valor = 2000
+class lr():
+    nombre = 'ZM LR300'
+    key = 'H'
+    valor = 650
+class psg():
+    nombre = 'HK PSG1'
+    key = 'J'
+    valor = 1000
+class g36():
+    nombre = 'HK G36'
+    key = 'I'
+    valor = 1000
+class ak():
+    nombre = 'AK103 7.62mm'
+    key = 'O'
+    valor = 700
+class negev():
+    nombre = 'IMI Negev'
+    key = 'Q'
+    valor = 800
+class m4():
+    nombre = 'Colt M4A1'
+    key = 'S'
+    valor = 650
+class he():
+    nombre = 'HE Grenade'
+    key = 'K'
+    valor = 300
+class smoke():
+    nombre = 'Smoke Grenade'
+    key = 'N'
+    valor = 200
+class flash():
+    nombre = 'Flash Grenade'
+    key = 'N'
+    valor = 1000
+class knife():
+    nombre = 'Knife'
+    key = 'A'
+    valor = 150
+class kevlar():
+    nombre = 'Kevlar Vest'
+    key = 'A'
+    valor = 1000
+class helmet():
+    nombre = 'Helmet'
+    key = 'F'
+    valor = 800
+class medkit():
+    nombre = 'Medkit'
+    key = 'C'
+    valor = 500
+class tac():
+    nombre = 'TacGoggles'
+    key = 'B'
+    valor = 2000
+class health():
+    nombre = 'Health'
+    valor = 2000
