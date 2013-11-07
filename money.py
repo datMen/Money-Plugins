@@ -1354,6 +1354,18 @@ class MoneyPlugin(b3.plugin.Plugin):
                 sobran = (dinero - valor)
                 self.clientBought(client, idioma, nombre, sobran)
                 
+    def buyVeces(self, client, key, valor, nombre, veces):
+        valorTotal = (valor * veces)
+            
+        if (valorTotal > dinero):
+            self.noCoins(client, idioma, dinero)
+        else:
+            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valorTotal, client.id))
+            self.console.storage.query(q)
+            sobran = (dinero - valorTotal)
+            self.console.write("gw %s %s +%s" % (client.cid, key, veces))
+            self.clientBought(client, idioma, nombre, sobran)
+                
             
     def cmd_getweapon(self, data, client=None, cmd=None):
         """\
@@ -1622,7 +1634,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 else:
                     self.buyWeapon(client, key, valor, nombre)
             else:
-            	if(idioma == "ES"):
+                if(idioma == "ES"):
                     client.message("^7No se encontro: ^1%s^7" % input[0])
                 elif(idioma == "IT"):
                     client.message("^7Impossibile trovare: ^1%s^7" % input[0])
@@ -1636,222 +1648,81 @@ class MoneyPlugin(b3.plugin.Plugin):
             veces = input[1]
                         	   ############################## HE Grenade ##############################
             if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
-                if veces:
-                    regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
-                    match = regex.match(data)
-                    weapon = match.group('string')
-                    veces = int(match.group('number'))
+                valor = 300
+                nombre = 'HE Grenade'
+                key = "K"
                 
-            	if(client.maxLevel >= 100):
-            	  if(veces):
-            	    self.console.write("gw %s K +%s" % (client.cid,veces))
-            	    return True
-            	  else:
-            	    self.console.write("gw %s K +1" % client.cid)
-            	    return True
-            	else:
-            		if(veces):
-                          valor = (300 * veces)
-            		else:
-            		  valor = 300  ######### PRECIO
-            		nombre = 'HE Grenade'  ######### NOMBRE ARMA
-            		if (valor > dinero):
-            		  self.noCoins(client, idioma, dinero)
-            		else:
-            		  if(veces):
-            		    q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                            self.console.storage.query(q)
-                            sobran=dinero-valor
-                            self.console.write("gw %s K +%s" % (client.cid,veces))
-                            self.clientBought(client, idioma, nombre, sobran)
-            		  else:
-            		    self.console.write("gw %s K +1" % (client.cid))
-                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                            self.console.storage.query(q)
-                            sobran=dinero-valor
-                            self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Smoke Grenade ##############################
+                if client.maxLevel >= 100:
+                    if veces:
+                        self.console.write("gw %s %s +%s" % (client.cid, key, veces))
+                    else:
+                        self.console.write("gw %s %s +1" % (client.cid, key))
+                else:
+                    if veces:
+                        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                        match = regex.match(data)
+                        weapon = match.group('string')
+                        veces = int(match.group('number'))
+                        self.buyVeces(client, key, valor, nombre, veces)
+                    else:
+                        self.buyWeapon(client, key, valor, nombre)
+                            
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
-            	if(client.maxLevel >= 100):
-            	  if(veces):
-            	    self.console.write("gw %s M +%s" % (client.cid,veces))
-            	    return True
-            	  else:
-            	    self.console.write("gw %s M +1" % client.cid)
-            	    return True
-            	else:
-            		if(veces):
-            		  if(veces == "1"):
-            		    valor = "250" ######### PRECIO
-            		    valor2 = 250  ######### PRECIO
-            		  elif(veces == "2"):
-            		    valor = "450" ######### PRECIO
-            		    valor2 = 450  ######### PRECIO
-            		  elif(veces == "3"):
-            		    valor = "650" ######### PRECIO
-            		    valor2 = 650  ######### PRECIO
-            		  elif(veces == "4"):
-            		    valor = "850" ######### PRECIO
-            		    valor2 = 850  ######### PRECIO
-            		  elif(veces == "5"):
-            		    valor = "1000" ######### PRECIO
-            		    valor2 = 1000  ######### PRECIO
-            		  else:
-            		    valor = "300" ######### PRECIO
-            		    valor2 = 300  ######### PRECIO
-            		else:
-            		  valor = "250" ######### PRECIO
-            		  valor2 = 250  ######### PRECIO
-            		nombre = 'Smoke Grenade'  ######### NOMBRE ARMA
-            		if (valor2 > dinero):
-            		  self.noCoins(client, idioma, dinero)
-            		else:
-            		  if(veces):
-            		    if(int(veces)<=5):
-                              q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                              self.console.storage.query(q)
-            		      sobran=dinero-valor2
-            		      self.console.write("gw %s M +%s" % (client.cid,veces))
-                              self.clientBought(client, idioma, veces, nombre, sobran)
-            		    else:
-            		      if(idioma == "ES"):
-            		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Granadas')
-                              elif(idioma == "IT"):
-                                client.message('^7Puoi comprare ^21 ^7a ^25 ^7Granate')
-            		      else:
-            		        client.message('^7You can buy ^21^7-^25 ^7Grenade')
-            		      return False
-            		  else:
-            		    q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            		    self.console.storage.query(q)
-            		    self.console.write("gw %s M +1" % client.cid)
-            		    sobran=dinero-valor2
-            		    self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Smoke Grenade ##############################
+                valor = 200
+                nombre = 'Smoke Grenade'
+                key = "M"
+                
+                if client.maxLevel >= 100:
+                    if veces:
+                        self.console.write("gw %s %s +%s" % (client.cid, key, veces))
+                    else:
+                        self.console.write("gw %s %s +1" % (client.cid, key))
+                else:
+                    if veces:
+                        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                        match = regex.match(data)
+                        weapon = match.group('string')
+                        veces = int(match.group('number'))
+                        self.buyVeces(client, key, valor, nombre, veces)
+                    else:
+                        self.buyWeapon(client, key, valor, nombre)
+                        
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "kn") or (weapon == "KN"):
-            	if(client.maxLevel >= 100):
-            	  if(veces):
-            	    self.console.write("gw %s A +%s" % (client.cid,veces))
-            	    return True
-            	  else:
-            	    self.console.write("gw %s A +1" % client.cid)
-            	    return True
-            	else:
-            		if(veces):
-            		  if(veces == "1"):
-            		    valor = "300" ######### PRECIO
-            		    valor2 = 300  ######### PRECIO
-            		  elif(veces == "2"):
-            		    valor = "550" ######### PRECIO
-            		    valor2 = 550  ######### PRECIO
-            		  elif(veces == "3"):
-            		    valor = "700" ######### PRECIO
-            		    valor2 = 700  ######### PRECIO
-            		  elif(veces == "4"):
-            		    valor = "850" ######### PRECIO
-            		    valor2 = 850  ######### PRECIO
-            		  elif(veces == "5"):
-            		    valor = "1050" ######### PRECIO
-            		    valor2 = 1050  ######### PRECIO
-            		  else:
-            		    valor = "300" ######### PRECIO
-            		    valor2 = 300  ######### PRECIO
-            		else:
-            		  valor = "300" ######### PRECIO
-            		  valor2 = 300  ######### PRECIO
-            		nombre = 'Knife'  ######### NOMBRE ARMA
-            		if (valor2 > dinero):
-            		  self.noCoins(client, idioma, dinero)
-            		else:
-            		  if(veces):
-            		    if(int(veces)<=5):
-                              q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                              self.console.storage.query(q)
-            		      sobran=dinero-valor2
-            		      self.console.write("gw %s A +%s" % (client.cid,veces))
-                              self.clientBought(client, idioma, veces, nombre, sobran)
-            		    else:
-            		      if(idioma == "ES"):
-            		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Cuchillos')
-                              elif(idioma == "IT"):
-                                client.message('^7Puoi comprare ^21 ^7a ^25 ^7Coltelli')
-            		      else:
-            		        client.message('^7You can buy ^21^7-^25 ^7Knives')
-            		      return False
-            		  else:
-            		    q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            		    self.console.storage.query(q)
-            		    self.console.write("gw %s A +1" % client.cid)
-            		    sobran=dinero-valor2
-            		    self.clientBought(client, idioma, nombre, sobran)
-                        	   ############################## Flash Grenade ##############################
+                valor = 150
+                nombre = 'Knife'
+                key = "A"
+                
+                if client.maxLevel >= 100:
+                    if veces:
+                        self.console.write("gw %s %s +%s" % (client.cid, key, veces))
+                    else:
+                        self.console.write("gw %s %s +1" % (client.cid, key))
+                else:
+                    if veces:
+                        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                        match = regex.match(data)
+                        weapon = match.group('string')
+                        veces = int(match.group('number'))
+                        self.buyVeces(client, key, valor, nombre, veces)
+                    else:
+                        self.buyWeapon(client, key, valor, nombre)
+                        
             elif (weapon == "FLASH") or (weapon == "flash") or (weapon == "fla") or (weapon == "FLA"):
-            	if(client.maxLevel >= 100):
-            	  if(veces):
-            	    self.console.write("gw %s L %s" % (client.cid,veces))
-            	    return True
-            	  else:
-            	    self.console.write("gw %s L" % client.cid)
-            	    return True
-            	else:
+                if(client.maxLevel >= 100):
+                    if(veces):
+                        self.console.write("gw %s L %s" % (client.cid,veces))
+                        return True
+                    else:
+                        self.console.write("gw %s L" % client.cid)
+                        return True
+                else:
                     if(idioma == "ES"):
                         client.message('^2Flash nade ^7no esta permitida..')
                     elif(idioma == "IT"):
                         client.message('^2Flash nade ^7non e permessa..')
                     else:
                         client.message('^2Flash nade ^7is not allowed..')
-                    return False
-                    
-        #    		if(veces):
-         #   		  if(veces == "1"):
-          #  		    valor = "350" ######### PRECIO
-           # 		    valor2 = 350  ######### PRECIO
-            #		  elif(veces == "2"):
-            #		    valor = "550" ######### PRECIO
-            #		    valor2 = 550  ######### PRECIO
-            #		  elif(veces == "3"):
-            #		    valor = "750" ######### PRECIO
-            #		    valor2 = 750  ######### PRECIO
-            #		  elif(veces == "4"):
-            #		    valor = "850" ######### PRECIO
-            #		    valor2 = 850  ######### PRECIO
-            #		  elif(veces == "5"):
-            #		    valor = "950" ######### PRECIO
-            #		    valor2 = 950  ######### PRECIO
-            #		  else:
-            #		    valor = "300" ######### PRECIO
-            #		    valor2 = 300  ######### PRECIO
-            #		else:
-            #		  valor = "350" ######### PRECIO
-            #		  valor2 = 350  ######### PRECIO
-            #		nombre = 'Flash Grenade'  ######### NOMBRE ARMA
-            #		if (valor2 > dinero):
-            #		  if(idioma == "ES"):
-            #		    client.message('^7NO tienes suficiente DINERO Tienes:%s' % dinero)
-            #		  else:
-            #		    client.message('^7You DONT have coins. Your coins are:^2%s' % dinero)
-            #		  return False
-            #		else:
-            #		  if(veces):
-            #		    if(int(veces) <=5):
-            #		      self.console.write("gw %s L %s" % (client.cid,veces))
-            #		    else:
-            #		      if(idioma == "ES"):
-            #		        client.message('^7Puedes comprar de ^21 ^7a ^25 ^7Granadas')
-            #		      else:
-            #		        client.message('^7You can buy ^21^7-^25 ^7Grenade')
-            #		      return False
-            #		  else:
-            #		    q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            #		    self.console.storage.query(q)
-            #		    self.console.write("gw %s L" % client.cid)
-            #		    sobran=dinero-valor2
-            #		    if(idioma == "ES"):
-            #		      client.message('^7Has Comprado ^2%s ^7Te Quedan:^2%s ^7coins' % (nombre,sobran))
-            #		    else:
-            #		      client.message('^7You have Bought ^2%s ^7You have:^2%s ^7coins' % (nombre,sobran))
-            #		    return True
-                        	   ############################## Kevlar Vest ##############################
+                        
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
                 nombre = 'Kevlar Vest'
                 key = 'A'
