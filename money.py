@@ -1270,7 +1270,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(idioma == "IT"):
             client.message('Hai comprato ^5%s ^2%s ^7Hai:^2%s ^7coins' % (veces, nombre, sobran))
                     
-    def putOnOff(self, client, status, name, key, valor, nombre, weapon):
+    def putOnOff(self, client, status, key, valor, weapon, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         self.debug(q)
         cursor = self.console.storage.query(q)
@@ -1314,7 +1314,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 else:
                     self.autoBuyingNot(client, idioma)
                 
-    def buyWeapon(self, client, name, key, valor, nombre):
+    def buyWeapon(self, client, key, valor, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         self.debug(q)
         cursor = self.console.storage.query(q)
@@ -1334,7 +1334,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 sobran = (dinero - valor)
                 self.clientBought(client, idioma, nombre, sobran)
                 
-    def buyItem(self, client, name, key, valor, nombre):
+    def buyItem(self, client, key, valor, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         self.debug(q)
         cursor = self.console.storage.query(q)
@@ -1507,10 +1507,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 600
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
                 nombre = 'Franchi SPAS12'
@@ -1518,10 +1518,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 450
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "mp5") or (weapon == "MP5") or (weapon == "MP5K") or (weapon == "mp5k"):
                 nombre = 'HK MP5K'
@@ -1529,10 +1529,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 300
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "ump") or (weapon == "UMP") or (weapon == "UMP45") or (weapon == "ump45"):
                 nombre = 'HK UMP45'
@@ -1540,10 +1540,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 350
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "HK69") or (weapon == "hk69") or (weapon == "hk") or (weapon == "HK"):
                 nombre = 'HK69 40mm'
@@ -1551,10 +1551,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 2000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
                 nombre = 'ZM LR300'
@@ -1562,10 +1562,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 650
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "PSG") or (weapon == "psg") or (weapon == "PSG1") or (weapon == "psg1"):
                 nombre = 'HK PSG1'
@@ -1573,10 +1573,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 1000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "g36") or (weapon == "G36"):
                 nombre = 'HK G36'
@@ -1584,10 +1584,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 1000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "ak") or (weapon == "AK") or (weapon == "AK103") or (weapon == "ak103"):
                 nombre = 'AK103 7.62mm'
@@ -1595,10 +1595,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 700
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "NEGEV") or (weapon == "negev") or (weapon == "NE") or (weapon == "ne"):
                 nombre = 'IMI Negev'
@@ -1606,10 +1606,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 1000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "M4") or (weapon == "m4") or (weapon == "m4a") or (weapon == "M4A"):
                 nombre = 'Colt M4A1'
@@ -1617,10 +1617,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 650
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyWeapon(client, nombre, key, valor, nombre)
+                    self.buyWeapon(client, key, valor, nombre)
             else:
             	if(idioma == "ES"):
                     client.message("^7No se encontro: ^1%s^7" % input[0])
@@ -1858,10 +1858,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 1000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyItem(client, nombre, key, valor, nombre)
+                    self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
                 nombre = 'Helmet'
@@ -1869,10 +1869,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 800
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyItem(client, nombre, key, valor, nombre)
+                    self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
                 nombre = 'Medkit'
@@ -1880,10 +1880,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 500
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyItem(client, nombre, key, valor, nombre)
+                    self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
                 nombre = 'TacGoggles'
@@ -1891,10 +1891,10 @@ class MoneyPlugin(b3.plugin.Plugin):
                 valor = 2000
                 
                 if status:
-                    self.putOnOff(client, status, nombre, key, valor, nombre, weapon)
+                    self.putOnOff(client, status, key, valor, weapon, nombre)
                     return False
                 else:
-                    self.buyItem(client, nombre, key, valor, nombre)
+                    self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
                 if input[1]:
