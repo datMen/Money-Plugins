@@ -1815,6 +1815,12 @@ class MoneyPlugin(b3.plugin.Plugin):
             veces = input[1]
                         	   ############################## HE Grenade ##############################
             if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
+                if veces:
+                    regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                    match = regex.match(data)
+                    weapon = match.group('string')
+                    veces = int(match.group('number'))
+                
             	if(client.maxLevel >= 100):
             	  if(veces):
             	    self.console.write("gw %s K +%s" % (client.cid,veces))
@@ -1824,52 +1830,25 @@ class MoneyPlugin(b3.plugin.Plugin):
             	    return True
             	else:
             		if(veces):
-            		  if(veces == "1"):
-            		    valor = "300" ######### PRECIO
-            		    valor2 = 300  ######### PRECIO
-            		  elif(veces == "2"):
-            		    valor = "550" ######### PRECIO
-            		    valor2 = 550  ######### PRECIO
-            		  elif(veces == "3"):
-            		    valor = "700" ######### PRECIO
-            		    valor2 = 700  ######### PRECIO
-            		  elif(veces == "4"):
-            		    valor = "850" ######### PRECIO
-            		    valor2 = 850  ######### PRECIO
-            		  elif(veces == "5"):
-            		    valor = "1050" ######### PRECIO
-            		    valor2 = 1050  ######### PRECIO
-            		  else:
-            		    valor = "300" ######### PRECIO
-            		    valor2 = 300  ######### PRECIO
+                          valor = (300 * veces)
             		else:
-            		  valor = "300" ######### PRECIO
-            		  valor2 = 300  ######### PRECIO
+            		  valor = 300  ######### PRECIO
             		nombre = 'HE Grenade'  ######### NOMBRE ARMA
-            		if (valor2 > dinero):
+            		if (valor > dinero):
             		  self.noCoins(client, idioma, dinero)
             		else:
             		  if(veces):
-            		    if(int(veces)<=5):
-                              q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-                              self.console.storage.query(q)
-            		      sobran=dinero-valor2
-            		      self.console.write("gw %s K +%s" % (client.cid,veces))
-                              self.clientBought(client, idioma, nombre, sobran)
-            		    else:
-            		      if(idioma == "ES"):
-            		        client.message('^7Puedes comprar ^21 ^7a ^25 ^7Granadas')
-                              elif(idioma == "IT"):
-                                client.message('^7Puoi comprare ^21 ^7a ^25 ^7Granate')
-            		      else:
-            		        client.message('^7You can buy ^21^7-^25 ^7Grenades')
-            		      return False
+            		    q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                            self.console.storage.query(q)
+                            sobran=dinero-valor
+                            self.console.write("gw %s K +%s" % (client.cid,veces))
+                            self.clientBought(client, idioma, nombre, sobran)
             		  else:
             		    self.console.write("gw %s K +1" % (client.cid))
-            		  q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
-            		  self.console.storage.query(q)
-            		  sobran=dinero-valor2
-            		  self.clientBought(client, idioma, nombre, sobran)
+                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                            self.console.storage.query(q)
+                            sobran=dinero-valor
+                            self.clientBought(client, idioma, nombre, sobran)
                         	   ############################## Smoke Grenade ##############################
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
             	if(client.maxLevel >= 100):
