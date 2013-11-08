@@ -1824,6 +1824,18 @@ class MoneyPlugin(b3.plugin.Plugin):
                         else:
                             self.noCoins(c, idioma, dinero)
                             
+    def clientBought(self, client, idioma, nombre, sobran):
+        if(idioma == "EN"):
+            client.message('You Have Bought ^2%s ^7You have: ^2%s ^7Coins' % (nombre,sobran))
+        elif(idioma == "ES"):
+            client.message('Has Comprado ^2%s ^7Te Quedan: ^2%s ^7Coins' % (nombre,sobran))
+        elif(idioma == "FR"):
+            client.message("In French: You Have Bought ^2%s ^7You have: ^2%s ^7Coins" % (nombre,sobran))
+        elif(idioma == "DE"):
+            client.message("Du hast ^2%s ^7gekauft. Du hast noch: ^2%s ^7Coins" % (nombre,sobran))
+        elif(idioma == "IT"):
+            client.message('Hai Comprato ^2%s ^7Hai: ^2%s ^7Coins' % (nombre,sobran))
+                            
     def noCoins(self, client, idioma, dinero):
         if(idioma == "EN"):
             client.message("You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
