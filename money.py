@@ -861,96 +861,96 @@ class MoneyPlugin(b3.plugin.Plugin):
             input = self._adminPlugin.parseUserCmd(data)
             weapon = input[0]
             if (weapon == "sr8") or (weapon == "SR8"):
-                valor = "600"
-                name = "Sr8"
+                name = sr8.nombre
+                valor = sr8.valor
                 self.price(client, name, valor)
             elif (weapon == "disarm") or (weapon == "dis"):
-                valor = "4.000"
-                name = "disarm"
+                valor = 4000
+                name = "Disarm"
                 self.price(client, name, valor)
             elif (weapon == "god") or (weapon == "godmode"):
-                valor = "30.000"
-                name = "god"
+                valor = 30000
+                name = "GoD"
                 self.price(client, name, valor)
             elif (weapon == "inv") or (weapon == "invisible"): 
-                valor = "150.000"
+                valor = 150000
                 name = "Invisible"
                 self.price(client, name, valor)
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
-                valor = "400"
-                name = "Spas"
+                name = spas.nombre
+                valor = spas.valor
                 self.price(client, name, valor)
             elif (weapon == "mp5") or (weapon == "MP5") or (weapon == "MP5K") or (weapon == "mp5k"): 
-                valor = "500"
-                name = "MP5K"
+                name = mp5.nombre
+                valor = mp5.valor
                 self.price(client, name, valor)
             elif (weapon == "ump") or (weapon == "UMP") or (weapon == "UMP45") or (weapon == "ump45"):
-                valor = "550"
-                name = "UMP45"
+                name = ump.nombre
+                valor = ump.valor
                 self.price(client, name, valor)
             elif (weapon == "HK69") or (weapon == "hk69") or (weapon == "hk") or (weapon == "HK"):
-                valor = "2.000"
-                name = "HK69"
+                name = hk.nombre
+                valor = hk.valor
                 self.price(client, name, valor)
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
-                valor = "650"
-                name = "LR300"
+                name = lr.nombre
+                valor = lr.valor
                 self.price(client, name, valor)
             elif (weapon == "PSG") or (weapon == "psg") or (weapon == "PSG1") or (weapon == "psg1"):
-                valor = "1.000"
-                name = "PSG1"
+                name = psg.nombre
+                valor = psg.valor
                 self.price(client, name, valor)
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
-                valor = "650"
-                name = "LR300"
+                name = lr.nombre
+                valor = lr.valor
                 self.price(client, name, valor)
             elif (weapon == "g36") or (weapon == "G36"):
-                valor = "1.000"
-                name = "G36"
+                name = g36.nombre
+                valor = g36.valor
                 self.price(client, name, valor)
             elif (weapon == "ak") or (weapon == "AK") or (weapon == "AK103") or (weapon == "ak103"):
-                valor = "700"
-                name = "AK103"
+                name = ak.nombre
+                valor = ak.valor
                 self.price(client, name, valor)
             elif (weapon == "NEGEV") or (weapon == "negev") or (weapon == "NE") or (weapon == "ne"):
-                valor = "750"
-                name = "Negev"
+                name = negev.nombre
+                valor = negev.valor
                 self.price(client, name, valor)
             elif (weapon == "M4") or (weapon == "m4") or (weapon == "m4a") or (weapon == "M4A"):
-                valor = "650"
-                name = "M4A1"
+                name = m4.nombre
+                valor = m4.valor
                 self.price(client, name, valor)
             elif (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
-                valor = "300"
-                name = "HE"
+                name = he.nombre
+                valor = he.valor
                 self.price(client, name, valor)
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
-                valor = "250"
-                name = "Smoke"
+                name = smoke.nombre
+                valor = smoke.valor
                 self.price(client, name, valor)
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "KN") or (weapon == "kn"):
-                valor = "300"
-                name = "Knife"
+                name = knife.nombre
+                valor = knife.valor
                 self.price(client, name, valor)
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
-                valor = "1.200"
-                name = "Kevlar"
+                name = kevlar.nombre
+                valor = kevlar.valor
                 self.price(client, name, valor)
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
-                valor = "800"
-                name = "Helmet"
+                name = helmet.nombre
+                valor = helmet.valor
                 self.price(client, name, valor)
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
-                valor = "500"
-                name = "Medkit"
+                name = medkit.nombre
+                valor = medkit.valor
                 self.price(client, name, valor)
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
-                valor = "5.000"
-                name = "TacGoggles"
+                name = tac.nombre
+                valor = tac.valor
                 self.price(client, name, valor)
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
-                valor = "2.000"
-                name = "Health"
+                name = health.nombre
+                valor = health.valor
                 self.price(client, name, valor)
             else:
                 if(idioma == "EN"):
@@ -1180,96 +1180,6 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s ^7Digita:^2DIS^7 / ^2Disarm^7 / Prezzo: ^23000' % (client.cid))
                 self.console.write('tell %s ^7Digita:^2TP^7 / ^2Teleport^7 / Team: ^21000 ^7Nemico: ^25000' % (client.cid))
                 return True
-            
-    def noCoins(self, client, idioma, dinero):
-        if(idioma == "EN"):
-            client.message("You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
-        elif(idioma == "ES"):
-            client.message('^1No tienes ^7suficiente dinero. Tienes: ^2%s ^7Coins' % dinero)
-        elif(idioma == "FR"):
-            client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
-        elif(idioma == "DE"):
-            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
-        elif(idioma == "IT"):
-            client.message("Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
-        return False
-    
-    def autoBuying(self, client, idioma, weapon):
-        if(idioma == "EN"):
-            client.message('You ^2started^7 to autobuy ^2%s' % weapon)
-        elif(idioma == "ES"):
-            client.message('Has ^2comenzado ^7a autocomprar ^2%s' % weapon)
-        elif(idioma == "FR"):
-            client.message("In French: You ^2started ^7to autobuy ^2%s" % weapon)
-        elif(idioma == "DE"):
-            client.message("Du ^2aktiviertest ^7autobuy ^2%s" % weapon)
-        elif(idioma == "IT"):
-            client.message("In Ita: You ^2started ^7to autobuy ^2%s" % weapon)
-        return False
-    
-    def autoBuyingStop(self, client, idioma, weapon):
-        if(idioma == "EN"):
-            client.message('You ^1stopped ^7to autobuy ^2%s' % weapon)
-        elif(idioma == "ES"):
-            client.message('Has ^1dejado ^7de ^7autocomprar ^2%s' % weapon)
-        elif(idioma == "FR"):
-            client.message("In French: You ^1stopped ^7to autobuy ^2%s" % weapon)
-        elif(idioma == "DE"):
-            client.message("Du ^1deaktiviertest ^7autobuy ^2%s" % weapon)
-        elif(idioma == "IT"):
-            client.message("In Ita: You ^1stopped ^7to autobuy ^2%s" % weapon)
-        return False
-    
-    def autoBuyingAlready(self, client, idioma, weapon):
-        if(idioma == "EN"):
-            client.message('You ^2are already^7 autobuying ^2%s' % weapon)
-        elif(idioma == "ES"):
-            client.message('^2Ya estas ^7autocomprando ^2%s' % weapon)
-        elif(idioma == "FR"):
-            client.message("In French: You ^2are already^7 autobuying ^2%s" % weapon)
-        elif(idioma == "DE"):
-            client.message("Du ^2hast die Waffe schon ^7im autobuy ^2%s" % weapon)
-        elif(idioma == "IT"):
-            client.message("In Ita: You ^2are already^7 autobuying ^2%s" % weapon)
-        return False
-    
-    def autoBuyingNot(self, client, idioma):
-        if(idioma == "EN"):
-            client.message("You ^1have not^7 activated Autobuy")
-        elif(idioma == "ES"):
-            client.message("^1No has^7 activado autocomprar")
-        elif(idioma == "FR"):
-            client.message("In French: You ^1have not^7 activated Autobuy")
-        elif(idioma == "DE"):
-            client.message("Du hast Autobuy ^1nicht ^7Aktiviert")
-        elif(idioma == "IT"):
-            client.message('^1Non hai ^7attivato l\'autoacquisto.')
-        return False
-    
-    def clientBought(self, client, idioma, nombre, sobran):
-        if(idioma == "EN"):
-            client.message('You Have Bought ^2%s ^7You have: ^2%s ^7Coins' % (nombre,sobran))
-        elif(idioma == "ES"):
-            client.message('Has Comprado ^2%s ^7Te Quedan: ^2%s ^7Coins' % (nombre,sobran))
-        elif(idioma == "FR"):
-            client.message("In French: You Have Bought ^2%s ^7You have: ^2%s ^7Coins" % (nombre,sobran))
-        elif(idioma == "DE"):
-            client.message("Du hast ^2%s ^7gekauft. Du hast noch: ^2%s ^7Coins" % (nombre,sobran))
-        elif(idioma == "IT"):
-            client.message('Hai Comprato ^2%s ^7Hai: ^2%s ^7Coins' % (nombre,sobran))
-        return True
-    
-    def clientBoughtVeces(self, client, veces, idioma, nombre, sobran):
-        if(idioma == "EN"):
-            client.message("You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
-        elif(idioma == "ES"):
-            client.message('^7Has Comprado ^5%s ^2%s ^7Te Quedan: ^2%s ^7Coins' % (veces, nombre, sobran))
-        elif(idioma == "FR"):
-            client.message("In French: You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
-        elif(idioma == "DE"):
-            client.message("Du hast ^5%s und ^2%s ^7gekauft.Du hast noch: ^2%s ^7Coins" % (veces, nombre, sobran))
-        elif(idioma == "IT"):
-            client.message('Hai comprato ^5%s ^2%s ^7Hai:^2%s ^7coins' % (veces, nombre, sobran))
                     
     def putOnOff(self, client, status, key, valor, weapon, nombre):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
@@ -1371,7 +1281,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             self.console.storage.query(q)
             sobran = (dinero - valorTotal)
             self.console.write("gw %s %s +%s" % (client.cid, key, veces))
-            self.clientBought(client, idioma, nombre, sobran)
+            if(idioma == "EN"):
+                client.message("You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
+            elif(idioma == "ES"):
+                client.message('^7Has Comprado ^5%s ^2%s ^7Te Quedan: ^2%s ^7Coins' % (veces, nombre, sobran))
+            elif(idioma == "FR"):
+                client.message("In French: You have Bought ^5%s ^2%s ^7You have:^2%s ^7Coins" % (veces, nombre, sobran))
+            elif(idioma == "DE"):
+                client.message("Du hast ^5%s und ^2%s ^7gekauft.Du hast noch: ^2%s ^7Coins" % (veces, nombre, sobran))
+            elif(idioma == "IT"):
+                client.message('Hai comprato ^5%s ^2%s ^7Hai:^2%s ^7coins' % (veces, nombre, sobran))
                 
             
     def cmd_getweapon(self, data, client=None, cmd=None):
@@ -1520,9 +1439,9 @@ class MoneyPlugin(b3.plugin.Plugin):
     	    		self.noCoins(client, idioma, dinero)
 
             elif (weapon == "sr8") or (weapon == "SR8"):
-                nombre = 'Remington SR8'
-                key = 'N'
-                valor = 600
+                nombre = sr8.nombre
+                key = sr8.key
+                valor = sr8.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1531,9 +1450,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
-                nombre = 'Franchi SPAS12'
-                key = 'D'
-                valor = 450
+                nombre = spas.nombre
+                key = spas.key
+                valor = spas.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1542,9 +1461,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "mp5") or (weapon == "MP5") or (weapon == "MP5K") or (weapon == "mp5k"):
-                nombre = 'HK MP5K'
-                key = 'E'
-                valor = 300
+                nombre = mp5.nombre
+                key = mp5.key
+                valor = mp5.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1553,9 +1472,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "ump") or (weapon == "UMP") or (weapon == "UMP45") or (weapon == "ump45"):
-                nombre = 'HK UMP45'
-                key = 'F'
-                valor = 350
+                nombre = ump.nombre
+                key = ump.key
+                valor = ump.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1564,9 +1483,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "HK69") or (weapon == "hk69") or (weapon == "hk") or (weapon == "HK"):
-                nombre = 'HK69 40mm'
-                key = 'G'
-                valor = 2000
+                nombre = hk.nombre
+                key = hk.key
+                valor = hk.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1575,9 +1494,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "lr300") or (weapon == "LR300") or (weapon == "LR") or (weapon == "lr"):
-                nombre = 'ZM LR300'
-                key = 'H'
-                valor = 650
+                nombre = lr.nombre
+                key = lr.key
+                valor = lr.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1586,9 +1505,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "PSG") or (weapon == "psg") or (weapon == "PSG1") or (weapon == "psg1"):
-                nombre = 'HK PSG1'
-                key = 'J'
-                valor = 1000
+                nombre = psg.nombre
+                key = psg.key
+                valor = psg.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1597,9 +1516,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "g36") or (weapon == "G36"):
-                nombre = 'HK G36'
-                key = 'I'
-                valor = 1000
+                nombre = g36.nombre
+                key = g36.key
+                valor = g36.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1608,9 +1527,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "ak") or (weapon == "AK") or (weapon == "AK103") or (weapon == "ak103"):
-                nombre = 'AK103 7.62mm'
-                key = 'O'
-                valor = 700
+                nombre = ak.nombre
+                key = ak.key
+                valor = ak.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1619,9 +1538,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
 
             elif (weapon == "NEGEV") or (weapon == "negev") or (weapon == "NE") or (weapon == "ne"):
-                nombre = 'IMI Negev'
-                key = 'Q'
-                valor = 1000
+                nombre = negev.nombre
+                key = negev.key
+                valor = negev.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1630,9 +1549,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyWeapon(client, key, valor, nombre)
                     
             elif (weapon == "M4") or (weapon == "m4") or (weapon == "m4a") or (weapon == "M4A"):
-                nombre = 'Colt M4A1'
-                key = 'S'
-                valor = 650
+                nombre = m4.nombre
+                key = m4.key
+                valor = m4.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1654,9 +1573,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             veces = input[1]
                         	   ############################## HE Grenade ##############################
             if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
-                valor = 300
-                nombre = 'HE Grenade'
-                key = "K"
+                nombre = he.nombre
+                key = he.key
+                valor = he.valor
                 
                 if client.maxLevel >= 100:
                     if veces:
@@ -1674,9 +1593,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self.buyWeapon(client, key, valor, nombre)
                             
             elif (weapon == "SMOKE") or (weapon == "smoke") or (weapon == "SM") or (weapon == "sm"):
-                valor = 200
-                nombre = 'Smoke Grenade'
-                key = "M"
+                nombre = smoke.nombre
+                key = smoke.key
+                valor = smoke.valor
                 
                 if client.maxLevel >= 100:
                     if veces:
@@ -1694,9 +1613,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self.buyWeapon(client, key, valor, nombre)
                         
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "kn") or (weapon == "KN"):
-                valor = 150
-                nombre = 'Knife'
-                key = "A"
+                nombre = knife.nombre
+                key = knife.key
+                valor = knife.valor
                 
                 if client.maxLevel >= 100:
                     if veces:
@@ -1714,6 +1633,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self.buyWeapon(client, key, valor, nombre)
                         
             elif (weapon == "FLASH") or (weapon == "flash") or (weapon == "fla") or (weapon == "FLA"):
+                nombre = flash.nombre
+                key = flash.key
+                valor = flash.valor
                 if(client.maxLevel >= 100):
                     if(veces):
                         self.console.write("gw %s L %s" % (client.cid,veces))
@@ -1730,9 +1652,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                         client.message('^2Flash nade ^7is not allowed..')
                         
             elif (weapon == "kevlar") or (weapon == "KEVLAR") or (weapon == "KEV") or (weapon == "kev"):
-                nombre = 'Kevlar Vest'
-                key = 'A'
-                valor = 1000
+                nombre = kevlar.nombre
+                key = kevlar.key
+                valor = kevlar.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1741,9 +1663,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "helmet") or (weapon == "HELMET") or (weapon == "HEL") or (weapon == "hel"):
-                nombre = 'Helmet'
-                key = 'F'
-                valor = 800
+                nombre = helmet.nombre
+                key = helmet.key
+                valor = helmet.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1752,9 +1674,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "medkit") or (weapon == "MEDKIT") or (weapon == "MEDIC") or (weapon == "medic") or (weapon == "MED") or (weapon == "med"):
-                nombre = 'Medkit'
-                key = 'C'
-                valor = 500
+                nombre = medkit.nombre
+                key = medkit.key
+                valor = medkit.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1763,9 +1685,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "TAC") or (weapon == "tac") or (weapon == "nvg") or (weapon == "NVG") or (weapon == "goggles") or (weapon == "TacGoggles") or (weapon == "tacgoggles"):
-                nombre = 'TacGoggles'
-                key = 'B'
-                valor = 2000
+                nombre = tac.nombre
+                key = tac.key
+                valor = tac.valor
                 
                 if status:
                     self.putOnOff(client, status, key, valor, weapon, nombre)
@@ -1774,6 +1696,8 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.buyItem(client, key, valor, nombre)
                     
             elif (weapon == "HEALTH") or (weapon == "health") or (weapon == "heal") or (weapon == "HEAL") or (weapon == "H") or (weapon == "h"):
+                valor = health.valor
+                nombre = health.nombre
                 if input[1]:
                     sclient = self._adminPlugin.findClientPrompt(input[1], client)
                     if sclient:
@@ -1781,16 +1705,13 @@ class MoneyPlugin(b3.plugin.Plugin):
                             self.console.write("gh %s +100" % sclient.cid)
                             return True
                         else:
-                            valor = "2000" ######### PRECIO
-                            valor2 = 2000  ######### PRECIO
-                            nombre = 'Health'  ######### NOMBRE ARMA
-                            if (valor2 > dinero):
+                            if (valor > dinero):
                                 self.noCoins(client, idioma, dinero)
                             else:
                                 q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
                                 self.console.storage.query(q)
                                 self.console.write("gh %s +100" % sclient.cid)
-                                sobran=dinero-valor2
+                                sobran=dinero-valor
                                 if(idioma == "ES"):
                                     client.message('^7Has Comprado ^2%s ^7a %s. Te Quedan:^2%s ^7coins' % (nombre,sclient.exactName,sobran))
                                 elif(idioma == "IT"):
@@ -1803,16 +1724,13 @@ class MoneyPlugin(b3.plugin.Plugin):
                         self.console.write("gh %s +100" % client.cid)
                         return True
                     else:
-                        valor = "2000" ######### PRECIO
-                        valor2 = 2000  ######### PRECIO
-                        nombre = 'Health'  ######### NOMBRE ARMA
-                        if (valor2 > dinero):
+                        if (valor > dinero):
                             self.noCoins(client, idioma, dinero)
                         else:
-                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor,client.id))
+                            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor, client.id))
                             self.console.storage.query(q)
                             self.console.write("gh %s +100" % client.cid)
-                            sobran=dinero-valor2
+                            sobran=dinero-valor
                             self.clientBought(client, idioma, nombre, sobran)
             else:
                 if(idioma == "EN"):
@@ -1843,27 +1761,27 @@ class MoneyPlugin(b3.plugin.Plugin):
                     if azul:
                         weapon = []
                         if 'N' in azul:
-                            weapon.insert( 1, 'Sr8')
+                            weapon.insert( 1, sr8.nombre)
                         if 'D' in azul:
-                            weapon.insert( 1, 'Spas')
+                            weapon.insert( 1, spas.nombre)
                         if 'E' in azul:
-                            weapon.insert( 1, 'MP5K')
+                            weapon.insert( 1, mp5.nombre)
                         if 'F' in azul:
-                            weapon.insert( 1, 'UMP45')
+                            weapon.insert( 1, ump.nombre)
                         if 'G' in azul:
-                            weapon.insert( 1, 'HK69')
+                            weapon.insert( 1, hk.nombre)
                         if 'H' in azul:
-                            weapon.insert( 1, 'LR300')
+                            weapon.insert( 1, lr.nombre)
                         if 'I' in azul:
-                            weapon.insert( 1, 'G36')
+                            weapon.insert( 1, g36.nombre)
                         if 'J' in azul:
-                            weapon.insert( 1, 'PSG1')
+                            weapon.insert( 1, psg.nombre)
                         if 'O' in azul:
-                            weapon.insert( 1, 'AK103')
+                            weapon.insert( 1, ak.nombre)
                         if 'Q' in azul:
-                            weapon.insert( 1, 'Negev')
+                            weapon.insert( 1, negev.nombre)
                         if 'S' in azul:
-                            weapon.insert( 1, 'M4A1')
+                            weapon.insert( 1, m4.nombre)
                         if(dinero > precio_azul):
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_azul,c.id))
                             self.console.storage.query(q)
@@ -1885,19 +1803,19 @@ class MoneyPlugin(b3.plugin.Plugin):
                     if rojo:
                         weapon = []
                         if 'K' in rojo:
-                            weapon.insert( 1, 'HE Nade')
+                            weapon.insert( 1, he.nombre)
                         if 'L' in rojo:
-                            weapon.insert( 1, 'Flash Nade')
+                            weapon.insert( 1, flash.nombre)
                         if 'M' in rojo:
-                            weapon.insert( 1, 'Smoke Nade')
+                            weapon.insert( 1, smoke.nombre)
                         if 'A' in rojo:
-                            weapon.insert( 1, 'Kevlar')
+                            weapon.insert( 1, kevlar.nombre)
                         if 'B' in rojo:
-                            weapon.insert( 1, 'TacGoggles')
+                            weapon.insert( 1, tac.nombre)
                         if 'C' in rojo:
-                            weapon.insert( 1, 'MedKit')
+                            weapon.insert( 1, medkit.nombre)
                         if 'F' in rojo:
-                            weapon.insert( 1, 'Helmet')
+                            weapon.insert( 1, helmet.nombre)
                         if(dinero > precio_rojo):
                             q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (precio_rojo,c.id))
                             self.console.storage.query(q)
@@ -1905,6 +1823,66 @@ class MoneyPlugin(b3.plugin.Plugin):
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
                             self.noCoins(c, idioma, dinero)
+                            
+    def noCoins(self, client, idioma, dinero):
+        if(idioma == "EN"):
+            client.message("You ^1don't have ^7enough coins. You have: ^2%s ^7Coins" % dinero)
+        elif(idioma == "ES"):
+            client.message('^1No tienes ^7suficiente dinero. Tienes: ^2%s ^7Coins' % dinero)
+        elif(idioma == "FR"):
+            client.message("Tu ^1n'as pas ^7assez d'argent. Tu as: ^2%s ^7Coins" % dinero)
+        elif(idioma == "DE"):
+            client.message("Du hast ^1nicht ^7genug Coins. Du hast: ^2%s ^7Coins" % dinero)
+        elif(idioma == "IT"):
+            client.message("Non hai ^7abbastanza coins. Hai: ^2%s ^7Coins" % dinero)
+    
+    def autoBuying(self, client, idioma, weapon):
+        if(idioma == "EN"):
+            client.message('You ^2started^7 to autobuy ^2%s' % weapon)
+        elif(idioma == "ES"):
+            client.message('Has ^2comenzado ^7a autocomprar ^2%s' % weapon)
+        elif(idioma == "FR"):
+            client.message("In French: You ^2started ^7to autobuy ^2%s" % weapon)
+        elif(idioma == "DE"):
+            client.message("Du ^2aktiviertest ^7autobuy ^2%s" % weapon)
+        elif(idioma == "IT"):
+            client.message("In Ita: You ^2started ^7to autobuy ^2%s" % weapon)
+    
+    def autoBuyingStop(self, client, idioma, weapon):
+        if(idioma == "EN"):
+            client.message('You ^1stopped ^7to autobuy ^2%s' % weapon)
+        elif(idioma == "ES"):
+            client.message('Has ^1dejado ^7de ^7autocomprar ^2%s' % weapon)
+        elif(idioma == "FR"):
+            client.message("In French: You ^1stopped ^7to autobuy ^2%s" % weapon)
+        elif(idioma == "DE"):
+            client.message("Du ^1deaktiviertest ^7autobuy ^2%s" % weapon)
+        elif(idioma == "IT"):
+            client.message("In Ita: You ^1stopped ^7to autobuy ^2%s" % weapon)
+    
+    def autoBuyingAlready(self, client, idioma, weapon):
+        if(idioma == "EN"):
+            client.message('You ^2are already^7 autobuying ^2%s' % weapon)
+        elif(idioma == "ES"):
+            client.message('^2Ya estas ^7autocomprando ^2%s' % weapon)
+        elif(idioma == "FR"):
+            client.message("In French: You ^2are already^7 autobuying ^2%s" % weapon)
+        elif(idioma == "DE"):
+            client.message("Du ^2hast die Waffe schon ^7im autobuy ^2%s" % weapon)
+        elif(idioma == "IT"):
+            client.message("In Ita: You ^2are already^7 autobuying ^2%s" % weapon)
+    
+    def autoBuyingNot(self, client, idioma):
+        if(idioma == "EN"):
+            client.message("You ^1have not^7 activated Autobuy")
+        elif(idioma == "ES"):
+            client.message("^1No has^7 activado autocomprar")
+        elif(idioma == "FR"):
+            client.message("In French: You ^1have not^7 activated Autobuy")
+        elif(idioma == "DE"):
+            client.message("Du hast Autobuy ^1nicht ^7Aktiviert")
+        elif(idioma == "IT"):
+            client.message('^1Non hai ^7attivato l\'autoacquisto.')
                             
 class sr8():
     nombre = 'Remington SR8'
