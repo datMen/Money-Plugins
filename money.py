@@ -1610,7 +1610,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         veces = int(match.group('number'))
                         self.buyVeces(client, key, valor, nombre, veces)
                     else:
-                        self.buyWeapon(client, key, valor, nombre)
+                        self.buyItem(client, key, valor, nombre)
                         
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "kn") or (weapon == "KN"):
                 nombre = knife.nombre
