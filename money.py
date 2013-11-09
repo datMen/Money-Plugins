@@ -1610,7 +1610,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         veces = int(match.group('number'))
                         self.buyVeces(client, key, valor, nombre, veces)
                     else:
-                        self.buyItem(client, key, valor, nombre)
+                        self.buyWeapon(client, key, valor, nombre)
                         
             elif (weapon == "KNIFE") or (weapon == "knife") or (weapon == "kn") or (weapon == "KN"):
                 nombre = knife.nombre
@@ -1946,11 +1946,11 @@ class he():
     valor = 300
 class smoke():
     nombre = 'Smoke Grenade'
-    key = 'N'
+    key = 'M'
     valor = 200
 class flash():
     nombre = 'Flash Grenade'
-    key = 'N'
+    key = 'L'
     valor = 1000
 class knife():
     nombre = 'Knife'
