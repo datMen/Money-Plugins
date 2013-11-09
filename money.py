@@ -1,4 +1,4 @@
-__version__ = '2.5'
+__version__ = '3.0'
 __author__  = 'LouK'
 
 import b3
@@ -25,6 +25,9 @@ def cdate():
 class SpreeStats:
     kills                  = 0
     deaths                 = 0
+
+    god                   = 0
+    inv                   = False
     
     spec                   = True
     suicide                   = True
@@ -189,10 +192,10 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
            self.spreeKill(event.client, event.target)
-        	
+           
         elif(event.type == b3.events.EVT_CLIENT_CONNECT):
             self._not_connecting = False
-            t = threading.Timer(30, self.connOff)
+            t = threading.Timer(40, self.connOff)
             t.start() 
            
     def connOff(self):
@@ -869,12 +872,12 @@ class MoneyPlugin(b3.plugin.Plugin):
                 name = "Disarm"
                 self.price(client, name, valor)
             elif (weapon == "god") or (weapon == "godmode"):
-                valor = 30000
-                name = "GoD"
+                name = god.nombre
+                valor = ("%s(per round)" % god.valor)
                 self.price(client, name, valor)
             elif (weapon == "inv") or (weapon == "invisible"): 
-                valor = 150000
-                name = "Invisible"
+                name = invisible.nombre
+                valor = ("%s(per minute)" % invisible.valor)
                 self.price(client, name, valor)
             elif (weapon == "spas") or (weapon == "SPAS") or (weapon == "FRANCHI") or (weapon == "franchi"):
                 name = spas.nombre
@@ -1291,7 +1294,25 @@ class MoneyPlugin(b3.plugin.Plugin):
                 client.message("Du hast ^5%s und ^2%s ^7gekauft.Du hast noch: ^2%s ^7Coins" % (veces, nombre, sobran))
             elif(idioma == "IT"):
                 client.message('Hai comprato ^5%s ^2%s ^7Hai:^2%s ^7coins' % (veces, nombre, sobran))
-                
+            
+    def stopInv(self, client):
+        Status = self.get_spree_stats(client)
+        Status.inv = False
+        client.message('Your ^4Invisible ^7time finishes in ^55')
+        time.sleep(2)
+        client.message('Your ^4Invisible ^7time finishes in ^54')
+        time.sleep(2)
+        client.message('Your ^4Invisible ^7time finishes in ^53')
+        time.sleep(2)
+        client.message('Your ^4Invisible ^7time finishes in ^52')
+        time.sleep(2)
+        client.message('Your ^4Invisible ^7time finishes in ^51')
+        time.sleep(2)
+        client.message('Your ^4Invisible ^7time finished')
+        
+        self.console.write('forceteam %s spectator' % (client.cid))
+        self.console.write('forceteam %s blue' % (client.cid))
+        self.console.write('bigtext "%s ^7is now ^2Visible ^7again!"' % (client.exactName))
             
     def cmd_getweapon(self, data, client=None, cmd=None):
         """\
@@ -1321,6 +1342,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             return False
         weapon = input[0]
         status = input[1]
+        veces = input[1]
         if(weapon == "help") or (weapon == "ayuda") or (weapon == "In French: help")or (weapon == "In German: help"):
             if(idioma == "EN"):
                 self.console.write('tell %s ^7Type ^2!money ^7to see your money' % (client.cid))
@@ -1384,59 +1406,90 @@ class MoneyPlugin(b3.plugin.Plugin):
             return False
         if client.team == b3.TEAM_BLUE:
             if (weapon == "god") or (weapon == "godmode"):
+                nombre = god.nombre
+                valor = god.valor
                 if(client.maxLevel >= 100):
-                    self.console.write("sv_cheats 1")
-                    self.console.write("spoof %s god" % (client.cid))
-                    self.console.write("sv_cheats 0")
-                    self.console.write('bigtext "%s ^7bought ^6GoDMoD"' % (client.exactName))
+                    self.console.write("exec god%s.cfg" % (client.cid))
+                    self.console.write('bigtext "%s ^7Is ^6GoD"' % (client.exactName))
                     return True
                 else:
+                    if veces:
+                        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                        match = regex.match(data)
+                        weapon = match.group('string')
+                        veces = int(match.group('number'))
+                        valor = (valor * veces)
+                    else:
+                        veces = 1
                     q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
                     cursor = self.console.storage.query(q)
                     r = cursor.getRow()
                     dinero = r['dinero']
                     idioma = r['idioma']
-                    if(dinero > 30000):
-                        q=('UPDATE `dinero` SET `dinero` = dinero-30000 WHERE iduser = "%s"' % (client.id))
+                    if(dinero > valor):
+                        q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor, client.id))
                         self.console.storage.query(q)
-                        self.console.write("sv_cheats 1")
-                        self.console.write("spoof %s god" % (client.cid))
-                        self.console.write("sv_cheats 0")
-                        self.console.write('bigtext "%s ^7bought ^6GoDMoDe"' % (client.exactName))
-                        if(idioma == "ES"):
-                            client.message('^7Activaste Correctamente ^6GoDMoDe^7. ^1-30000 ^7coins')
+                        self.console.write("exec god%s.cfg" % (client.cid))
+                        self.console.write('bigtext "%s ^7bought ^6GoDMoDe ^7for ^5%s ^7Rounds!"' % (client.exactName, veces))
+                        Status = self.get_spree_stats(client)
+                        Status.god += veces
+                        sobran = (dinero - valor)
+                        if(idioma == "EN"):
+                            client.message('You Have Bought ^6%s ^7for ^5%s ^7Rounds You have: ^2%s ^7Coins' % (nombre, veces, sobran))
+                        elif(idioma == "ES"):
+                            client.message('Has Comprado ^6%s ^7durante ^5%s ^7Rondas Te Quedan: ^2%s ^7Coins' % (nombre, veces, sobran))
+                        elif(idioma == "FR"):
+                            client.message("In French: You Have Bought ^6%s ^7for ^5%s^7Rounds You have: ^2%s ^7Coins" % (nombre, veces, sobran))
+                        elif(idioma == "DE"):
+                            client.message("In German: You Have Bought ^6%s ^7for ^5%s^7Rounds You have: ^2%s ^7Coins" % (nombre, veces, sobran))
                         elif(idioma == "IT"):
-                            client.message('^7Hai attivato correttamente la ^6GoDMoDe^7. ^1-30000 ^7coins')
-                        else:
-                            client.message('^7You activated Correctly ^6GodMoDe. ^1-30000 ^7coins')
-                        return True
+                            client.message("In Ita: You Have Bought ^6%s ^7for ^5%s^7Rounds You have: ^2%s ^7Coins" % (nombre, veces, sobran))
                     else:
                         self.noCoins(client, idioma, dinero)
-            elif (weapon == "inv") or (weapon == "invisible"):     
+                        
+            elif (weapon == "inv") or (weapon == "invisible"):   
+                nombre = invisible.nombre
+                valor = invisible.valor  
                 if(client.maxLevel >= 100):
                     self.console.write("inv %s" % (client.cid))
-                    self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
+                    self.console.write('bigtext "%s ^7Is ^4Invisible"' % (client.exactName))
                     return True
                 else:
+                    if veces:
+                        regex = re.compile(r"""^(?P<string>\w+) (?P<number>\d+)$""")
+                        match = regex.match(data)
+                        weapon = match.group('string')
+                        veces = int(match.group('number'))
+                        valor = (valor * veces)
+                    else:
+                        veces = 1
                     q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
                     cursor = self.console.storage.query(q)
                     r = cursor.getRow()
                     dinero = r['dinero']
                     idioma = r['idioma']
-                    if(dinero > 150000):
-    	    		q=('UPDATE `dinero` SET `dinero` = dinero-150000 WHERE iduser = "%s"' % (client.id))
-    	    		self.console.storage.query(q)
-    	    		self.console.write("inv %s" % (client.cid))
-    	    		self.console.write('bigtext "%s ^7bought ^4InvisibleMode"' % (client.exactName))
-    	    		if(idioma == "ES"):
-    	    			client.message('^7Activaste Correctamente ^4Invisible^7. ^1-1500000 ^7coins')
+                    if(dinero > valor):
+                        q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (valor, client.id))
+                        self.console.storage.query(q)
+                        self.console.write("inv %s" % (client.cid))
+                        self.console.write('bigtext "%s ^7bought ^4Invisible ^7for ^5%s ^7minutes!"' % (client.exactName, veces))
+                        Status = self.get_spree_stats(client)
+                        Status.inv = True
+                        t = threading.Timer((veces * 60), self.stopInv, args=[client])
+                        t.start()
+                        sobran = (dinero - valor)
+                        if(idioma == "EN"):
+                            client.message('You Have Bought ^6%s ^7for ^5%s^7min You have: ^2%s ^7Coins' % (nombre, veces, sobran))
+                        elif(idioma == "ES"):
+                            client.message('Has Comprado ^6%s ^7por ^5%s^7min Te Quedan: ^2%s ^7Coins' % (nombre, veces, sobran))
+                        elif(idioma == "FR"):
+                            client.message("In French: You Have Bought ^6%s ^7for ^5%s^7min You have: ^2%s ^7Coins" % (nombre, veces, sobran))
+                        elif(idioma == "DE"):
+                            client.message("In German: You Have Bought ^6%s ^7for ^5%s^7min You have: ^2%s ^7Coins" % (nombre, veces, sobran))
                         elif(idioma == "IT"):
-    	    			client.message('^7Sei diventato ^4Invisibile^7. ^1-1500000 ^7coins')
-    	    		else:
-    	    			client.message('^7You activated Correctly ^4Invisible^7. ^1-1500000 ^7coins')
-    	    		return True
+                            client.message("In Ita: You Have Bought ^6%s ^7for ^5%s^7min You have: ^2%s ^7Coins" % (nombre, veces, sobran))
                     else:
-    	    		self.noCoins(client, idioma, dinero)
+                        self.noCoins(client, idioma, dinero)
 
             elif (weapon == "sr8") or (weapon == "SR8"):
                 nombre = sr8.nombre
@@ -1789,6 +1842,15 @@ class MoneyPlugin(b3.plugin.Plugin):
                             c.message('You are autobuying: ^2%s' % ('^7, ^2'.join(weapon)))
                         else:
                             self.noCoins(c, idioma, dinero)
+                            
+                Status = self.get_spree_stats(c)
+                if Status.god > 0:
+                    self.console.write("exec god%s.cfg" % (c.cid))
+                    Status.god -= 1
+                    c.message('^5%s ^7Rounds left to lose your ^6GoD ^7status!' % Status.god)
+                if Status.inv == True:
+                    self.console.write("inv %s" % (c.cid))
+                    
             if(c.team == b3.TEAM_RED):
                 q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
                 cursor = self.console.storage.query(q)
@@ -1895,7 +1957,16 @@ class MoneyPlugin(b3.plugin.Plugin):
             client.message("Du hast Autobuy ^1nicht ^7Aktiviert")
         elif(idioma == "IT"):
             client.message('^1Non hai ^7attivato l\'autoacquisto.')
-                            
+                        
+class god():
+    nombre = 'GoD'
+    valor = 15000
+class invisible():
+    nombre = 'Invisible'
+    valor = 10000
+class teleport():
+    nombre = 'Teleport'
+    valor = 1000
 class sr8():
     nombre = 'Remington SR8'
     key = 'N'
