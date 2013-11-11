@@ -1000,20 +1000,15 @@ class MoneygunsPlugin(b3.plugin.Plugin):
     def stopInv(self, client):
         Status = self.get_spree_stats(client)
         Status.inv = False
-        client.message('Your ^4Invisible ^7time finishes in ^55')
-        time.sleep(2)
-        client.message('Your ^4Invisible ^7time finishes in ^54')
-        time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^53')
         time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^52')
         time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^51')
         time.sleep(2)
-        client.message('Your ^4Invisible ^7time finished')
         
-        self.console.write('forceteam %s spectator' % (client.cid))
-        self.console.write('forceteam %s blue' % (client.cid))
+        funstuff = random.choice(('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'))
+        self.console.write('forcecvar %s cg_rgb "%s"' % (client.cid, funstuff))
         self.console.write('bigtext "%s ^7is now ^2Visible ^7again!"' % (client.exactName))
         
     def stopGod(self, client):

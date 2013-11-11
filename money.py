@@ -1,8 +1,7 @@
 __version__ = '3.0'
 __author__  = 'LouK'
 
-import b3
-import re
+import b3, re, random
 import b3.events
 import b3.plugin
 from b3 import geoip
@@ -1298,20 +1297,15 @@ class MoneyPlugin(b3.plugin.Plugin):
     def stopInv(self, client):
         Status = self.get_spree_stats(client)
         Status.inv = False
-        client.message('Your ^4Invisible ^7time finishes in ^55')
-        time.sleep(2)
-        client.message('Your ^4Invisible ^7time finishes in ^54')
-        time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^53')
         time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^52')
         time.sleep(2)
         client.message('Your ^4Invisible ^7time finishes in ^51')
         time.sleep(2)
-        client.message('Your ^4Invisible ^7time finished')
         
-        self.console.write('forceteam %s spectator' % (client.cid))
-        self.console.write('forceteam %s blue' % (client.cid))
+        funstuff = random.choice(('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'))
+        self.console.write('forcecvar %s cg_rgb "%s"' % (client.cid, funstuff))
         self.console.write('bigtext "%s ^7is now ^2Visible ^7again!"' % (client.exactName))
             
     def cmd_getweapon(self, data, client=None, cmd=None):
