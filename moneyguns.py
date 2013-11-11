@@ -1,8 +1,7 @@
 __version__ = '3.0'
 __author__  = 'LouK'
 
-import b3
-import re
+import b3, re, random
 import b3.events
 import b3.plugin
 from b3 import geoip
@@ -113,8 +112,11 @@ class MoneygunsPlugin(b3.plugin.Plugin):
           cursor.close()
         
         if event.type == b3.events.EVT_CLIENT_KILL: 
-           self.knifeKill(event.client, event.target, event.data)
-           self.autoMessage2(event.target, event.client, event.data)
+            sclient = event.client
+            if sclient.ip == '0.0.0.0':
+                return False
+            self.knifeKill(event.client, event.target, event.data)
+            self.autoMessage2(event.target, event.client, event.data)
            
 #    def update(self):
  #     for c in self.console.clients.getList():
@@ -177,7 +179,7 @@ class MoneygunsPlugin(b3.plugin.Plugin):
 
     def knifeKill(self, client, target, data=None):
         if self._pasta:
-    	  if(client.maxLevel < 100) or (client.ip != '0.0.0.0'):
+    	  if(client.maxLevel < 100):
     	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
     	    cursor = self.console.storage.query(q)
     	    r = cursor.getRow()
@@ -666,6 +668,9 @@ class MoneygunsPlugin(b3.plugin.Plugin):
           if(sclient.maxLevel >= 100):
             client.message('%s has: ^2Infinite' % (sclient.exactName))
             return True
+          if sclient.ip == '0.0.0.0':
+                client.message('%s Is a Fricking bot x)' % (sclient.exactName))
+                return False
           else:
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
             cursor = self.console.storage.query(q)
