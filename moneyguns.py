@@ -437,8 +437,6 @@ class MoneygunsPlugin(b3.plugin.Plugin):
       if(client.maxLevel >= 100):
         input = self._adminPlugin.parseUserCmd(data)
         sclient = self._adminPlugin.findClientPrompt(input[0], client)
-        Stats = self.get_spree_stats(sclient)
-        Stats.suicide = False
         self.console.write("kill %s" % (sclient.cid))
       else:
     	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
@@ -463,8 +461,6 @@ class MoneygunsPlugin(b3.plugin.Plugin):
     	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
     	  if not sclient: return False
     	  if (dinero > 10000):
-            Stats = self.get_spree_stats(sclient)
-            Stats.suicide = False
             q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
             self.console.storage.query(q)
             self.console.write("kill %s" % (sclient.cid))
