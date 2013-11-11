@@ -30,6 +30,7 @@ class SpreeStats:
     
     spec                   = True
     suicide                   = True
+    connecting                   = False
     
 
 class MoneyPlugin(b3.plugin.Plugin):
@@ -40,7 +41,6 @@ class MoneyPlugin(b3.plugin.Plugin):
     _swap_num = True
     _nim = True
     _swap_status = True
-    _not_connecting = True
     
     def onStartup(self):
         # get the admin plugin so we can register commands
@@ -167,12 +167,11 @@ class MoneyPlugin(b3.plugin.Plugin):
                     Stats = self.get_spree_stats(sclient)
                     if Stats.spec:
                         self.console.write("forceteam %s" % (sclient.cid))
-                        if self._not_connecting:
-                            warnings = sclient.numWarnings
-                            sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not join spec team ^3Newb' % (warnings +1))
-                            self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
-                            if warnings >= 2:
-                                sclient.tempban(duration='5m', reason='Too many warnings: Do not join spec team')
+                        warnings = sclient.numWarnings
+                        sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not join spec team ^3Newb' % (warnings +1))
+                        self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
+                        if warnings >= 2:
+                            sclient.tempban(duration='5m', reason='Too many warnings: Do not join spec team')
                     else:
                         Stats.spec = True
                         
@@ -193,12 +192,9 @@ class MoneyPlugin(b3.plugin.Plugin):
            self.spreeKill(event.client, event.target)
            
         elif(event.type == b3.events.EVT_CLIENT_CONNECT):
-            self._not_connecting = False
-            t = threading.Timer(40, self.connOff)
-            t.start() 
-           
-    def connOff(self):
-        self._not_connecting = True
+            sclient = event.client
+            Status = self.get_spree_stats(sclient)
+            Status.spec = False
         
     def Fin_S1(self):
         self.console.write("restart")
