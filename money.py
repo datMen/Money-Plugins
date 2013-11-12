@@ -178,14 +178,16 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(event.type == b3.events.EVT_CLIENT_SUICIDE):
             sclient = event.client
             Stats = self.get_spree_stats(sclient)
-            if Stats.suicide:
-                warnings = sclient.numWarnings
-                sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not kill yourself idiot' % (warnings +1))
-                self.console.say('%s, try to kill yourself again ^1n00b' % (sclient.exactName))
-                if warnings >= 2:
-                    sclient.tempban(duration='5m', reason='Too many warnings: Do not kill yourself idiot')
-            else:
-                Stats.suicide = True
+            sdata = event.data
+            if sdata[1] != self.console.MOD_LAVA:
+                if Stats.suicide:
+                    warnings = sclient.numWarnings
+                    sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not kill yourself idiot' % (warnings +1))
+                    self.console.say('%s, try to kill yourself again ^1n00b' % (sclient.exactName))
+                    if warnings >= 2:
+                        sclient.tempban(duration='5m', reason='Too many warnings: Do not kill yourself idiot')
+                else:
+                    Stats.suicide = True
                     
         elif event.type == b3.events.EVT_CLIENT_KILL: 
            self.knifeKill(event.client, event.target, event.data)
