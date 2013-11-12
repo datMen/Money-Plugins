@@ -156,22 +156,23 @@ class MoneyPlugin(b3.plugin.Plugin):
                     TimeS1 = MoneyPlugin.time_swap * 1
                     swaptimer = threading.Timer(TimeS1, self.Fin_S1)
                     swaptimer.start()
-            self._connecting = True
-            t = threading.Timer(45, self.connOff)
-            t.start() 
+
         		  
         elif(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
             sclient = event.client
             if(sclient.team == b3.TEAM_SPEC):
                 if(sclient.maxLevel < 10):
                     Stats = self.get_spree_stats(sclient)
+                    self.console.write("forceteam %s" % (sclient.cid))
                     if Stats.spec:
-                        self.console.write("forceteam %s" % (sclient.cid))
-                        warnings = sclient.numWarnings
-                        sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not join spec team ^3Newb' % (warnings +1))
-                        self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
-                        if warnings >= 2:
-                            sclient.tempban(duration='5m', reason='Too many warnings: Do not join spec team')
+                        if Stats.connecting == False:
+                            warnings = sclient.numWarnings
+                            sclient.warn(duration='10m', warning='^1WARNING^7 [^3%s^7]: Do not join spec team ^3Newb' % (warnings +1))
+                            self.console.say('Do not join spec team Newbie %s' % (sclient.exactName))
+                            if warnings >= 2:
+                                sclient.tempban(duration='5m', reason='Too many warnings: Do not join spec team')
+                        else:
+                            Stats.connecting = False
                     else:
                         Stats.spec = True
                         
@@ -196,6 +197,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         elif(event.type == b3.events.EVT_CLIENT_CONNECT):
             sclient = event.client
             Status = self.get_spree_stats(sclient)
+            Status.connecting = True
             Status.spec = False
         
     def Fin_S1(self):
