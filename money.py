@@ -1414,7 +1414,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                         veces = int(match.group('number'))
                         valor = (valor * veces)
                     else:
-                        veces = 1
+                        veces = 0
                     q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
                     cursor = self.console.storage.query(q)
                     r = cursor.getRow()
