@@ -1008,8 +1008,8 @@ class MoneygunsPlugin(b3.plugin.Plugin):
         client.message('Your ^4Invisible ^7time finishes in ^51')
         time.sleep(2)
         
-        funstuff = random.choice(('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'))
-        self.console.write('forcecvar %s cg_rgb "%s"' % (client.cid, funstuff))
+        self.console.write('forcecvar %s cg_rgb "1"' % (client.cid))
+        self.console.write('forcecvar %s cg_rgb "0"' % (client.cid))
         self.console.write('bigtext "%s ^7is now ^2Visible ^7again!"' % (client.exactName))
         
     def stopGod(self, client):
@@ -1035,11 +1035,11 @@ class MoneygunsPlugin(b3.plugin.Plugin):
             if(idioma == "EN"):
                 client.message('Type ^2!buy help ^7to see how to use this command')
             elif(idioma == "ES"):
-    	        client.message('Escribe ^2!buy ayuda ^7para ver como usar este comando')
+                client.message('Escribe ^2!buy ayuda ^7para ver como usar este comando')
             elif(idioma == "FR"):
-    	        client.message("In French: Type ^2!buy help ^7to see how to use this command")
+                client.message("In French: Type ^2!buy help ^7to see how to use this command")
             elif(idioma == "DE"):
-    	        client.message("Schreibe ^2!buy help ^7um den Gebrauch dieses Kommandos zu erfahren")
+                client.message("Schreibe ^2!buy help ^7um den Gebrauch dieses Kommandos zu erfahren")
             elif(idioma == "IT"):
                 client.message("Scrivi ^2!buy help ^7per vedere come utilizzare questo comando")
             return False
