@@ -98,7 +98,7 @@ class MoneyPlugin(b3.plugin.Plugin):
               self.console.storage.query(q)
           if(sclient.maxLevel < 100):
             datedebut = cdate()
-            datefin = 3600 + cdate()
+            datefin = cdate() += 3600
             q=('SELECT * FROM `automoney` WHERE `client_id` = "%s"' % (sclient.id))
             cursor = self.console.storage.query(q)
             if(cursor.rowcount == 0):
@@ -220,9 +220,9 @@ class MoneyPlugin(b3.plugin.Plugin):
           if int(fin) < int(datenow):
             fin = 3600 + cdate()
             #fin = 60 + cdate()
-            q=('UPDATE `automoney` SET `datefin` =%s,veces=veces+1 WHERE client_id = "%s"' % (fin,c.id))
+            q=('UPDATE `automoney` SET `datefin` =%s, veces=veces+1 WHERE client_id = "%s"' % (fin,c.id))
             self.console.storage.query(q)
-            veces2= 5000 * veces
+            veces2 = 5000 * veces
             q=('UPDATE `dinero` SET `dinero` = dinero+%s WHERE iduser = "%s"' % (veces2,c.id))
             self.console.storage.query(q)
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (c.id))
