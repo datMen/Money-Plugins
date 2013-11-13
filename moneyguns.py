@@ -1508,8 +1508,9 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                 return False
             
     def autoMessage2(self, client, target, data=None):
-        t = threading.Timer(self._delay, self.autoMessage, args=[client])
-        t.start() 
+        if client.ip != '0.0.0.0':
+            t = threading.Timer(self._delay, self.autoMessage, args=[client])
+            t.start() 
                 
     def autoMessage(self, client):
         q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
