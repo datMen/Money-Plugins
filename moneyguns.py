@@ -1120,6 +1120,9 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                         match = regex.match(data)
                         weapon = match.group('string')
                         veces = int(match.group('number'))
+                        if veces <= 0:
+                          client.message('You cant buy ^5%s ^7minutes!' % (veces))
+                          return False
                         valor = (valor * veces)
                     else:
                         veces = 1
@@ -1163,6 +1166,9 @@ class MoneygunsPlugin(b3.plugin.Plugin):
                         match = regex.match(data)
                         weapon = match.group('string')
                         veces = int(match.group('number'))
+                        if veces <= 0:
+                          client.message('You cant buy ^5%s ^7minutes!' % (veces))
+                          return False
                         valor = (valor * veces)
                     else:
                         veces = 1
