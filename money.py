@@ -55,11 +55,11 @@ class MoneyPlugin(b3.plugin.Plugin):
         self._adminPlugin = self.console.getPlugin('admin')
         self.query = self.console.storage.query
         
-        if self._cronTab:
-          self.console.cron - self._cronTab
+        #if self._cronTab:
+         # self.console.cron - self._cronTab
           
-        self._cronTab = b3.cron.PluginCronTab(self, self.update, minute='*/10')
-        self.console.cron + self._cronTab
+        #self._cronTab = b3.cron.PluginCronTab(self, self.update, minute='*/10')
+        #self.console.cron + self._cronTab
         
         if not self._adminPlugin:
             # something is wrong, can't start without admin plugin
@@ -97,8 +97,8 @@ class MoneyPlugin(b3.plugin.Plugin):
               q=('INSERT INTO `dinero`(`iduser`, `dinero`) VALUES (%s,10000)' % (sclient.id))
               self.console.storage.query(q)
           if(sclient.maxLevel < 100):
-            datedebut = cdate()
-            datefin = cdate() += 3600
+            #datedebut = cdate()
+            #datefin = cdate() += 3600
             q=('SELECT * FROM `automoney` WHERE `client_id` = "%s"' % (sclient.id))
             cursor = self.console.storage.query(q)
             if(cursor.rowcount == 0):
