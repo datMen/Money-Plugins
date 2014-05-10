@@ -591,22 +591,24 @@ class MoneyPlugin(b3.plugin.Plugin):
               return False
           sclient = self._adminPlugin.findClientPrompt(input[0], client)
           if not sclient: return False
-          if (dinero > 10000):
-            Stats = self.get_spree_stats(sclient)
-            Stats.suicide = False
-            q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
+          status = self.get_spree_stats(client)
+          price = kill.price*status._kill_counter
+          if (dinero > price):
+            status.suicide = False
+            q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (price, client.id))
             self.console.storage.query(q)
             self.console.write("kill %s" % (sclient.cid))
             if(idioma == "EN"):
-                client.message('You killed %s! ^1-10000 ^7Coins' % (sclient.exactName))
+                client.message('You killed %s! ^1-%s ^7Coins' % (sclient.exactName, price))
             elif(idioma == "ES"):
-                client.message('Mataste a %s! ^1-10000 ^7Coins' % (sclient.exactName))
+                client.message('Mataste a %s! ^1-%s ^7Coins' % (sclient.exactName, price))
             elif(idioma == "FR"):
-                client.message("Tu as ordonne la mort de %s! ^1-10000 ^7Coins" % (sclient.exactName))
+                client.message("Tu as ordonne la mort de %s! ^1-%s ^7Coins" % (sclient.exactName, price))
             elif(idioma == "DE"):
-                client.message("Du hast %s gekillt! ^1-10000 ^7Coins" % (sclient.exactName))
+                client.message("Du hast %s gekillt! ^1-%s ^7Coins" % (sclient.exactName, price))
             elif(idioma == "IT"):
-                client.message("Hai ucciso %s! ^1-10000 ^7Coins" % (sclient.exactName))
+                client.message("Hai ucciso %s! ^1-%s ^7Coins" % (sclient.exactName, price))
+            status._kill_counter += 1
             return True
           else:
             self.noCoins(client, idioma, dinero)
@@ -638,22 +640,25 @@ class MoneyPlugin(b3.plugin.Plugin):
               return False
           sclient = self._adminPlugin.findClientPrompt(input[0], client)
           if not sclient: return False
-          if (dinero > 4000):
+          status = self.get_spree_stats(client)
+          price = disarm.price*status._dis_counter
+          if (dinero > price):
             if client.team != sclient.team:
               if(client.team == b3.TEAM_RED):
-                q=('UPDATE `dinero` SET `dinero` = dinero-4000 WHERE iduser = "%s"' % (client.id))
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
                 self.console.write("gw %s -@" % (sclient.cid))
                 if(idioma == "EN"):
-                    client.message('You disarmed %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                    client.message('You disarmed %s! ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "ES"):
-                    client.message('Has desarmado a %s! ^1-4000 ^7Coins' % (sclient.exactName))
+                    client.message('Has desarmado a %s! ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "FR"):
-                    client.message("In French: You disarmed %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("In French: You disarmed %s! ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "DE"):
-                    client.message("Du hast %s entwaffnet! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("Du hast %s entwaffnet! ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "IT"):
-                    client.message("Hai disarmato %s! ^1-4000 ^7Coins" % (sclient.exactName))
+                    client.message("Hai disarmato %s! ^1-%s ^7Coins" % (sclient.exactName, price))
+                status._dis_counter += 1
                 return True
               else:
                 if(idioma == "EN"):
@@ -1961,6 +1966,12 @@ class invisible():
 class teleport():
     nombre = 'Teleport'
     valor = 1000
+class kill():
+    nombre = 'Kill'
+    valor = 10000
+class disarm():
+    nombre = 'Disarm'
+    valor = 4000
 class sr8():
     nombre = 'Remington SR8'
     key = 'N'
