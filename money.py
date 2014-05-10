@@ -28,6 +28,9 @@ class SpreeStats:
     spec                   = True
     suicide                   = True
     connecting                   = False
+    _tp_counter = 1
+    _kill_counter = 1
+    _dis_counter = 1
     
 
 class MoneyPlugin(b3.plugin.Plugin):
@@ -489,67 +492,71 @@ class MoneyPlugin(b3.plugin.Plugin):
             client.message('Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
 
     def cmd_teleport(self, data, client, cmd=None):
-    	  if(client.maxLevel >= 100):
-    	    input = self._adminPlugin.parseUserCmd(data)
-    	    sclient = self._adminPlugin.findClientPrompt(input[0], client)
-    	    if not data:
-    	      client.message('^7Type !teleport <player>')
-    	      return False
-    	    self.console.write("teleport %s %s" % (client.cid, sclient.cid))
-    	  else:  
-    	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	    self.debug(q)
-    	    cursor = self.console.storage.query(q)
-    	    r = cursor.getRow()
-    	    iduser = r['iduser']
-    	    dinero = r['dinero']
-    	    idioma = r['idioma']
-    	    input = self._adminPlugin.parseUserCmd(data)
-    	    if not data:
-    	      if(idioma == "EN"):
-    	        client.message('Correct usage is ^2!teleport ^4<player>')
-    	      elif(idioma == "ES"):
-    	        client.message('^7Debes escribir ^2!teleport ^4<jugador>')
+          if(client.maxLevel >= 100):
+            input = self._adminPlugin.parseUserCmd(data)
+            sclient = self._adminPlugin.findClientPrompt(input[0], client)
+            if not data:
+              client.message('^7Type !teleport <player>')
+              return False
+            self.console.write("teleport %s %s" % (client.cid, sclient.cid))
+          else:
+            q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+            self.debug(q)
+            cursor = self.console.storage.query(q)
+            r = cursor.getRow()
+            dinero = r['dinero']
+            idioma = r['idioma']
+            input = self._adminPlugin.parseUserCmd(data)
+            if not data:
+              if(idioma == "EN"):
+                client.message('Correct usage is ^2!teleport ^4<player>')
+              elif(idioma == "ES"):
+                client.message('^7Debes escribir ^2!teleport ^4<jugador>')
               elif(idioma == "FR"):
-    	        client.message("Utilisation: ^2!teleport ^4<joueur>")
+                client.message("Utilisation: ^2!teleport ^4<joueur>")
               elif(idioma == "DE"):
-    	        client.message("Richtiger Gebrauch: ^2!teleport ^4<player>")
+                client.message("Richtiger Gebrauch: ^2!teleport ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto e ^2!teleport ^4<player>")
               return False
-    	    sclient = self._adminPlugin.findClientPrompt(input[0], client)
-    	    if not sclient: return False
-    	    if (dinero  > 1000):
-    	      if client.team == sclient.team:
-    	        q=('UPDATE `dinero` SET `dinero` = dinero-1000 WHERE iduser = "%s"' % (client.id))
-    	        self.console.storage.query(q)
-    	        self.console.write("teleport %s %s" % (client.cid, sclient.cid))
+            sclient = self._adminPlugin.findClientPrompt(input[0], client)
+            if not sclient: return False
+            status = self.get_spree_stats(client)
+            price = teleport.price*status._tp_counter
+            if (dinero  > price):
+              if client.team == sclient.team:
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id, price))
+                self.console.storage.query(q)
+                self.console.write("teleport %s %s" % (client.cid, sclient.cid))
                 if(idioma == "EN"):
-                    client.message('^7You teleported to %s^7. ^1-1000 ^7Coins' % sclient.exactName)
+                    client.message('^7You teleported to %s^7. ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "ES"):
-                    client.message('^7Te has teletransportado a %s^7. ^1-1000 ^7Coins' % sclient.exactName)
+                    client.message('^7Te has teletransportado a %s^7. ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "FR"):
-                    client.message("Tu t'es teleporte a %s^7. ^1-1000 ^7Coins" % sclient.exactName)
+                    client.message("Tu t'es teleporte a %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "DE"):
-                    client.message("Du teleportiertest dich zu %s^7. ^1-1000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "IT"):
-                    client.message("Ti sei teletrasportato a %s^7. ^1-1000 ^7Coins" % sclient.exactName)
+                    client.message("Ti sei teletrasportato a %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
+                status._tp_counter += 1
                 return True
-    	      elif (dinero  > 5000):
-    	      	q=('UPDATE `dinero` SET `dinero` = dinero-5000 WHERE iduser = "%s"' % (client.id))
-    	        self.console.storage.query(q)
-    	        self.console.write("teleport %s %s" % (client.cid, sclient.cid))
+              elif (dinero  > (price*5)):
+                price *= 5
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id, price))
+                self.console.storage.query(q)
+                self.console.write("teleport %s %s" % (client.cid, sclient.cid))
                 if(idioma == "EN"):
-                    client.message('^7You teleported to %s^7. ^1-5000 ^7Coins' % sclient.exactName)
+                    client.message('^7You teleported to %s^7. ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "ES"):
-                    client.message('^7Te has teletransportado a %s^7. ^1-5000 ^7Coins' % sclient.exactName)
+                    client.message('^7Te has teletransportado a %s^7. ^1-%s ^7Coins' % (sclient.exactName, price))
                 elif(idioma == "FR"):
-                    client.message("Tu t'es teleporte a %s^7. ^1-5000 ^7Coins" % sclient.exactName)
+                    client.message("Tu t'es teleporte a %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "DE"):
-                    client.message("Du teleportiertest dich zu %s^7. ^1-5000 ^7Coins" % sclient.exactName)
+                    client.message("Du teleportiertest dich zu %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
                 elif(idioma == "IT"):
-                    client.message("Ti sei teletrasportato a %s^7. ^1-5000 ^7Coins" % sclient.exactName)
-    	        return True
+                    client.message("Ti sei teletrasportato a %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
+                status._tp_counter += 1
+                return True
               else:
                   self.noCoins(client, idioma, dinero)
             else:
