@@ -1,14 +1,11 @@
 __version__ = '3.0'
 __author__  = 'LouK'
 
-import b3, re, random
+import b3, re
 import b3.events
 import b3.plugin
-from b3 import geoip
-from b3.translator import translate
 import b3.cron
-import datetime, time, calendar, threading, thread
-from time import gmtime, strftime
+import time, calendar, threading, thread
 from b3 import clients
 
 def cdate():
@@ -86,7 +83,7 @@ class MoneyPlugin(b3.plugin.Plugin):
     def onEvent(self, event):
         if event.type == b3.events.EVT_GAME_ROUND_START:
           self.autoMessage(event)
-             	                
+                                
         elif(event.type == b3.events.EVT_CLIENT_AUTH):
           sclient = event.client
           if(sclient.maxLevel < 100):
@@ -96,17 +93,17 @@ class MoneyPlugin(b3.plugin.Plugin):
             if(cursor.rowcount == 0):
               q=('INSERT INTO `dinero`(`iduser`, `dinero`) VALUES (%s,10000)' % (sclient.id))
               self.console.storage.query(q)
-          if(sclient.maxLevel < 100):
+          # if(sclient.maxLevel < 100):
             #datedebut = cdate()
             #datefin = cdate() += 3600
-            q=('SELECT * FROM `automoney` WHERE `client_id` = "%s"' % (sclient.id))
-            cursor = self.console.storage.query(q)
-            if(cursor.rowcount == 0):
-              q=('INSERT INTO `automoney`(`client_id`, `datedebut`, `datefin`, `veces`) VALUES (%s,%s,%s,1)' % (sclient.id,datedebut,datefin))
-              self.console.storage.query(q)
-            else:
-              q=('UPDATE `automoney` SET `datedebut`=%s,`datefin`=%s,`veces`=1 WHERE client_id=%s' % (datedebut,datefin,sclient.id))
-              self.console.storage.query(q)
+            # q=('SELECT * FROM `automoney` WHERE `client_id` = "%s"' % (sclient.id))
+            # cursor = self.console.storage.query(q)
+            # if(cursor.rowcount == 0):
+            #   q=('INSERT INTO `automoney`(`client_id`, `datedebut`, `datefin`, `veces`) VALUES (%s,%s,%s,1)' % (sclient.id,datedebut,datefin))
+            #   self.console.storage.query(q)
+            # else:
+            #   q=('UPDATE `automoney` SET `datedebut`=%s,`datefin`=%s,`veces`=1 WHERE client_id=%s' % (datedebut,datefin,sclient.id))
+            #   self.console.storage.query(q)
 
           q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
           cursor = self.console.storage.query(q)
@@ -134,12 +131,12 @@ class MoneyPlugin(b3.plugin.Plugin):
                  sclient.message("La tua lingua e stata impostata in ^2''ITALIANO''")
                  sclient.message("Puoi cambiarla usando ^2!lang <en/es/fr/de/it>")
           cursor.close()
-          	
+            
         elif(event.type == b3.events.EVT_CLIENT_DISCONNECT):
-        	sclient = event.client
-        	q=('DELETE FROM automoney WHERE client_id = "%s"' % (sclient.id))
-        	self.console.storage.query(q)
-        	
+            sclient = event.client
+            q=('DELETE FROM automoney WHERE client_id = "%s"' % (sclient.id))
+            self.console.storage.query(q)
+            
         elif(event.type == b3.events.EVT_GAME_EXIT):
             if self._swap_status:
                 if self._swap_num:
@@ -157,7 +154,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     swaptimer = threading.Timer(TimeS1, self.Fin_S1)
                     swaptimer.start()
 
-        		  
+                  
         elif(event.type == b3.events.EVT_CLIENT_TEAM_CHANGE):
             sclient = event.client
             if(sclient.team == b3.TEAM_SPEC):
@@ -267,36 +264,34 @@ class MoneyPlugin(b3.plugin.Plugin):
 #                return False
                 
 #    def TeamBlue(self):
-#    	blue = []
-#    	for c in self.console.clients.getClientsByLevel():
-#    	  if(c.team == b3.TEAM_BLUE):
-#    	    blue.append(c.cid)
+#       blue = []
+#       for c in self.console.clients.getClientsByLevel():
+#         if(c.team == b3.TEAM_BLUE):
+#           blue.append(c.cid)
 #            self.debug(', '.join(blue))
-#    	return blue
-#    	
+#       return blue
+#       
 #    def TeamRed(self):
-#    	red = []
-#    	for c in self.console.clients.getClientsByLevel():
-#    	  if(c.team == b3.TEAM_RED):
-#    	    red.append(c.cid)
+#       red = []
+#       for c in self.console.clients.getClientsByLevel():
+#         if(c.team == b3.TEAM_RED):
+#           red.append(c.cid)
 #            self.debug(', '.join(red))
-#    	return red
+#       return red
 
     def knifeKill(self, client, target, data=None):
-    	  if(client.maxLevel < 100):
-    	    q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	    cursor = self.console.storage.query(q)
-    	    r = cursor.getRow()
-    	    iduser = r['iduser']
-    	    dinero = r['dinero']
-    	    idioma = r['idioma']
-    	    if(client.team == b3.TEAM_RED):
-    	      if(data[1] == self.console.UT_MOD_KNIFE or self.console.UT_MOD_KNIFE_THROWN or UT_MOD_HEGRENADE or UT_MOD_BLED or UT_MOD_KICKED):
-    	        q=('UPDATE `dinero` SET `dinero` = dinero+300 WHERE iduser = "%s"' % (client.id))
-    	        self.console.storage.query(q)
-    	        if(idioma == "EN"):
+          if(client.maxLevel < 100):
+            q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+            cursor = self.console.storage.query(q)
+            r = cursor.getRow()
+            idioma = r['idioma']
+            if(client.team == b3.TEAM_RED):
+              if(data[1] == self.console.UT_MOD_KNIFE or self.console.UT_MOD_KNIFE_THROWN or self.console.UT_MOD_HEGRENADE or self.console.UT_MOD_BLED or self.console.UT_MOD_KICKED):
+                q=('UPDATE `dinero` SET `dinero` = dinero+300 WHERE iduser = "%s"' % (client.id))
+                self.console.storage.query(q)
+                if(idioma == "EN"):
                     client.message('^7For kill %s you won ^2300 ^7Coins' % (target.exactName))
-    	        elif(idioma == "ES"):
+                elif(idioma == "ES"):
                     client.message('^7Por matar a %s has ganado ^2300 ^7Coins' % (target.exactName))
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2300 ^7Coins" % (target.exactName))
@@ -304,16 +299,16 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message("^7Fur den Kill %s gewinnst du ^2300 ^7Coins" % (target.exactName))
                 elif(idioma == "IT"):
                     client.message("^7Per aver ucciso %s hai guadagnato ^2300 ^7Coins" % (target.exactName))
-    	        	
-    	    if(client.team == b3.TEAM_BLUE):
-    	      if(data[1] == self.console.UT_MOD_BERETTA or self.console.UT_MOD_DEAGLE or self.console.UT_MOD_MP5K or self.console.UT_MOD_SPAS 
-    	      or self.console.UT_MOD_UMP45 or self.console.UT_MOD_LR300 or self.console.UT_MOD_G36 or UT_MOD_PSG1 or UT_MOD_HK69 or UT_MOD_BLED 
-    	      or UT_MOD_KICKED or UT_MOD_SR8 or UT_MOD_AK103 or UT_MOD_NEGEV or UT_MOD_HK69_HIT or UT_MOD_M4 or UT_MOD_GOOMBA):                    
-    	        q=('UPDATE `dinero` SET `dinero` = dinero+600 WHERE iduser = "%s"' % (client.id))
-    	        self.console.storage.query(q)
+                    
+            if(client.team == b3.TEAM_BLUE):
+              if(data[1] == self.console.UT_MOD_BERETTA or self.console.UT_MOD_DEAGLE or self.console.UT_MOD_MP5K or self.console.UT_MOD_SPAS 
+              or self.console.UT_MOD_UMP45 or self.console.UT_MOD_LR300 or self.console.UT_MOD_G36 or self.console.UT_MOD_PSG1 or self.console.UT_MOD_HK69 or self.console.UT_MOD_BLED 
+              or self.console.UT_MOD_KICKED or self.console.UT_MOD_SR8 or self.console.UT_MOD_AK103 or self.console.UT_MOD_NEGEV or self.console.UT_MOD_HK69_HIT or self.console.UT_MOD_M4 or self.console.UT_MOD_GOOMBA):                    
+                q=('UPDATE `dinero` SET `dinero` = dinero+600 WHERE iduser = "%s"' % (client.id))
+                self.console.storage.query(q)
                 if(idioma == "EN"):
                     client.message('^7For kill %s you won ^2600 ^7Coins' % (target.exactName))
-    	        elif(idioma == "ES"):
+                elif(idioma == "ES"):
                     client.message('^7Por matar a %s has ganado ^2600 ^7Coins' % (target.exactName))
                 elif(idioma == "FR"):
                     client.message("^7Pour la mort de %s, tu gagnes ^2600 ^7Coins" % (target.exactName))
@@ -325,7 +320,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             if(data[1] == self.console.UT_MOD_KICKED):
                 self.console.write("gh %s +25" % (client.cid))
                 self.console.say("%s ^7made a ^6Boot ^7kill! ^1= ^2+25 ^7hps" % client.exactName)
-    	    cursor.close()
+            cursor.close()
             
     def spreeKill(self, client=None, victim=None):
         if client:
@@ -420,53 +415,53 @@ class MoneyPlugin(b3.plugin.Plugin):
             cmd.sayLoudOrPM(client, '^520 ^7Kills ^1-> ^22500 ^7Coins')
 
     def cmd_idioma(self, data, client, cmd=None):
-    	  input = self._adminPlugin.parseUserCmd(data)
-    	  input = data.split(' ',1)
-    	  valor = input[0]
-    	  if not data:
-    	    client.message('^7Type !lang <en/es/fr/de/it>')
-    	    return False
-    	  if(valor == "EN" or valor == "en" or valor == "ES" or valor == "es" or valor == "FR" or valor == "fr" or valor == "DE" or valor == "de" or valor == "IT" or valor == "it" ):
-    	    if(valor == "EN" or valor == "en"):
-    	      q=('UPDATE `dinero` SET `idioma` ="EN" WHERE iduser = "%s"' % (client.id))
-    	      self.console.storage.query(q)
-    	      client.message('^7You defined your language correctly.')
-    	    if(valor == "ES" or valor == "es"):
-    	      q=('UPDATE `dinero` SET `idioma` ="ES" WHERE iduser = "%s"' % (client.id))
-    	      self.console.storage.query(q)
-    	      client.message('^7Has definido tu idioma correctamente.')
+          input = self._adminPlugin.parseUserCmd(data)
+          input = data.split(' ',1)
+          valor = input[0]
+          if not data:
+            client.message('^7Type !lang <en/es/fr/de/it>')
+            return False
+          if(valor == "EN" or valor == "en" or valor == "ES" or valor == "es" or valor == "FR" or valor == "fr" or valor == "DE" or valor == "de" or valor == "IT" or valor == "it" ):
+            if(valor == "EN" or valor == "en"):
+              q=('UPDATE `dinero` SET `idioma` ="EN" WHERE iduser = "%s"' % (client.id))
+              self.console.storage.query(q)
+              client.message('^7You defined your language correctly.')
+            if(valor == "ES" or valor == "es"):
+              q=('UPDATE `dinero` SET `idioma` ="ES" WHERE iduser = "%s"' % (client.id))
+              self.console.storage.query(q)
+              client.message('^7Has definido tu idioma correctamente.')
             if(valor == "FR" or valor == "fr"):
-    	      q=('UPDATE `dinero` SET `idioma` ="FR" WHERE iduser = "%s"' % (client.id))
-    	      self.console.storage.query(q)
-    	      client.message("^7Tu as bien change ta langue.")
+              q=('UPDATE `dinero` SET `idioma` ="FR" WHERE iduser = "%s"' % (client.id))
+              self.console.storage.query(q)
+              client.message("^7Tu as bien change ta langue.")
             if(valor == "DE" or valor == "de"):
-    	      q=('UPDATE `dinero` SET `idioma` ="DE" WHERE iduser = "%s"' % (client.id))
-    	      self.console.storage.query(q)
-    	      client.message("^7Du hast deine Sprache richtig gesetzt.")
+              q=('UPDATE `dinero` SET `idioma` ="DE" WHERE iduser = "%s"' % (client.id))
+              self.console.storage.query(q)
+              client.message("^7Du hast deine Sprache richtig gesetzt.")
             if(valor == "IT" or valor == "it"):
               q=('UPDATE `dinero` SET `idioma` ="IT" WHERE iduser = "%s"' % (client.id))
               self.console.storage.query(q)
               client.message("^7Hai impostato la tua lingua correttamente.")
-    	  else:
+          else:
             client.message('Correct usage is ^2!lang ^4<en/es/fr/de/it>')
             
     def cmd_setidioma(self, data, client, cmd=None):
           if not data:
-    	    client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
-    	    return False
-    	  input = self._adminPlugin.parseUserCmd(data)
-    	  scname = input[0]
+            client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
+            return False
+          input = self._adminPlugin.parseUserCmd(data)
+          scname = input[0]
           valor = input[1]
           sclient = self._adminPlugin.findClientPrompt(scname, client)
           if not sclient:
-    	    client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
-    	    return False
+            client.message('^7Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
+            return False
           q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
           self.debug(q)
           cursor = self.console.storage.query(q)
           r = cursor.getRow()
           idioma = r['idioma']
-    	  if(valor == "EN" or valor == "ES" or valor == "FR" or valor == "DE" or valor == "IT"):
+          if(valor == "EN" or valor == "ES" or valor == "FR" or valor == "DE" or valor == "IT"):
             q=('UPDATE `dinero` SET `idioma` ="%s" WHERE iduser = "%s"' % (valor, sclient.id))
             self.console.storage.query(q)
             if valor == "EN":
@@ -480,17 +475,17 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif valor == "IT":
                 lang = "Italian"
             client.message("You changed %s^7's language to ^2%s" % (sclient.exactName, lang))
-    	    if idioma == "EN":
-    	      sclient.message('%s changed your language to ^2%s' % (client.exactName, lang))
-    	    elif idioma == "ES":
-    	      client.message('%s ha cambiado tu idioma a ^2%s' % (client.exactName, lang))
+            if idioma == "EN":
+              sclient.message('%s changed your language to ^2%s' % (client.exactName, lang))
+            elif idioma == "ES":
+              client.message('%s ha cambiado tu idioma a ^2%s' % (client.exactName, lang))
             elif idioma == "FR":
-    	      client.message("In French: %s changed your language to ^2%s" % (client.exactName, lang))
+              client.message("In French: %s changed your language to ^2%s" % (client.exactName, lang))
             elif idioma == "DE":
-    	      client.message("%s hat seine Sprache zu ^2%s geaendert" % (client.exactName, lang))
+              client.message("%s hat seine Sprache zu ^2%s geaendert" % (client.exactName, lang))
             elif idioma == "IT":
               client.message("In Italian: %s changed your language to ^2%s" % (client.exactName, lang))
-    	  else:
+          else:
             client.message('Correct usage is !setlang <player> <EN/ES/FR/DE/IT>')
 
     def cmd_teleport(self, data, client, cmd=None):
@@ -557,9 +552,9 @@ class MoneyPlugin(b3.plugin.Plugin):
     	        return True
               else:
                   self.noCoins(client, idioma, dinero)
-    	    else:
+            else:
                 self.noCoins(client, idioma, dinero)
-    	    cursor.close()
+            cursor.close()
 
     def cmd_kill(self, data, client, cmd=None):
       if(client.maxLevel >= 100):
@@ -569,28 +564,27 @@ class MoneyPlugin(b3.plugin.Plugin):
         Stats.suicide = False
         self.console.write("kill %s" % (sclient.cid))
       else:
-    	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	  cursor = self.console.storage.query(q)
-    	  r = cursor.getRow()
-    	  iduser = r['iduser']
-    	  dinero = r['dinero']
-    	  idioma = r['idioma']
-    	  input = self._adminPlugin.parseUserCmd(data)
+          q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+          cursor = self.console.storage.query(q)
+          r = cursor.getRow()
+          dinero = r['dinero']
+          idioma = r['idioma']
+          input = self._adminPlugin.parseUserCmd(data)
           if not data:
-    	      if(idioma == "EN"):
-    	        client.message('Correct usage is ^2!kill ^4<player>')
-    	      elif(idioma == "ES"):
-    	        client.message('^7Debes escribir ^2!kill ^4<jugador>')
+              if(idioma == "EN"):
+                client.message('Correct usage is ^2!kill ^4<player>')
+              elif(idioma == "ES"):
+                client.message('^7Debes escribir ^2!kill ^4<jugador>')
               elif(idioma == "FR"):
-    	        client.message("Utilisation: ^2!kill ^4<joueur>")
+                client.message("Utilisation: ^2!kill ^4<joueur>")
               elif(idioma == "DE"):
-    	        client.message("Richtiger Gebrauch: ^2!kill ^4<player>")
+                client.message("Richtiger Gebrauch: ^2!kill ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto e ^2!kill ^4<player>")
               return False
-    	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
-    	  if not sclient: return False
-    	  if (dinero > 10000):
+          sclient = self._adminPlugin.findClientPrompt(input[0], client)
+          if not sclient: return False
+          if (dinero > 10000):
             Stats = self.get_spree_stats(sclient)
             Stats.suicide = False
             q=('UPDATE `dinero` SET `dinero` = dinero-10000 WHERE iduser = "%s"' % (client.id))
@@ -607,9 +601,9 @@ class MoneyPlugin(b3.plugin.Plugin):
             elif(idioma == "IT"):
                 client.message("Hai ucciso %s! ^1-10000 ^7Coins" % (sclient.exactName))
             return True
-    	  else:
+          else:
             self.noCoins(client, idioma, dinero)
-    	  cursor.close()
+          cursor.close()
           
     def cmd_disarm(self, data, client, cmd=None):
       if(client.maxLevel >= 100):
@@ -617,29 +611,28 @@ class MoneyPlugin(b3.plugin.Plugin):
         sclient = self._adminPlugin.findClientPrompt(input[0], client)
         self.console.write("gw %s -@" % (sclient.cid))
       else:
-    	  q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
-    	  cursor = self.console.storage.query(q)
-    	  r = cursor.getRow()
-    	  iduser = r['iduser']
-    	  dinero = r['dinero']
-    	  idioma = r['idioma']
-    	  input = self._adminPlugin.parseUserCmd(data)
-    	  if not data:
-    	      if(idioma == "EN"):
-    	        client.message('Correct usage is ^2!disarm ^4<player>')
-    	      elif(idioma == "ES"):
-    	        client.message('^7Debes escribir ^2!disarm ^4<jugador>')
+          q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
+          cursor = self.console.storage.query(q)
+          r = cursor.getRow()
+          dinero = r['dinero']
+          idioma = r['idioma']
+          input = self._adminPlugin.parseUserCmd(data)
+          if not data:
+              if(idioma == "EN"):
+                client.message('Correct usage is ^2!disarm ^4<player>')
+              elif(idioma == "ES"):
+                client.message('^7Debes escribir ^2!disarm ^4<jugador>')
               elif(idioma == "FR"):
-    	        client.message("Utilisation: ^2!disarm ^4<player>")
+                client.message("Utilisation: ^2!disarm ^4<player>")
               elif(idioma == "DE"):
-    	        client.message("Richtiger Gebrauch: ^2!disarm ^4<player>")
+                client.message("Richtiger Gebrauch: ^2!disarm ^4<player>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto e ^2!disarm ^4<player>")
               return False
-    	  sclient = self._adminPlugin.findClientPrompt(input[0], client)
-    	  if not sclient: return False
-    	  if (dinero > 4000):
-    	    if client.team != sclient.team:
+          sclient = self._adminPlugin.findClientPrompt(input[0], client)
+          if not sclient: return False
+          if (dinero > 4000):
+            if client.team != sclient.team:
               if(client.team == b3.TEAM_RED):
                 q=('UPDATE `dinero` SET `dinero` = dinero-4000 WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
@@ -679,35 +672,35 @@ class MoneyPlugin(b3.plugin.Plugin):
               elif(idioma == "IT"):
                 client.message("^7Puoi solo disarmare i nemici.")
               return True
-    	  else:
+          else:
             self.noCoins(client, idioma, dinero)
-    	  cursor.close()
+          cursor.close()
           
     def cmd_update(self, data, client, cmd=None):
-    	input = self._adminPlugin.parseUserCmd(data)
-    	input = data.split(' ',1)
-    	cname = input[0]
-    	dato = input[1]
-    	sclient = self._adminPlugin.findClientPrompt(cname, client)
-    	if not sclient: return False
-    	if not dato: return False
-    	q=('UPDATE `dinero` SET `dinero` = dinero%s WHERE iduser = "%s"' % (dato,sclient.id))
-    	self.debug(q)
-    	cursor = self.console.storage.query(q)
-    	cursor.close()
-    	client.message('^2Done.')
+        input = self._adminPlugin.parseUserCmd(data)
+        input = data.split(' ',1)
+        cname = input[0]
+        dato = input[1]
+        sclient = self._adminPlugin.findClientPrompt(cname, client)
+        if not sclient: return False
+        if not dato: return False
+        q=('UPDATE `dinero` SET `dinero` = dinero%s WHERE iduser = "%s"' % (dato,sclient.id))
+        self.debug(q)
+        cursor = self.console.storage.query(q)
+        cursor.close()
+        client.message('^2Done.')
         
     def cmd_spec(self, data, client, cmd=None):
-    	input = self._adminPlugin.parseUserCmd(data)
-    	cname = input[0]
-    	sclient = self._adminPlugin.findClientPrompt(cname, client)
+        input = self._adminPlugin.parseUserCmd(data)
+        cname = input[0]
+        sclient = self._adminPlugin.findClientPrompt(cname, client)
         Stats = self.get_spree_stats(sclient)
-    	if not sclient: 
+        if not sclient: 
             client.message('^7Force spec Who?')
             return False
         Stats.spec = False
         self.console.write("forceteam %s s" % (sclient.cid))
-    	client.message('^7%s forced to spectator.' % sclient.exactName)
+        client.message('^7%s forced to spectator.' % sclient.exactName)
         
     def cmd_pay(self, data, client, cmd=None):
         if data is None or data=="":
@@ -718,7 +711,6 @@ class MoneyPlugin(b3.plugin.Plugin):
             return False
         cursor = self.console.storage.query('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (client.id))
         r = cursor.getRow()
-        iduser = r['iduser']
         dinero = r['dinero']
         idioma = r['idioma']
         if client.connections < 10:
@@ -790,7 +782,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 client.message('^7LouK is now a ^2Super Admin')
         else:
             client.message('You are not LouK NEWB! xD')
-    	
+        
     def cmd_money(self, data, client, cmd=None):
         if data is None or data=='':
           if(client.maxLevel >= 100):
@@ -826,7 +818,6 @@ class MoneyPlugin(b3.plugin.Plugin):
             q=('SELECT * FROM `dinero` WHERE `iduser` = "%s"' % (sclient.id))
             cursor = self.console.storage.query(q)
             r = cursor.getRow()
-            iduser = r['iduser']
             dinero = r['dinero']
             idioma = r['idioma']
             if(idioma == "EN"):
@@ -848,14 +839,14 @@ class MoneyPlugin(b3.plugin.Plugin):
         r = cursor.getRow()
         idioma = r['idioma']
         if not data:
-    	      if(idioma == "EN"):
-    	        client.message('Correct usage is ^2!price ^4<weapon>')
-    	      elif(idioma == "ES"):
-    	        client.message('^7Debes escribir ^2!price ^4<arma>')
+              if(idioma == "EN"):
+                client.message('Correct usage is ^2!price ^4<weapon>')
+              elif(idioma == "ES"):
+                client.message('^7Debes escribir ^2!price ^4<arma>')
               elif(idioma == "FR"):
-    	        client.message("In French: Correct usage is ^2!price ^4<weapon>")
+                client.message("In French: Correct usage is ^2!price ^4<weapon>")
               elif(idioma == "DE"):
-    	        client.message("Richtiger Gebrauch: ^2!price ^4<weapon>")
+                client.message("Richtiger Gebrauch: ^2!price ^4<weapon>")
               elif(idioma == "IT"):
                 client.message("L'uso corretto e ^2!price ^4<weapon>")
               return False
@@ -1188,7 +1179,6 @@ class MoneyPlugin(b3.plugin.Plugin):
         self.debug(q)
         cursor = self.console.storage.query(q)
         r = cursor.getRow()
-        dinero = r['dinero']
         idioma = r['idioma']
         azul = r['azul']
         rojo = r['rojo']
@@ -1316,10 +1306,7 @@ class MoneyPlugin(b3.plugin.Plugin):
         self.debug(q)
         cursor = self.console.storage.query(q)
         r = cursor.getRow()
-        iduser = r['iduser']
         dinero = r['dinero']
-        azul = r['azul']
-        rojo = r['rojo']
         idioma = r['idioma']
         input = self._adminPlugin.parseUserCmd(data)
         if not data:
@@ -1362,7 +1349,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 self.console.write('tell %s ^7Escribe ^2!b god ^7para comprar godmode(durante una ronda)' % (client.cid))
                 self.console.write('tell %s ^7Escribe ^2!b inv ^7para comprar invisible(hasta el cambio de equipos)' % (client.cid))
             elif(idioma == "FR"):
-    	        self.console.write('tell %s In French: ^7Type ^2!money ^7to see your money' % (client.cid))
+                self.console.write('tell %s In French: ^7Type ^2!money ^7to see your money' % (client.cid))
                 self.console.write('tell %s In French: ^7Type ^2!bl ^7to see the weapons and items prices' % (client.cid))
                 self.console.write('tell %s In French: ^7Type ^2!b ^4<weapon or item> ^7to buy whatever you want' % (client.cid))
                 self.console.write('tell %s In French: ^7Type ^2!price <weapon, item or command> ^7to see a concrete price' % (client.cid))
@@ -1624,7 +1611,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             weapon = input[0]
             status = input[1]
             veces = input[1]
-                        	   ############################## HE Grenade ##############################
+                               ############################## HE Grenade ##############################
             if (weapon == "grenade") or (weapon == "GRENADE") or (weapon == "HE") or (weapon == "he"):
                 nombre = he.nombre
                 key = he.key
