@@ -36,7 +36,7 @@ class SpreeStats:
 class MoneyPlugin(b3.plugin.Plugin):
     requiresConfigFile = False
     _cronTab = None
-    time_swap = 10
+    time_swap = 5
     _clientvar_name = 'spree_info'
     _swap_num = True
     _nim = True
@@ -865,13 +865,22 @@ class MoneyPlugin(b3.plugin.Plugin):
         else:
             input = self._adminPlugin.parseUserCmd(data)
             weapon = input[0]
+            status = self.get_spree_stats(client)
             if (weapon == "sr8") or (weapon == "SR8"):
                 name = sr8.nombre
                 valor = sr8.valor
                 self.price(client, name, valor)
             elif (weapon == "disarm") or (weapon == "dis"):
-                valor = 4000
-                name = "Disarm"
+                valor = disarm.price*status._dis_counter
+                name = disarm.nombre
+                self.price(client, name, valor)
+            elif (weapon == "teleport") or (weapon == "tp"):
+                valor = teleport.price*status._tp_counter
+                name = teleport.nombre
+                self.price(client, name, valor)
+            elif (weapon == "kill") or (weapon == "kl"):
+                valor = kill.price*status._kill_counter
+                name = kill.nombre
                 self.price(client, name, valor)
             elif (weapon == "god") or (weapon == "godmode"):
                 name = god.nombre
@@ -1965,13 +1974,13 @@ class invisible():
     valor = 10000
 class teleport():
     nombre = 'Teleport'
-    valor = 1000
+    price = 1000
 class kill():
     nombre = 'Kill'
-    valor = 10000
+    price = 10000
 class disarm():
     nombre = 'Disarm'
-    valor = 4000
+    price = 4000
 class sr8():
     nombre = 'Remington SR8'
     key = 'N'
