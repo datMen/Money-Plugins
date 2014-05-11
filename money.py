@@ -525,7 +525,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             price = teleport.price*status._tp_counter
             if (dinero  > price):
               if client.team == sclient.team:
-                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id, price))
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (price, client.id))
                 self.console.storage.query(q)
                 self.console.write("teleport %s %s" % (client.cid, sclient.cid))
                 if(idioma == "EN"):
@@ -540,9 +540,9 @@ class MoneyPlugin(b3.plugin.Plugin):
                     client.message("Ti sei teletrasportato a %s^7. ^1-%s ^7Coins" % (sclient.exactName, price))
                 status._tp_counter += 1
                 return True
-              elif (dinero  > (price*5)):
+              elif (dinero > (price*5)):
                 price *= 5
-                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id, price))
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (price, client.id))
                 self.console.storage.query(q)
                 self.console.write("teleport %s %s" % (client.cid, sclient.cid))
                 if(idioma == "EN"):
@@ -645,7 +645,7 @@ class MoneyPlugin(b3.plugin.Plugin):
           if (dinero > price):
             if client.team != sclient.team:
               if(client.team == b3.TEAM_RED):
-                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (client.id))
+                q=('UPDATE `dinero` SET `dinero` = dinero-%s WHERE iduser = "%s"' % (price, client.id))
                 self.console.storage.query(q)
                 self.console.write("gw %s -@" % (sclient.cid))
                 if(idioma == "EN"):
