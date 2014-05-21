@@ -288,7 +288,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             cursor = self.console.storage.query(q)
             r = cursor.getRow()
             idioma = r['idioma']
-            if(client.team == b3.TEAM_RED):
+            if (client.team == b3.TEAM_RED and client.id != target.id):
               if(data[1] == self.console.UT_MOD_KNIFE or self.console.UT_MOD_KNIFE_THROWN or self.console.UT_MOD_HEGRENADE or self.console.UT_MOD_BLED or self.console.UT_MOD_KICKED):
                 q=('UPDATE `dinero` SET `dinero` = dinero+300 WHERE iduser = "%s"' % (client.id))
                 self.console.storage.query(q)
@@ -303,7 +303,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                 elif(idioma == "IT"):
                     client.message("^7Per aver ucciso %s hai guadagnato ^2300 ^7Coins" % (target.exactName))
                     
-            if(client.team == b3.TEAM_BLUE):
+            if (client.team == b3.TEAM_BLUE and client.id != target.id):
               if(data[1] == self.console.UT_MOD_BERETTA or self.console.UT_MOD_DEAGLE or self.console.UT_MOD_MP5K or self.console.UT_MOD_SPAS 
               or self.console.UT_MOD_UMP45 or self.console.UT_MOD_LR300 or self.console.UT_MOD_G36 or self.console.UT_MOD_PSG1 or self.console.UT_MOD_HK69 or self.console.UT_MOD_BLED 
               or self.console.UT_MOD_KICKED or self.console.UT_MOD_SR8 or self.console.UT_MOD_AK103 or self.console.UT_MOD_NEGEV or self.console.UT_MOD_HK69_HIT or self.console.UT_MOD_M4 or self.console.UT_MOD_GOOMBA):                    
