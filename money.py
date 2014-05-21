@@ -326,7 +326,7 @@ class MoneyPlugin(b3.plugin.Plugin):
             cursor.close()
             
     def spreeKill(self, client=None, victim=None):
-        if client:
+        if client and client.id != victim.id:
             spreeStats = self.get_spree_stats(client)
             spreeStats.kills += 1
             if client.team == b3.TEAM_RED:
@@ -382,7 +382,7 @@ class MoneyPlugin(b3.plugin.Plugin):
                     self.console.say('%s made ^55 ^7kills in a row, you won ^25000 ^7Coins!' % client.exactName)
             spreeStats.deaths = 0
 
-        if victim:
+        if victim and client.id != victim.id:
             spreeStats = self.get_spree_stats(victim)
             spreeStats.deaths += 1
             spreeStats.kills = 0
